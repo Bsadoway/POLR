@@ -1,3 +1,5 @@
+const math = require('./math-functions');
+
 module.exports = {
 
   getEverything: () => {
@@ -11,15 +13,15 @@ module.exports = {
       .insert({
         creator: input.creator,
         poll_title: input.title,
-        admin_url: "/adminurl1",
-        poll_url: "/pollurl#1",
-        is_open: false,
-        created_date: "12/12/14"
+        admin_url: `/${math.generateRandomString()}/admin`,
+        poll_url: `/${math.generateRandomString()}`,
+        is_open: true,
+        created_date: Date.now()
       })
       .into('polls')
       .returning('id')
       .then(function(id) {
-        pollInsert(id,input);
+        pollInsert(id, input);
       });
   }
 
@@ -28,8 +30,8 @@ module.exports = {
 
 }
 
-function pollInsert (id, input){
-  Promise.all(input.item.map((item) =>{
+function pollInsert(id, input) {
+  Promise.all(input.item.map((item) => {
     return global.knex
       .insert({
         poll_item: item,

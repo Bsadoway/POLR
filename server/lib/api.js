@@ -1,4 +1,5 @@
 const math = require('./math-functions');
+const dateFormat = require('dateformat');
 
 module.exports = {
 
@@ -9,17 +10,16 @@ module.exports = {
   },
 
   createPoll: (input) => {
+    const date = (Date.now(), "YYYY-MM-DD HH:MI:SS");
+    
     return global.knex
       .insert({
         creator: input.creator,
         poll_title: input.title,
-        // admin_url: 'admin',
-        // poll_url: 'poll_url',
-
-        admin_url: `${math.generateRandomString()}`,
-        poll_url: `${math.generateRandomString()}`,
+        admin_url: `/${math.generateRandomString()}/admin`,
+        poll_url: `/${math.generateRandomString()}`,
         is_open: true,
-        created_date: '1/1/1'
+        created_date: date
       })
       .into('polls')
       .returning('id')

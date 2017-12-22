@@ -10,8 +10,8 @@ module.exports = {
   },
 
   createPoll: (input) => {
-    const date = (Date.now(), "YYYY-MM-DD HH:MI:SS");
-    
+    const date = dateFormat();
+
     return global.knex
       .insert({
         creator: input.creator,

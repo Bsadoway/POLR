@@ -32,12 +32,17 @@ module.exports = {
       .select()
       .from('polls')
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-      .where({ 'polls.poll_url': url })
-  }
+      .where({'polls.poll_url': url })
+      .orWhere({'polls.admin_url': url})
+  },
 
-
-
-
+  closePoll: (url) => {
+    return global.knex
+      .select('is_open')
+      .from('polls')
+      .where({'polls.admin_url': url })
+      .update({'is_open': f})
+  },
 
 }
 

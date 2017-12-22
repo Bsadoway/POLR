@@ -36,7 +36,6 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
-
 const api = require('./lib/api');
 
 // Mount all resource routes

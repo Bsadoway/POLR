@@ -1,20 +1,19 @@
 "use strict";
 
 const express = require('express');
-const router  = express.Router();
-const bodyParser  = require("body-parser");
-
+const router = express.Router();
+const bodyParser = require("body-parser");
 
 module.exports = (API) => {
 
   router.get("/", (req, res) => {
-      API.getEverything()
+    API.getEverything()
       .then(res => res.render('index'))
       .catch(err => res.render('index'))
   });
 
   router.post("/", (req, res) => {
-      API.createPoll(req.body)
+    API.createPoll(req.body)
       .then(res => res.render('index'))
       .catch(err => res.render('index'))
   });
@@ -32,7 +31,7 @@ module.exports = (API) => {
     console.log("PUT to admin route");
   });
 
-// Voter routes
+  // Voter routes
 
   router.get('/:poll', (req, res) => {
     const url = req.params.poll;

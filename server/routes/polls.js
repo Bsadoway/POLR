@@ -32,14 +32,21 @@ module.exports = (API) => {
     console.log("PUT to admin route");
   });
 
-  router.delete('/:poll/admin', (req, res) => {
-    console.log("DELETE to admin route");
-  });
-
 // Voter routes
 
   router.get('/:poll', (req, res) => {
-    console.log("GET to poll route");
+    const url = req.params.poll;
+    console.log(url);
+    API.getPoll(url)
+      .then(res => {
+
+        console.log(res);
+        res.render('vote')
+
+
+      })
+      .catch(err => res.render('vote'))
+
   });
 
   router.post('/:poll', (req, res) => {

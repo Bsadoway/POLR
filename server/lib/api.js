@@ -13,10 +13,13 @@ module.exports = {
       .insert({
         creator: input.creator,
         poll_title: input.title,
-        admin_url: `/${math.generateRandomString()}/admin`,
-        poll_url: `/${math.generateRandomString()}`,
+        // admin_url: 'admin',
+        // poll_url: 'poll_url',
+
+        admin_url: `${math.generateRandomString()}`,
+        poll_url: `${math.generateRandomString()}`,
         is_open: true,
-        created_date: Date.now()
+        created_date: '1/1/1'
       })
       .into('polls')
       .returning('id')

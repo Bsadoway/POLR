@@ -19,18 +19,24 @@ module.exports = {
       .into('polls')
       .returning('id')
       .then(function(id) {
-        return global.knex
-          .insert({
-            poll_item: input.item,
-            description: 'item_description#1',
-            rank: 0,
-            poll_id: id[0]
-          })
-          .into('poll_items')
+        pollInsert(id,input);
       });
   }
 
 
   // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
 
+}
+
+function pollInsert (id, input){
+  Promise.all(input.item.map((item) =>{
+    return global.knex
+      .insert({
+        poll_item: item,
+        description: 'item_description#zzz',
+        rank: 0,
+        poll_id: id[0]
+      })
+      .into('poll_items')
+  }));
 }

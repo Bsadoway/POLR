@@ -2,6 +2,8 @@
 
 const express = require('express');
 const router  = express.Router();
+const bodyParser  = require("body-parser");
+
 
 module.exports = (API) => {
 
@@ -10,6 +12,13 @@ module.exports = (API) => {
       .then(res => res.render('index'))
       .catch(err => res.render('index'))
   });
+
+  router.post("/", (req, res) => {
+      API.createPoll(req.body)
+      .then(res => res.render('index'))
+      .catch(err => res.render('index'))
+  });
+
 
   router.get('/:poll/admin', (req, res) => {
     console.log("GET to admin poll route");

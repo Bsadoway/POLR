@@ -14,8 +14,8 @@ module.exports = (API) => {
 
   router.post("/", (req, res) => {
     API.createPoll(req.body)
-      .then(res => res.render('index'))
-      .catch(err => res.render('index'))
+      .then(res => res.redirect('/'))
+      .catch(err => res.redirect('/'))
   });
 
 

@@ -10,8 +10,6 @@ module.exports = {
   },
 
   createPoll: (input) => {
-    const date = dateFormat();
-
     return global.knex
       .insert({
         creator: input.creator,
@@ -19,23 +17,22 @@ module.exports = {
         admin_url: `${math.generateRandomString()}/admin`,
         poll_url: `${math.generateRandomString()}`,
         is_open: true,
-        created_date: date
       })
       .into('polls')
       .returning('id')
-      .then(function(id) {
+      .then(function (id) {
         pollInsert(id, input);
       });
-  // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
+    // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
   },
 
 
   getPoll: (url) => {
-      return global.knex
-        .select()
-        .from('polls')
-        .join('poll_items', {'poll_items.poll_id': 'polls.id'})
-        .where({'polls.poll_url': url})
+    return global.knex
+      .select()
+      .from('polls')
+      .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
+      .where({ 'polls.poll_url': url })
   }
 
 

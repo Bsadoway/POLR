@@ -62,7 +62,6 @@ module.exports = (API) => {
 
   router.post('/:poll', (req, res) => {
     const url = req.params.poll;
-    const 
     console.log(url);
     API.submitVote(url)
       .then(result => res.render('admin', { 'vars': 'var1' }))

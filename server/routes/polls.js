@@ -24,7 +24,7 @@ module.exports = (API) => {
     const url = `${req.params.poll}/admin`;
     API.getPoll(url)
       .then(result => {
-        console.log(result);      
+        console.log(result);
         res.render('admin', {'result': result})
       })
       .catch(err => res.render('vote'))
@@ -60,13 +60,13 @@ module.exports = (API) => {
     const url = req.params.poll;
     console.log(url);
     API.getPoll(url)
-      .then(result => res.render('admin', {'vars': 'var1'}))
+      .then(result => res.render('vote', {'result': result}))
       .catch(err => res.render('vote'))
   });
 
   router.post('/:poll', (req, res) => {
     console.log("POST to poll route");
   });
-  
+
   return router;
 }

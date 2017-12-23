@@ -3,21 +3,54 @@
   <head>
     <title>Home Page</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
     <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
     <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
     <script type="text/javascript" src="/scripts/app.js"></script>
+
+    <!-- External  javascript-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+    <script src="https://use.fontawesome.com/729922a123.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <!-- For mobile drag n drop-->
+    <script type="text/javascript" src="/scripts/jquery.ui.touch-punch.js"></script>
+
   </head>
 
   <body>
 
     <header>POLR</header>
 
-    <h1> Vote Page</h1>
+    <h1 class="d-flex justify-content-center"> Vote Page</h1>
+    <div class="d-flex justify-content-center main-container">
+      <section>
+        <form action='/' method='POST'>
+          <div class="d-flex flex-column">
+            <div class="p-2" ><%= result[0].poll_title %></div>
+            <hr>
+          </div>
+          <ul id="sortable">
+
+            <% result.forEach((item) =>{ %>
+              <li class="ui-state-default vote">
+                <div class="p-2" ><%= item.poll_item %></div>
+                <br>
+              </li>
+            <% }); %>
+          </ul>
+          <button type="submit" class="btn btn-primary btn-lg btn-block"> Submit </button>
+        </form>
+      </section>
+    </div>
 
 
   </body>

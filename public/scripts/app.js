@@ -11,9 +11,22 @@ $(() => {
     count++;
   });
 
+    $('.friends-button').on('click', function(){
+    $('#friends-form').append(
+      `<form action='' method='POST'>
+         <label for='friends'>Phone #</label>
+           <input type='text' id='id1' class="p-2" name='friends'>
+           <input type='text' id='id2' class="p-2" name='friends'>
+           <button type="submit" class="btn btn-primary btn-lg btn-block"> Submit </button>
+           <br>
+           <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+       </form>`
+    );
+  });
+
+
   $( "#sortable" ).sortable();
   $( "#sortable" ).disableSelection();
-
 
 
 });

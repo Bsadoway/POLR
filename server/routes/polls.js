@@ -34,12 +34,12 @@ module.exports = (API) => {
   router.post('/:poll/admin', (req, res) => {
     const url = `${req.params.poll}/admin`;
     const friends = req.body.friends;
-    API.inviteFriends(url, friends)
+    API.inviteFriends(friends)
       .then(result => {
         console.log(result);
         res.render('admin', { 'result': result })
       })
-      .catch(err => res.render('vote'))
+      .catch(err => res.render('admin'))
   });
 
   // Closes poll

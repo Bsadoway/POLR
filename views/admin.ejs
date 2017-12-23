@@ -2,39 +2,62 @@
 <html lang="en">
 
 <head>
-  <title>Home Page</title>
+  <title>Admin Page</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+
+  <!-- External  javascript-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/729922a123.js"></script>
+  ]
+
 </head>
 
 <body>
 
   <header>POLR</header>
 
-  <h1> Admin Results Page</h1>
-  <p>Creator is: </p>
-  <p>Vars is:
-  </p>
+  <h1 class="d-flex justify-content-center"> Admin Page</h1>
+  <div class="d-flex justify-content-center main-container">
+    <section>
+      <div class="d-flex flex-column">
+        <div class="p-2">
+          <!-- <%= result[0].poll_title %> -->
+        </div>
+        <hr>
+      </div>
+      <ul>
 
-  <p>Item: Rank:</p>
-
-  <p>URL to send people:</p>
-  <button>Invite more friends</button>
-  <button>Close poll</button>
-  <button>Create new poll</button>
+        <% result.forEach((item) =>{ %>
+          <li class="ui-state-default vote">
+            <div class="p-2">
+              <%= item.poll_item %>
+            </div>
+            <br>
+          </li>
+          <% }); %>
+      </ul>
+      <button type='button' class="friends-button btn btn-primary btn-lg btn-block">Invite friends</button>
+      <div id="friends-form">
+      </div>
+      <button class="btn btn-primary btn-lg btn-block">Close poll</button>
+      <button class="btn btn-primary btn-lg btn-block">Create new poll</button>
+    </section>
+  </div>
 
 </body>
 
 </html>
-
-<!-- res.forEach(item) -->
-
-
-result = []

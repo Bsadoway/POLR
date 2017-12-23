@@ -46,15 +46,15 @@ module.exports = {
       })
   },
 
-  closePoll: (url) => {
-    return global.knex
-      .select('is_open')
-      .from('polls')
-      .where('admin_url'=)
-      .update({
-          is_open: false
-    })
-  }
+  // closePoll: (url) => {
+  //   return global.knex
+  //     .select('is_open')
+  //     .from('polls')
+  //     .where('admin_url'=)
+  //     .update({
+  //         is_open: false
+  //   })
+  // }
 
 
 

@@ -56,7 +56,11 @@ module.exports = (API) => {
     const url = req.params.poll;
     console.log(url);
     API.getPoll(url)
-      .then(result => res.render('vote', {'result': result}))
+      .then(result => {
+        console.log('result is: ');
+        console.log(result);
+        res.render('vote', {'result': result})
+      })
       .catch(err => res.render('vote'))
   });
 

@@ -37,12 +37,13 @@ module.exports = {
 
   inviteFriends: (url, friends) => {
     // Promise.all(friends.friends.map((phoneNum) => {
-    //   return global.knex
-    //     .insert({
-    //       phone_num: phoneNum
-    //     })
-    //     .into('voters')
-    // }));
+
+      return global.knex
+        .insert({
+          phone_num: phoneNum
+        })
+        .into('voters')
+    }));
   },
 
 

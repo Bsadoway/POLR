@@ -18,6 +18,8 @@ module.exports = (API) => {
       .catch(err => res.render('index'))
   });
 
+/////////// ADMIN ROUTES /////////////////////////////////////
+
   router.get('/:poll/admin', (req, res) => {
     const url = `${req.params.poll}/admin`;
     API.getPoll(url)
@@ -28,16 +30,31 @@ module.exports = (API) => {
       .catch(err => res.render('vote'))
   });
 
-
+  // Inviting friends
   router.post('/:poll/admin', (req, res) => {
-    console.log("POST to admin route");
+    const url = `${req.params.poll}/admin`;
+    const friends = req.body.friends;
+    API.inviteFriends(url, friends)
+      .then(result => {
+        console.log(result);
+        res.render('admin', { 'result': result })
+      })
+      .catch(err => res.render('vote'))
   });
 
+  // Changes poll status 
   router.put('/:poll/admin', (req, res) => {
-    console.log("PUT to admin route");
+    const url = `${req.params.poll}/admin`;
+    API.inviteFriends(url)
+      .then(result => {
+        console.log(result);
+        res.render('admin', { 'result': result })
+      })
+      .catch(err => res.render('vote'))
   });
 
-  // Voter routes
+/////////// VOTER ROUTES /////////////////////////////////////
+
 
   router.get('/:poll', (req, res) => {
     const url = req.params.poll;

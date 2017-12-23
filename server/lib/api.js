@@ -26,7 +26,6 @@ module.exports = {
     // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
   },
 
-
   getPoll: (url) => {
     return global.knex
       .select()
@@ -36,13 +35,28 @@ module.exports = {
       .orWhere({'polls.admin_url': url})
   },
 
+
+  inviteFriends: (url, friends) => {
+    return global.knex
+      .select('is_open')
+      .from('polls')
+      .where(url)
+      .update({
+        is_open: false
+      })
+  },
+
   closePoll: (url) => {
     return global.knex
       .select('is_open')
       .from('polls')
-      .where({'polls.admin_url': url })
-      .update({'is_open': f})
-  },
+      .where('admin_url'=)
+      .update({
+          is_open: false
+    })
+  }
+
+
 
 }
 

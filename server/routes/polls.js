@@ -42,7 +42,7 @@ module.exports = (API) => {
       .catch(err => res.render('vote'))
   });
 
-  // Changes poll status 
+  // Closes poll
   router.put('/:poll/admin', (req, res) => {
     const url = `${req.params.poll}/admin`;
     API.inviteFriends(url)

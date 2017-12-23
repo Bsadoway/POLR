@@ -45,16 +45,12 @@ module.exports = (API) => {
   // Closes poll
   router.put('/:poll/admin', (req, res) => {
     const url = `${req.params.poll}/admin`;
-    API.inviteFriends(url)
-      .then(result => {
-        console.log(result);
-        res.render('admin', { 'result': result })
-      })
+    API.closePoll(url)
+      .then(result => res.render('admin', { 'result': result }))
       .catch(err => res.render('vote'))
   });
 
 /////////// VOTER ROUTES /////////////////////////////////////
-
 
   router.get('/:poll', (req, res) => {
     const url = req.params.poll;
@@ -65,8 +61,12 @@ module.exports = (API) => {
   });
 
   router.post('/:poll', (req, res) => {
-    console.log("POST to poll route");
+    const url = req.params.poll;
+    const 
+    console.log(url);
+    API.submitVote(url)
+      .then(result => res.render('admin', { 'vars': 'var1' }))
+      .catch(err => res.render('vote'))
   });
-
   return router;
 }

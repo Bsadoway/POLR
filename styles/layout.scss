@@ -1,7 +1,34 @@
+$background-color: #D0D7D0;
+$text-color: #31322C;
+$body-color: #48AAB5;
+$header-color: #B4CAD5;
+
 body {
-  background-color: rgb(177, 202, 211);
+    color: $text-color;
 
   h1 {
-    color: #244751;
+    color: $text-color;
+    margin: 25px;
+  }
+
+  header {
+    background-color: $header-color;
+    height: 100px;
+  }
+
+  .main-container {
+
+  }
+
+  .main-container section {
+    background-color: $body-color;
+    width:400px;
+    padding: 10px;
+    border-radius: 5px;  
+  }
+
+  input.p-2 {
+    width: 90%;
+    margin:0 auto;
   }
 }

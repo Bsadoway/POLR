@@ -36,14 +36,15 @@ module.exports = {
   },
 
   inviteFriends: (url, friends) => {
-    Promise.all(friends.friends.map((phoneNum) => {
-      return global.knex
-        .insert({
-          phone_num: phoneNum
-        })
-        .into('voters')
-    }));
+    // Promise.all(friends.friends.map((phoneNum) => {
+    //   return global.knex
+    //     .insert({
+    //       phone_num: phoneNum
+    //     })
+    //     .into('voters')
+    // }));
   },
+
 
   closePoll: (url) => {
     return global.knex
@@ -53,7 +54,12 @@ module.exports = {
       .update({
           is_open: false
     })
+  },
+
+  submitVote: () => {
+
   }
+
 
 }
 
@@ -62,7 +68,6 @@ function pollInsert(id, input) {
     return global.knex
       .insert({
         poll_item: item,
-        description: 'item_description#zzz',
         rank: 0,
         poll_id: id[0]
       })

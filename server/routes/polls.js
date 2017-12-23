@@ -52,7 +52,6 @@ module.exports = (API) => {
 
 /////////// VOTER ROUTES /////////////////////////////////////
 
-
   router.get('/:poll', (req, res) => {
     const url = req.params.poll;
     console.log(url);
@@ -62,8 +61,12 @@ module.exports = (API) => {
   });
 
   router.post('/:poll', (req, res) => {
-    console.log("POST to poll route");
+    const url = req.params.poll;
+    const 
+    console.log(url);
+    API.submitVote(url)
+      .then(result => res.render('admin', { 'vars': 'var1' }))
+      .catch(err => res.render('vote'))
   });
-  
   return router;
 }

@@ -35,14 +35,14 @@ module.exports = {
       .orWhere({'polls.admin_url': url})
   },
 
-  inviteFriends: (url, friends) => {
-    // Promise.all(friends.friends.map((phoneNum) => {
-    //   return global.knex
-    //     .insert({
-    //       phone_num: phoneNum
-    //     })
-    //     .into('voters')
-    // }));
+  inviteFriends: (friends) => {
+    return Promise.all(friends.map((phoneNum) => {
+      return global.knex
+        .insert({
+          phone_num: phoneNum
+        })
+        .into('voters')
+    }));
   },
 
 

@@ -45,11 +45,8 @@ module.exports = (API) => {
   // Closes poll
   router.put('/:poll/admin', (req, res) => {
     const url = `${req.params.poll}/admin`;
-    API.inviteFriends(url)
-      .then(result => {
-        console.log(result);
-        res.render('admin', { 'result': result })
-      })
+    API.closePoll(url)
+      .then(result => res.render('admin', { 'result': result }))
       .catch(err => res.render('vote'))
   });
 

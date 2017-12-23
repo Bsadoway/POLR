@@ -35,28 +35,25 @@ module.exports = {
       .orWhere({'polls.admin_url': url})
   },
 
-
   inviteFriends: (url, friends) => {
+    Promise.all(friends.friends.map((phoneNum) => {
+      return global.knex
+        .insert({
+          phone_num: phoneNum
+        })
+        .into('voters')
+    }));
+  },
+
+  closePoll: (url) => {
     return global.knex
       .select('is_open')
       .from('polls')
-      .where(url)
+      .where({'admin_url': url})
       .update({
-        is_open: false
-      })
-  },
-
-  // closePoll: (url) => {
-  //   return global.knex
-  //     .select('is_open')
-  //     .from('polls')
-  //     .where('admin_url'=)
-  //     .update({
-  //         is_open: false
-  //   })
-  // }
-
-
+          is_open: false
+    })
+  }
 
 }
 

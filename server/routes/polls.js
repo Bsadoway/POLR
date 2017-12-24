@@ -13,31 +13,31 @@ module.exports = (API) => {
     const sms = req.body;
     API.incomingSMS(sms)
       .then(responseMsg => {
-        res.end();
-        // const twiml = new MessagingResponse();
-        // twiml.message();
-        // res.writeHead(204, {'Content-type': 'text/xml'});
-        // res.end(twiml.toString());
+        // res.end();
+        const twiml = new MessagingResponse();
+        twiml.message();
+        res.writeHead(204, {'Content-type': 'text/xml'});
+        res.end(twiml.toString());
+      })
       .catch(err => console.log(err))
   });
 
-    // Below is used to send SMS back, a response is always required (even if no msg content)
-  //   const twiml = new MessagingResponse();
-  //   twiml.message();
-
-  //   res.writeHead(204, {'Content-type': 'text/xml'});
-  //   res.end(twiml.toString());
-  // });
 
   router.get("/", (req, res) => {
     API.getEverything()
-      .then(result => res.render('index'))
+      .then(result => {
+        console.log(result);
+        res.render('index');
+      })
       .catch(err => res.render('vote'))
   });
 
   router.post("/", (req, res) => {
     API.createPoll(req.body)
-      .then(result => res.render('index'))
+      .then(result => {
+        API.sendAdminSMS(result);
+        res.render('index');
+      })
       .catch(err => res.render('index'))
   });
 
@@ -69,7 +69,9 @@ module.exports = (API) => {
   router.put('/:poll/admin', (req, res) => {
     const url = `${req.params.poll}/admin`;
     API.closePoll(url)
-      .then(result => res.render('admin', { 'result': result }))
+      .then(result => {
+        res.render('admin', { 'result': result })
+      })
       .catch(err => res.render('vote'))
   });
 

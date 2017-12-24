@@ -6,11 +6,11 @@ module.exports = {
   incomingSMS: (message) => {
     const sender = message.From;
     const body = message.Body;
-    const poll_id = body.split(" ")[0];
-    const command = body.split(" ")[1];
-    console.log(poll_id);
-    console.log(command);
-    if (command === '1') {
+    const poll_id = body.split(" ")[0].toLowerCase();
+    const command = body.split(" ")[1].toLowerCase();
+    // console.log(poll_id);
+    // console.log(command);
+    if (command === 'c') {
       return global.knex
         .select('is_open')
         .from('polls')
@@ -18,13 +18,8 @@ module.exports = {
         .update({
           is_open: false
         })
-        .then(() => {
-          sms.twimlRespond();
-        })
     }
-    // sms.twimlRespond();
-    return;
-
+    return
   },
 
   getEverything: () => {
@@ -43,12 +38,11 @@ module.exports = {
         is_open: true,
       })
       .into('polls')
-      .returning('id', 'admin_url', 'poll_url')
+      .returning(['id', 'admin_url', 'poll_url','poll_title'])
       .then( id => {
         pollInsert(id, input);
+        return id[0]
       })
-      // .then((admin_url) => sms.sendAdminUrl()
-      // );
     // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
   },
   
@@ -71,7 +65,6 @@ module.exports = {
     }));
   },
 
-
   closePoll: (url) => {
     return global.knex
       .select('is_open')
@@ -83,9 +76,18 @@ module.exports = {
   },
 
   submitVote: () => {
+  },
 
+  sendAdminSMS: (adminInfo) => {
+    const poll_id = adminInfo.id;
+    const admin_url = adminInfo.admin_url;
+    const poll_url = adminInfo.poll_url;
+    const poll_title = adminInfo.poll_title;
+    const adminMessage = `Survey created with POLR! Your admin link is: http://localhost:8080/${admin_url}. To close the poll reply with: ${poll_id} c`;
+    const pollMessage = `CREATOR has made a survey about "${poll_title}"! To vote visit: http://localhost:8080/${poll_url} or reply with ${poll_id} t`;
+    sms.send(adminMessage).then(() => sms.send(pollMessage));
+    return
   }
-
 
 }
 
@@ -95,21 +97,11 @@ function pollInsert(id, input) {
       .insert({
         poll_item: item,
         rank: 0,
-        poll_id: id[0]
+        poll_id: id[0].id
       })
       .into('poll_items')
+      .returning('poll_item');
   }));
-}
-
-function sendSMS () {
-  twilio.messages
-    .create({
-      to: myPhone,
-      from: twilioNumber,
-      body: 'Sending a message from POLR!!',
-      // mediaUrl: 'https://static.boredpanda.com/blog/wp-content/uploads/2016/08/cute-kittens-30-57b30ad41bc90__605.jpg',
-    })
-    .then((message) => console.log(message.sid));
 }
 
 function closePollID (poll_id) {

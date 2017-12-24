@@ -15,7 +15,6 @@ exports.seed = function (knex, Promise) {
         { item_id: '3', voter_id: '2', submitted_rank: 3 },
         { item_id: '3', voter_id: '3', submitted_rank: 3 },
         
-
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 
         { item_id: '4', voter_id: '4', submitted_rank: 1 },

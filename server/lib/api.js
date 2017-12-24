@@ -1,7 +1,31 @@
 const math = require('./math-functions');
-const dateFormat = require('dateformat');
+const sms = require('./sms');
 
 module.exports = {
+  
+  incomingSMS: (message) => {
+    const sender = message.From;
+    const body = message.Body;
+    const poll_id = body.split(" ")[0];
+    const command = body.split(" ")[1];
+    console.log(poll_id);
+    console.log(command);
+    if (command === '1') {
+      return global.knex
+        .select('is_open')
+        .from('polls')
+        .where({ 'id': poll_id })
+        .update({
+          is_open: false
+        })
+        .then(() => {
+          sms.twimlRespond();
+        })
+    }
+    // sms.twimlRespond();
+    return;
+
+  },
 
   getEverything: () => {
     return global.knex
@@ -19,13 +43,15 @@ module.exports = {
         is_open: true,
       })
       .into('polls')
-      .returning('id')
-      .then(function (id) {
+      .returning('id', 'admin_url', 'poll_url')
+      .then( id => {
         pollInsert(id, input);
-      });
+      })
+      // .then((admin_url) => sms.sendAdminUrl()
+      // );
     // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
   },
-
+  
   getPoll: (url) => {
     return global.knex
       .select()
@@ -73,4 +99,26 @@ function pollInsert(id, input) {
       })
       .into('poll_items')
   }));
+}
+
+function sendSMS () {
+  twilio.messages
+    .create({
+      to: myPhone,
+      from: twilioNumber,
+      body: 'Sending a message from POLR!!',
+      // mediaUrl: 'https://static.boredpanda.com/blog/wp-content/uploads/2016/08/cute-kittens-30-57b30ad41bc90__605.jpg',
+    })
+    .then((message) => console.log(message.sid));
+}
+
+function closePollID (poll_id) {
+  console.log("close poll id function");
+  return global.knex
+    .select('is_open')
+    .from('polls')
+    .where({ 'id': poll_id })
+    .update({
+      is_open: false
+    })
 }

@@ -3,8 +3,31 @@
 const express = require('express');
 const router = express.Router();
 const bodyParser = require("body-parser");
+const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const sms = require('../lib/sms');
 
 module.exports = (API) => {
+
+// Testing route for receiving SMS
+  router.post('/sms', (req, res) => {
+    const sms = req.body;
+    API.incomingSMS(sms)
+      .then(responseMsg => {
+        res.end();
+        // const twiml = new MessagingResponse();
+        // twiml.message();
+        // res.writeHead(204, {'Content-type': 'text/xml'});
+        // res.end(twiml.toString());
+      .catch(err => console.log(err))
+  });
+
+    // Below is used to send SMS back, a response is always required (even if no msg content)
+  //   const twiml = new MessagingResponse();
+  //   twiml.message();
+
+  //   res.writeHead(204, {'Content-type': 'text/xml'});
+  //   res.end(twiml.toString());
+  // });
 
   router.get("/", (req, res) => {
     API.getEverything()

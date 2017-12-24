@@ -1,5 +1,4 @@
 "use strict";
-
 require('dotenv').config();
 
 const PORT        = process.env.PORT || 8080;
@@ -14,9 +13,12 @@ global.knex       = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 
+// Twilio
+const accountSid = process.env.accountSid;
+const authToken = process.env.authToken;
+const twilio = require('twilio')(accountSid, authToken);
 // Seperated Routes for each Resource
 const pollRoutes = require("./routes/polls");
-
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -42,7 +44,6 @@ const api = require('./lib/api');
 app.use(pollRoutes(api));
 
 app.listen(PORT, () => {
-    console.log("Example app listening on port " + PORT);
-
-})
+    console.log("POLR listening on port " + PORT);
+});
 

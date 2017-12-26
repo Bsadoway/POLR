@@ -35,7 +35,7 @@ module.exports = (API) => {
   router.post("/", (req, res) => {
     API.createPoll(req.body)
       .then(result => {
-        API.sendAdminSMS(result);
+        // API.sendAdminSMS(result);
         res.render('index');
       })
       .catch(err => res.render('index'))
@@ -70,7 +70,9 @@ module.exports = (API) => {
     const url = `${req.params.poll}/admin`;
     API.closePoll(url)
       .then(result => {
-        res.render('admin', { 'result': result })
+        console.log("log of result is:");
+        console.log(result);
+        res.render('index', { 'result': result })
       })
       .catch(err => res.render('vote'))
   });
@@ -82,8 +84,8 @@ module.exports = (API) => {
     console.log(url);
     API.getPoll(url)
       .then(result => {
-        console.log('result is: ');
-        console.log(result);
+        // console.log('result is: ');
+        // console.log(result);
         res.render('vote', {'result': result})
       })
       .catch(err => res.render('vote'))

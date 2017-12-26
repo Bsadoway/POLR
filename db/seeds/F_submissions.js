@@ -16,19 +16,19 @@ exports.seed = function (knex, Promise) {
         { item_id: '3', voter_id: '3', submitted_rank: 3 },
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        
         { item_id: '4', voter_id: '4', submitted_rank: 1 },
-        { item_id: '4', voter_id: '5', submitted_rank: 1 },
-        { item_id: '4', voter_id: '6', submitted_rank: 1 },
+        { item_id: '4', voter_id: '5', submitted_rank: 2 },
+        { item_id: '4', voter_id: '6', submitted_rank: 3 },
         
 
-        { item_id: '5', voter_id: '5', submitted_rank: 2 },
-        { item_id: '5', voter_id: '6', submitted_rank: 2 },
         { item_id: '5', voter_id: '4', submitted_rank: 2 },
+        { item_id: '5', voter_id: '5', submitted_rank: 1 },
+        { item_id: '5', voter_id: '6', submitted_rank: 1 },
         
         { item_id: '6', voter_id: '4', submitted_rank: 3 },
         { item_id: '6', voter_id: '5', submitted_rank: 3 },
-        { item_id: '6', voter_id: '6', submitted_rank: 3 },
+        { item_id: '6', voter_id: '6', submitted_rank: 2 },
         
         /////////////////////////////////////////////////////////////////////////////////////////////////////
 

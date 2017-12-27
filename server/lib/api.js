@@ -136,10 +136,12 @@ module.exports = {
     const pollMessage = `CREATOR has made a survey about "${poll_title}"! To vote visit: http://localhost:8080/${poll_url} or reply with ${poll_id} t`;
     sms.send(adminMessage).then(() => sms.send(pollMessage));
     return
-  }
+  },
 
   getResults: (url) => {
-    console.log(url);
+    return global.knex
+      .select()
+      .from('polls')
   }
 
 }

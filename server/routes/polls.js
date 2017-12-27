@@ -24,8 +24,7 @@ module.exports = (API) => {
 
   // Testing route
   router.get("/test", (req, res) => {
-    // API.runOff()
-      API.test()
+      API.testFunction()
       .then(result => {
         console.log(result);
         res.render('index');

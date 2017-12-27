@@ -30,18 +30,19 @@ module.exports = {
   },
 
   // Adds votes to poll item
-  voteBySMS: (poll_id, command, voter_id) => {
-    const votes = command.split('');
+  vote: (poll_identifier, voteOrder, voter_id) => {
+    // const votes = voterOrder.split('');
     const randomID = math.generateRandomString;
-    console.log(command);
+    // console.log(command);
     return global.knex
       .select()
       .from('polls')
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-      .where({ 'polls.id': poll_id })
+      .where({ 'polls.id': poll_identifier })
+      .orWhere({'poll_url': poll_identifer })
       .orderBy('poll_items.id', 'asc')
       .then(result => {
-        return Promise.all(votes.map((vote, index) => {
+        return Promise.all(voteOrder.map((vote, index) => {
           return global.knex
             .insert({
               item_id: result[(vote - 1)].id,

@@ -16,6 +16,7 @@ module.exports = {
     }
     // Sends poll info to voter via SMS
     if (command === 'view') {
+      const voteOrder = command.split('');
       return sms.sendPoll(poll_id, sender)
     } else {
       // return Promise.all([
@@ -23,7 +24,7 @@ module.exports = {
         .then( voter_id => {
           // console.log('id is:')
           // console.log(voter_id[0]);
-          return queries.voteBySMS(poll_id, command, voter_id[0])
+          return queries.vote(poll_id, command, voter_id[0])
       // ])
         })
     }
@@ -38,8 +39,10 @@ module.exports = {
 
   // TESTING FUNCTION
   testFunction: () => {
+    const TestArray = {a:1, b:2, '3':4, '4':3, '2':1, '1':0, 'q':3, '10':390};
+    return module.exports.submitVote('1', TestArray)
     // return queries.instantRunOff(3);
-    return queries.calculateRank(3);
+    // return queries.calculateRank(3);
     // return queries.onlyTwoLeft(3)
   },
 
@@ -116,11 +119,12 @@ module.exports = {
       })
   },
 
-  submitVote: (url, votes) => {
-    vote = req.body.item;
-    return global.knex
-      .insert({
-
+  submitVote: (url, input) => {
+    const name = input.voter_name;
+    const voteOrder = input.voteOrder;
+    return queries.addVoter(name)
+      .then(voter_id => {
+        return queries.vote(url, voteOrder, voter_id)
       })
   },
 

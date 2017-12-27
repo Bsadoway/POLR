@@ -138,6 +138,10 @@ module.exports = {
     return
   }
 
+  getResults: (url) => {
+    console.log(url);
+  }
+
 }
 
 function pollInsert(id, input) {
@@ -218,7 +222,7 @@ function sendPoll(id, sender) {
 function instantRunOff() {
   return global.knex.raw('SELECT poll_item FROM poll_items WHERE poll_id = 2 AND rank = (SELECT MAX(rank) FROM poll_items WHERE poll_id = 2)')
     .then(result => {
-      // console.log(result.rows[0].poll_item); 
+      // console.log(result.rows[0].poll_item);
       return result.rows[0].poll_item
     });
 }
@@ -288,4 +292,6 @@ function voteBySMS(poll_id, sender, command) {
   // .from('submissions')
   // .where({'submissions.item_id': result.id})
   // .update({sub})
+
+
 }

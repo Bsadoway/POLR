@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Home Page</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+  <script type="text/javascript" src="/scripts/app.js"></script>
+
+  <!-- External  javascript-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+  <script src="https://use.fontawesome.com/729922a123.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!-- For mobile drag n drop-->
+  <script type="text/javascript" src="/scripts/jquery.ui.touch-punch.js"></script>
+
+</head>
+
+<body>
+
+  <header class="nav">POLR</header>
+
+  <h1 class="d-flex justify-content-center"> Create a Poll</h1>
+  <div class="d-flex justify-content-center main-container">
+    <section>
+      <form action='/' method='POST'>
+        <div class="d-flex flex-column">
+          <label for='creator'>Email:</label>
+          <input class="p-2" type='email' id='creator' name='creator' placeholder="Email">
+          <br>
+        </div>
+        <div class="d-flex flex-column">
+          <label for='title'>Poll Title</label>
+          <input class="p-2" type='text' name='title' placeholder="Poll Title goes here">
+          <hr>
+        </div>
+        <ul id="sortable">
+          <li class="ui-state-default">
+            <input class="p-2" type='text' id='item' name='item' placeholder="Item1 goes here">
+            <br>
+          </li>
+          <li class="ui-state-default">
+            <input class="p-2" type='text' id='item2' name='item' placeholder="Item2 goes here">
+            <br>
+          </li>
+          <li class="ui-state-default">
+            <input class="p-2" type='text' id='item3' name='item' placeholder="Item3 goes here">
+            <br>
+            <li>
+        </ul>
+        <i class="fa fa-plus fa-2x" aria-hidden="true"></i>
+        <button type="submit" class="btn btn-primary btn-lg btn-block"> Submit </button>
+      </form>
+    </section>
+
+  </div>
+
+</body>
+
+</html>

@@ -16,21 +16,19 @@ module.exports = {
     }
     // Sends poll info to voter via SMS
     if (command === 'view') {
-      return sendPoll(poll_id, sender)
+      const voteOrder = command.split('');
+      return sms.sendPoll(poll_id, sender)
     } else {
       // return Promise.all([
-        return addVoter(sender)
-        .then( () => {
-          return voteBySMS(poll_id, sender, command)
+        return queries.addVoter(sender)
+        .then( voter_id => {
+          // console.log('id is:')
+          // console.log(voter_id[0]);
+          return queries.vote(poll_id, command, voter_id[0])
       // ])
         })
     }
     return
-  },
-
-  instantRun: () => {
-    // return math.instantRunOff();
-    // return instantRunOff();
   },
 
   getEverything: () => {
@@ -39,22 +37,24 @@ module.exports = {
       .from('polls')
   },
 
-  // Sets rank for poll items based on submitted ranks
-  getRank: () => {
-    return queries.instantRunOff(3);
-    // return math.calculateRank(3);
-    // return onlyTwoLeft(3)
+  // TESTING FUNCTION
+  testFunction: () => {
+    const TestArray = {a:1, b:2, '3':4, '4':3, '2':1, '1':0, 'q':3, '10':390};
+    return module.exports.submitVote('1', TestArray)
+    // return queries.instantRunOff(3);
+    // return queries.calculateRank(3);
+    // return queries.onlyTwoLeft(3)
   },
 
   runOff: () => {
-    return isWinner()
+    return queries.isWinner()
       .then(result => {
         if (result) {
           console.log('winner');
           return true
         } else {
           console.log('no winner. running instant run-off round');
-          if (onlyTwoLeft(3)) {
+          if (queries.onlyTwoLeft(3)) {
             const tieSelector = math.randomSelect;
             return global.knex
               .select('poll_item')
@@ -62,13 +62,13 @@ module.exports = {
               .from('poll_items')
               .where
           }
-          return math.instantRunOff(3)
+          return queries.instantRunOff(3)
             .then(() => {
               runOff()
             })
         }
       })
-    // return math.instantRunOff(3);
+    // return queries.instantRunOff(3);
   },
 
   createPoll: (input) => {
@@ -119,10 +119,12 @@ module.exports = {
       })
   },
 
-  submitVote: (url) => {
-    return global.knex
-      .insert({
-
+  submitVote: (url, input) => {
+    const name = input.voter_name;
+    const voteOrder = input.voteOrder;
+    return queries.addVoter(name)
+      .then(voter_id => {
+        return queries.vote(url, voteOrder, voter_id)
       })
   },
 
@@ -213,79 +215,4 @@ function sendPoll(id, sender) {
         return
       }
     })
-}
-
-function instantRunOff() {
-  return global.knex.raw('SELECT poll_item FROM poll_items WHERE poll_id = 2 AND rank = (SELECT MAX(rank) FROM poll_items WHERE poll_id = 2)')
-    .then(result => {
-      // console.log(result.rows[0].poll_item); 
-      return result.rows[0].poll_item
-    });
-}
-
-// Checks if there is an item with > 50% of majority vote
-function isWinner(poll_id) {
-  return Promise.all([
-    // Most votes
-    global.knex.max('rank').from('poll_items').where({ 'poll_id': 3 }),
-    // Total votes
-    global.knex.sum('rank').from('poll_items').where({ 'poll_id': 3 })
-  ])
-    .then(result => {
-      const mostVotes = result[0][0].max;
-      const totalVotes = result[1][0].sum;
-      const mostVoteRatio = mostVotes / totalVotes;
-      console.log(mostVoteRatio);
-      if (mostVoteRatio > 0.5) {
-        return true
-      } else {
-        return false
-      }
-    })
-}
-
-// Checks if there are only two poll items left
-function onlyTwoLeft(id) {
-  return global.knex
-    .count('poll_item')
-    .from('poll_items')
-    .where({ 'poll_id': id })
-    .andWhere('rank', '>=', 0)
-    .then(result => {
-      if (result[0].count === 2) {
-        return true
-      } else {
-        return false
-      }
-    })
-}
-
-function addVoter(sender) {
-  return global.knex
-    .insert({
-      phone_num: sender,
-      name: 'anon'
-    })
-    .into('voters')
-    .returning('phone_num')
-}
-
-function voteBySMS(poll_id, sender, command) {
-  const votes = command.split('');
-  console.log(command);
-  return Promise.all(
-    votes.map((vote) => {
-      return global.knex
-        .insert({
-          item_id: '2',
-          voter_id: '3',
-          submitted_rank: vote
-        })
-        .into('submissions')
-    })
-  );
-  // })
-  // .from('submissions')
-  // .where({'submissions.item_id': result.id})
-  // .update({sub})
 }

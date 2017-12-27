@@ -4,6 +4,7 @@ const myPhone = process.env.CellF;
 const twilioNumber = process.env.twilioNumber;
 const twilio = require('twilio')(accountSid, authToken);
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
+const math = require('./math-functions');
 
 module.exports = {
 
@@ -24,6 +25,32 @@ module.exports = {
     res.writeHead(204, { 'Content-type': 'text/xml' });
     res.end(twiml.toString());
     return
-  }
+  },
+
+  sendPoll: (id, sender) => {
+  return global.knex
+    .select()
+    .from('polls')
+    .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
+    .where({ 'polls.id': id })
+    .orderBy('poll_items.id', 'asc')
+    .then(result => {
+      if (result.length !== 0) {
+        // console.log('Success. Matched poll_id and sender');
+        const itemList = math.listBuilder(result).join(" ");
+        const responseMsg = `Poll title - List of items:\n ${itemList}.\n Vote now by saying:`;
+        console.log('response msg is: ');
+        console.log(responseMsg);
+        return
+        // return module.exports.send(responseMsg);
+      } else {
+        console.log('Wrong poll id ornauthorized command');
+        // const responseMsg = "Invalid command";
+        // return sms`.send(responseMsg);
+        return
+      }
+    })
+}
+
 
 }

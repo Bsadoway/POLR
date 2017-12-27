@@ -1,3 +1,5 @@
+const math = require('./math-functions');
+
 module.exports = {
 
   // Checks if there are only two poll items left
@@ -24,28 +26,32 @@ module.exports = {
         name: 'anon'
       })
       .into('voters')
-      .returning('phone_num')
+      .returning('id')
   },
 
   // Adds votes to poll item
-  voteBySMS: (poll_id, sender, command) => {
-    const votes = command.split('');
-    console.log(command);
-    return Promise.all(
-      votes.map((vote) => {
-        return global.knex
-          .insert({
-            item_id: '2',
-            voter_id: '3',
-            submitted_rank: vote
-          })
-          .into('submissions')
+  vote: (poll_identifier, voteOrder, voter_id) => {
+    // const votes = voterOrder.split('');
+    const randomID = math.generateRandomString;
+    // console.log(command);
+    return global.knex
+      .select()
+      .from('polls')
+      .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
+      .where({ 'polls.id': poll_identifier })
+      .orWhere({'poll_url': poll_identifer })
+      .orderBy('poll_items.id', 'asc')
+      .then(result => {
+        return Promise.all(voteOrder.map((vote, index) => {
+          return global.knex
+            .insert({
+              item_id: result[(vote - 1)].id,
+              voter_id: voter_id,
+              submitted_rank: (index + 1)
+            })
+            .into('submissions')          
+        }));
       })
-    );
-    // })
-    // .from('submissions')
-    // .where({'submissions.item_id': result.id})
-    // .update({sub})
   },
 
   // Checks if there is an item with > 50% of majority vote

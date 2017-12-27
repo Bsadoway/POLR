@@ -20,6 +20,11 @@ module.exports = {
     return
   },
 
+  instantRun: () => {
+    // return math.instantRunOff();
+    // return instantRunOff();
+  },
+
   getEverything: () => {
     return global.knex
       .select()
@@ -28,7 +33,12 @@ module.exports = {
 
   // Sets rank for poll items based on submitted ranks
   getRank: () => {
-    return math.calculateRank(2);
+    // return instantRunOff();
+    return math.calculateRank(3);
+  },
+
+  runOff: () => {
+    return math.instantRunOff(3);
   },
 
   createPoll: (input) => {
@@ -162,10 +172,62 @@ function sendPoll(id, sender) {
         return
         // return sms.send(responseMsg);
       } else {
-        console.log('Wrong poll id or unauthorized command');
+        console.log('Wrong poll id ornauthorized command');
         // const responseMsg = "Invalid command";
-        // return sms.send(responseMsg);
+        // return sms`.send(responseMsg);
         return
       }
-    })
+    }) 
 }
+
+function instantRunOff() {
+  return global.knex.raw('SELECT poll_item FROM poll_items WHERE poll_id = 2 AND rank = (SELECT MAX(rank) FROM poll_items WHERE poll_id = 2)')
+    .then(result => { 
+      // console.log(result.rows[0].poll_item); 
+      return result.rows[0].poll_item 
+    });
+}
+
+/*
+instantRunOff
+
+1. Check if top ranked is > 50% of total items
+  if yes > winner.
+  if no > step 2.
+2. Find lowest ranked item
+3. Find the rank 2 votes of everyone who voted for the loser
+
+// lowest ranked item
+global.knex.raw('SELECT poll_item FROM poll_items WHERE poll_id = 2 AND rank = (SELECT MAX(rank) FROM poll_items WHERE poll_id = 2)')
+    .then(result => { return rows[0].poll_item });
+
+
+// finds 2nd ranked item
+    return global.knex
+      .select('poll_items.id')
+      .count('submitted_rank')
+      .from('submissions')
+      .where({ 'voter_id': result.voter_id })
+      .andWhere({ 'submitted_rank': 2 })
+      .groupBy('poll_items.id')
+
+// based on lowest ranked item, finds the submitters
+return global.knex
+  .select('voter_id')
+  .from('submissions')
+  .join('poll_items', { 'submissions.item_id': 'poll_items.id' })
+  .where({poll_items.poll_item: resul})
+  .then( result => {
+    Promise
+        return global.knex
+      .select('poll_items.id')
+      .count('submitted_rank')
+      .from('submissions')
+      .where({ 'voter_id': result.voter_id })
+      .andWhere({ 'submitted_rank': 2 })
+      .groupBy('poll_items.id')
+  })
+
+
+
+*/

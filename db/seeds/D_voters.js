@@ -12,7 +12,11 @@ exports.seed = function (knex, Promise) {
 
       { phone_num: '666-666-6666', name: 'Voter7' },
       { phone_num: '777-777-7777', name: 'Voter8' },
-      { phone_num: '888-888-8888', name: 'Voter9' }
+      { phone_num: '888-888-8888', name: 'Voter9' },
+
+      { phone_num: '101-101-1010', name: 'Voter10' },
+      { phone_num: '110-110-1100', name: 'Voter11' },
+      { phone_num: '121-212-1212', name: 'Voter12' }
     ])
   ]);
 }

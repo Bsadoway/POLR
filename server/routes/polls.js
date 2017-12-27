@@ -22,9 +22,20 @@ module.exports = (API) => {
       .catch(err => console.log(err))
   });
 
+  // Testing route
+  router.get("/test", (req, res) => {
+    API.runOff()
+      // API.getRank()
+      .then(result => {
+        console.log(result);
+        res.render('index');
+      })
+      .catch(err => res.render('vote'))
+  });
 
   router.get("/", (req, res) => {
-    API.getEverything()
+    API.runOff()
+    // API.getEverything()
       .then(result => {
         console.log(result);
         res.render('index');

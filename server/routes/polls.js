@@ -96,19 +96,18 @@ module.exports = (API) => {
     console.log(url);
     API.getPoll(url)
       .then(result => {
-        // console.log('result is: ');
-        // console.log(result);
-        res.render('vote', {'result': result})
+        res.render('vote', {'result': result, 'url': url})
       })
       .catch(err => res.render('vote'))
   });
 
   router.post('/:poll', (req, res) => {
     const url = req.params.poll;
-    console.log(url);
-    API.submitVote(url)
-      .then(result => res.render('admin', { 'vars': 'var1' }))
-      .catch(err => res.render('vote'))
+    console.log(req.body);
+    API.submitVote(url, req.body)
+      .then(result => res.redirect(`/${url}`))
+      .catch(err => res.redirect(`/${url}`))
   });
+
   return router;
 }

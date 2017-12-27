@@ -1,7 +1,9 @@
 $(() => {
+
+  // add an item to the vote option list
   let count = 4;
   // TODO cap item limit
-  $('.fa-plus').on('click', function(){
+  $('.fa-plus').on('click', function() {
     $('#sortable').append(
       `<li class="ui-state-default">
         <input class="p-2" type='text' id='item${count}' name='item' placeholder="Item${count} goes here">
@@ -11,7 +13,8 @@ $(() => {
     count++;
   });
 
-    $('.friends-button').on('click', function(){
+
+  $('.friends-button').on('click', function() {
     $('#friends-form').append(
       `<form action='' method='POST'>
          <label for='friends'>Phone #</label>
@@ -24,9 +27,12 @@ $(() => {
     );
   });
 
+  //sort the options into drag and drop
+  $("#sortable").sortable();
+  $("#sortable").disableSelection();
 
-  $( "#sortable" ).sortable();
-  $( "#sortable" ).disableSelection();
 
+  // custom validators if needed go here
+  $.validate({});
 
 });

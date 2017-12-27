@@ -1,20 +1,75 @@
 module.exports = {
 
-  generateRandomString: () => {
-    return Math.random().toString(36).substr(2, 6);
+  // Checks if there are only two poll items left
+  onlyTwoLeft: (id) => {
+    return global.knex
+      .count('poll_item')
+      .from('poll_items')
+      .where({ 'poll_id': id })
+      .andWhere('rank', '>=', 0)
+      .then(result => {
+        if (result[0].count === 2) {
+          return true
+        } else {
+          return false
+        }
+      })
   },
 
-  listBuilder: (pollItems) => {
-    const pollArray = [];
-    let counter = 1;
-    pollItems.forEach(item => {
-      pollArray.push(`${counter})${item.poll_item}`);
-      counter++;
-    })
-    return pollArray
+  // Adds voter to database 'voters'
+  addVoter: (sender) => {
+    return global.knex
+      .insert({
+        phone_num: sender,
+        name: 'anon'
+      })
+      .into('voters')
+      .returning('phone_num')
   },
 
-  // Sets current rank in submitted poll_id based on submitted first choice votes
+  // Adds votes to poll item
+  voteBySMS: (poll_id, sender, command) => {
+    const votes = command.split('');
+    console.log(command);
+    return Promise.all(
+      votes.map((vote) => {
+        return global.knex
+          .insert({
+            item_id: '2',
+            voter_id: '3',
+            submitted_rank: vote
+          })
+          .into('submissions')
+      })
+    );
+    // })
+    // .from('submissions')
+    // .where({'submissions.item_id': result.id})
+    // .update({sub})
+  },
+
+  // Checks if there is an item with > 50% of majority vote
+  isWinner: (poll_id) => {
+    return Promise.all([
+      // Most votes
+      global.knex.max('rank').from('poll_items').where({ 'poll_id': 3 }),
+      // Total votes
+      global.knex.sum('rank').from('poll_items').where({ 'poll_id': 3 })
+    ])
+      .then(result => {
+        const mostVotes = result[0][0].max;
+        const totalVotes = result[1][0].sum;
+        const mostVoteRatio = mostVotes / totalVotes;
+        console.log(mostVoteRatio);
+        if (mostVoteRatio > 0.5) {
+          return true
+        } else {
+          return false
+        }
+      })
+  },
+
+  // Calculates and sets rank according to submitted votes
   calculateRank: (id) => {
     return global.knex
       .select('poll_items.id')
@@ -35,10 +90,7 @@ module.exports = {
       });
   },
 
-  randomSelect: () => {
-    return Math.floor(Math.random() * 2);
-  },
-
+  // Runs one round of instant run-off
   instantRunOff: (id) => {
     // finds lowest ranked item in poll
     return global.knex.raw(`SELECT id FROM poll_items WHERE poll_id=${id} AND rank=(SELECT MIN(rank) FROM poll_items WHERE poll_id=${id})`)
@@ -87,9 +139,6 @@ module.exports = {
         }
       })
   }
-
-
-
 
 
 }

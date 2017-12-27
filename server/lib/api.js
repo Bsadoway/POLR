@@ -1,5 +1,6 @@
 const math = require('./math-functions');
 const sms = require('./sms');
+const queries = require('./queries')
 
 module.exports = {
 
@@ -10,12 +11,19 @@ module.exports = {
     const poll_id = body.split(" ")[0].toLowerCase();
     const command = body.split(" ")[1].toLowerCase();
     // Closes poll
-    if (command === 'c') {
+    if (command === 'close') {
       return checkIfAdmin(poll_id, sender)
     }
     // Sends poll info to voter via SMS
-    if (command === 't') {
+    if (command === 'view') {
       return sendPoll(poll_id, sender)
+    } else {
+      // return Promise.all([
+        return addVoter(sender)
+        .then( () => {
+          return voteBySMS(poll_id, sender, command)
+      // ])
+        })
     }
     return
   },
@@ -33,12 +41,34 @@ module.exports = {
 
   // Sets rank for poll items based on submitted ranks
   getRank: () => {
-    // return instantRunOff();
-    return math.calculateRank(3);
+    return queries.instantRunOff(3);
+    // return math.calculateRank(3);
+    // return onlyTwoLeft(3)
   },
 
   runOff: () => {
-    return math.instantRunOff(3);
+    return isWinner()
+      .then(result => {
+        if (result) {
+          console.log('winner');
+          return true
+        } else {
+          console.log('no winner. running instant run-off round');
+          if (onlyTwoLeft(3)) {
+            const tieSelector = math.randomSelect;
+            return global.knex
+              .select('poll_item')
+              .count('rank')
+              .from('poll_items')
+              .where
+          }
+          return math.instantRunOff(3)
+            .then(() => {
+              runOff()
+            })
+        }
+      })
+    // return math.instantRunOff(3);
   },
 
   createPoll: (input) => {
@@ -89,7 +119,11 @@ module.exports = {
       })
   },
 
-  submitVote: () => {
+  submitVote: (url) => {
+    return global.knex
+      .insert({
+
+      })
   },
 
   // Sends 2 SMS to admin with admin_url and poll_url
@@ -98,7 +132,7 @@ module.exports = {
     const admin_url = adminInfo.admin_url;
     const poll_url = adminInfo.poll_url;
     const poll_title = adminInfo.poll_title;
-    const adminMessage = `Survey created with POLR! Your admin link is: http://localhost:8080/${admin_url}. To close the poll reply with: ${poll_id} c`;
+    const adminMessage = `Survey created with POLR! Your admin link is: http://localhost:8080/${admin_url}. To close the poll reply with: ${poll_id} close`;
     const pollMessage = `CREATOR has made a survey about "${poll_title}"! To vote visit: http://localhost:8080/${poll_url} or reply with ${poll_id} t`;
     sms.send(adminMessage).then(() => sms.send(pollMessage));
     return
@@ -161,7 +195,8 @@ function sendPoll(id, sender) {
     .select()
     .from('polls')
     .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-    .where({ 'polls.id': 3 })
+    .where({ 'polls.id': id })
+    .orderBy('poll_items.id', 'asc')
     .then(result => {
       if (result.length !== 0) {
         // console.log('Success. Matched poll_id and sender');
@@ -177,57 +212,80 @@ function sendPoll(id, sender) {
         // return sms`.send(responseMsg);
         return
       }
-    }) 
+    })
 }
 
 function instantRunOff() {
   return global.knex.raw('SELECT poll_item FROM poll_items WHERE poll_id = 2 AND rank = (SELECT MAX(rank) FROM poll_items WHERE poll_id = 2)')
-    .then(result => { 
+    .then(result => {
       // console.log(result.rows[0].poll_item); 
-      return result.rows[0].poll_item 
+      return result.rows[0].poll_item
     });
 }
 
-/*
-instantRunOff
+// Checks if there is an item with > 50% of majority vote
+function isWinner(poll_id) {
+  return Promise.all([
+    // Most votes
+    global.knex.max('rank').from('poll_items').where({ 'poll_id': 3 }),
+    // Total votes
+    global.knex.sum('rank').from('poll_items').where({ 'poll_id': 3 })
+  ])
+    .then(result => {
+      const mostVotes = result[0][0].max;
+      const totalVotes = result[1][0].sum;
+      const mostVoteRatio = mostVotes / totalVotes;
+      console.log(mostVoteRatio);
+      if (mostVoteRatio > 0.5) {
+        return true
+      } else {
+        return false
+      }
+    })
+}
 
-1. Check if top ranked is > 50% of total items
-  if yes > winner.
-  if no > step 2.
-2. Find lowest ranked item
-3. Find the rank 2 votes of everyone who voted for the loser
+// Checks if there are only two poll items left
+function onlyTwoLeft(id) {
+  return global.knex
+    .count('poll_item')
+    .from('poll_items')
+    .where({ 'poll_id': id })
+    .andWhere('rank', '>=', 0)
+    .then(result => {
+      if (result[0].count === 2) {
+        return true
+      } else {
+        return false
+      }
+    })
+}
 
-// lowest ranked item
-global.knex.raw('SELECT poll_item FROM poll_items WHERE poll_id = 2 AND rank = (SELECT MAX(rank) FROM poll_items WHERE poll_id = 2)')
-    .then(result => { return rows[0].poll_item });
+function addVoter(sender) {
+  return global.knex
+    .insert({
+      phone_num: sender,
+      name: 'anon'
+    })
+    .into('voters')
+    .returning('phone_num')
+}
 
-
-// finds 2nd ranked item
-    return global.knex
-      .select('poll_items.id')
-      .count('submitted_rank')
-      .from('submissions')
-      .where({ 'voter_id': result.voter_id })
-      .andWhere({ 'submitted_rank': 2 })
-      .groupBy('poll_items.id')
-
-// based on lowest ranked item, finds the submitters
-return global.knex
-  .select('voter_id')
-  .from('submissions')
-  .join('poll_items', { 'submissions.item_id': 'poll_items.id' })
-  .where({poll_items.poll_item: resul})
-  .then( result => {
-    Promise
-        return global.knex
-      .select('poll_items.id')
-      .count('submitted_rank')
-      .from('submissions')
-      .where({ 'voter_id': result.voter_id })
-      .andWhere({ 'submitted_rank': 2 })
-      .groupBy('poll_items.id')
-  })
-
-
-
-*/
+function voteBySMS(poll_id, sender, command) {
+  const votes = command.split('');
+  console.log(command);
+  return Promise.all(
+    votes.map((vote) => {
+      return global.knex
+        .insert({
+          item_id: '2',
+          voter_id: '3',
+          submitted_rank: vote
+        })
+        .into('submissions')
+    })
+  );
+  // })
+  // .from('submissions')
+  // .where({'submissions.item_id': result.id})
+  // .update({sub})
+}

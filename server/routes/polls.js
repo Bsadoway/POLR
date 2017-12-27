@@ -34,8 +34,7 @@ module.exports = (API) => {
   });
 
   router.get("/", (req, res) => {
-    API.runOff()
-    // API.getEverything()
+    API.getEverything()
       .then(result => {
         console.log(result);
         res.render('index');
@@ -44,6 +43,8 @@ module.exports = (API) => {
   });
 
   router.post("/", (req, res) => {
+    console.log('submitted votes look like');
+    console.log(req.body);
     API.createPoll(req.body)
       .then(result => {
         // API.sendAdminSMS(result);

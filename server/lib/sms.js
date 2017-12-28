@@ -27,30 +27,30 @@ module.exports = {
     return
   },
 
-  sendPoll: (id, sender) => {
-  return global.knex
-    .select()
-    .from('polls')
-    .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-    .where({ 'polls.id': id })
-    .orderBy('poll_items.id', 'asc')
-    .then(result => {
-      if (result.length !== 0) {
-        // console.log('Success. Matched poll_id and sender');
-        const itemList = math.listBuilder(result).join(" ");
-        const responseMsg = `Poll title - List of items:\n ${itemList}.\n Vote now by saying:`;
-        console.log('response msg is: ');
-        console.log(responseMsg);
-        // return
-        return module.exports.send(responseMsg);
-      } else {
-        console.log('Wrong poll id ornauthorized command');
-        // const responseMsg = "Invalid command";
-        // return sms`.send(responseMsg);
-        return
-      }
-    })
-}
+  sendPoll: (url, sender) => {
+    return global.knex
+      .select()
+      .from('polls')
+      .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
+      .where({ 'poll_url': url })
+      .orWhere({ 'admin_url': url })
+      .orderBy('poll_items.id', 'asc')
+      .then(result => {
+        if (result.length !== 0) {
+          const itemList = math.listBuilder(result).join(" ");
+          const responseMsg = `${result[0].poll_title}\n${itemList}\nTo vote, reply with the poll code and your votes ordered from highest to lowest ranked choice: ${result[0].poll_url} 1234`;
+          console.log('response msg is: ');
+          console.log(responseMsg);
+          return
+          // return module.exports.send(responseMsg);
+        } else {
+          console.log('Wrong poll id ornauthorized command');
+          // const responseMsg = "Invalid command";
+          // return sms`.send(responseMsg);
+          return
+        }
+      })
+  }
 
 
 }

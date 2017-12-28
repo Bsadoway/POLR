@@ -115,7 +115,6 @@ module.exports = (API) => {
     API.getPoll(url)
       .then(result => {
         res.render('results', {'result': result, 'url': url})
-        // res.json(result)
       })
       .catch(err => res.render('result'))
   });

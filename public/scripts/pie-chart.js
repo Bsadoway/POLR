@@ -8,20 +8,22 @@ $(() => {
   function drawChart() {
     const url = window.location.pathname;
     console.log(url);
+    //
+    // $.ajax({
+    //   url: url,
+    //   method: 'GET'
+    // }).done((results) => {
+    //   console.log(results);
+    // });
 
-    $.ajax({
-      url: url,
-      method: 'GET'
-    }).done((results) => {
-      console.log(results);
-      // var results = google.visualization.arrayToDataTable([
-      //   ['ITEM', 'RANK'],
-      //   ['Work', 11],
-      //
-      // ]);
-    });
+    let nameRank = [['Title', 'Rank']];
+    result.forEach(item => {
+      let items = [];
+      items.push(item.poll_item, item.rank);
+      nameRank.push(items);
+    })
 
-
+    let pie = google.visualization.arrayToDataTable(nameRank);
 
     var options = {
       title: 'Results of [NAMEOFPOLL]'
@@ -29,6 +31,6 @@ $(() => {
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-    chart.draw(data, options);
+    chart.draw(pie, options);
   }
 });

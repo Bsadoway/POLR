@@ -112,13 +112,15 @@ module.exports = (API) => {
 //////////// RESULTS ROUTE /////////////////////////////
   router.get('/:poll/results', (req, res) => {
     const url = req.params.poll;
-    console.log(url);
-    API.getResults(url)
+    API.getPoll(url)
       .then(result => {
         res.render('results', {'result': result, 'url': url})
+        // res.json(result)
       })
       .catch(err => res.render('result'))
   });
+
+
 
   return router;
 }

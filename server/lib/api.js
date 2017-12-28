@@ -138,11 +138,6 @@ module.exports = {
     return
   },
 
-  getResults: (url) => {
-    return global.knex
-      .select()
-      .from('polls')
-  }
 
 }
 

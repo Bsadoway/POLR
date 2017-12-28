@@ -32,7 +32,4 @@ $(() => {
   $("#sortable").disableSelection();
 
 
-  // custom validators if needed go here
-  $.validate({});
-
 });

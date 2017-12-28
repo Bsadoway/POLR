@@ -23,8 +23,9 @@ module.exports = (API) => {
   });
 
   // Testing route
-  router.get("/test", (req, res) => {
-      API.testFunction()
+  router.get("/:poll/test", (req, res) => {
+      const url = req.params.poll;
+      API.testFunction(url)
       .then(result => {
         console.log(result);
         res.render('index');
@@ -42,11 +43,12 @@ module.exports = (API) => {
   });
 
   router.post("/", (req, res) => {
-    console.log('submitted votes look like');
-    console.log(req.body);
+    // console.log(req.body);
     API.createPoll(req.body)
       .then(result => {
-        API.sendAdminSMS(result);
+        console.log('after create result is');
+        console.log(result);
+        // API.sendAdminSMS(result);
         res.render('index');
       })
       .catch(err => res.render('index'))
@@ -55,8 +57,8 @@ module.exports = (API) => {
 /////////// ADMIN ROUTES /////////////////////////////////////
 
   router.get('/:poll/admin', (req, res) => {
-    const url = `${req.params.poll}/admin`;
-    API.getPoll(url)
+    const admin_url = `${req.params.poll}/admin`;
+    API.getPoll(admin_url)
       .then(result => {
         console.log(result);
         res.render('admin', {'result': result})
@@ -66,12 +68,13 @@ module.exports = (API) => {
 
   // Inviting friends
   router.post('/:poll/admin', (req, res) => {
-    const url = `${req.params.poll}/admin`;
+    const admin_url = `${req.params.poll}/admin`;
     const friends = req.body.friends;
-    API.inviteFriends(friends)
+    API.inviteFriends(admin_url, friends)
       .then(result => {
         console.log(result);
-        res.render('admin', { 'result': result })
+        res.redirect(`/${url}`)
+        // res.render('admin', { 'result': result })
       })
       .catch(err => res.render('admin'))
   });
@@ -81,8 +84,8 @@ module.exports = (API) => {
     const url = `${req.params.poll}/admin`;
     API.closePoll(url)
       .then(result => {
-        console.log("log of result is:");
-        console.log(result);
+        // console.log("log of result is:");
+        // console.log(result);
         res.render('index', { 'result': result })
       })
       .catch(err => res.render('vote'))
@@ -92,7 +95,6 @@ module.exports = (API) => {
 
   router.get('/:poll', (req, res) => {
     const url = req.params.poll;
-    console.log(url);
     API.getPoll(url)
       .then(result => {
         res.render('vote', {'result': result, 'url': url})

@@ -8,7 +8,7 @@ module.exports = {
     const pollArray = [];
     let counter = 1;
     pollItems.forEach(item => {
-      pollArray.push(`${counter})${item.poll_item}\n`);
+      pollArray.push(`${counter}. ${item.poll_item}\n`);
       counter++;
     })
     return pollArray

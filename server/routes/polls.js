@@ -46,7 +46,7 @@ module.exports = (API) => {
     console.log(req.body);
     API.createPoll(req.body)
       .then(result => {
-        // API.sendAdminSMS(result);
+        API.sendAdminSMS(result);
         res.render('index');
       })
       .catch(err => res.render('index'))

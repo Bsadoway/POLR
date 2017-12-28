@@ -35,5 +35,8 @@ $(() => {
     window.location.reload(true);
   });
 
+  $.validate({
+    
+  })
 
 });

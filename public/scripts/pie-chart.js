@@ -15,6 +15,7 @@ $(() => {
       let items = [];
       items.push(item.poll_item, item.rank);
       nameRank.push(items);
+      console.log(nameRank);
     })
 
     let pie = google.visualization.arrayToDataTable(nameRank);

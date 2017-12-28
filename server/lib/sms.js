@@ -1,6 +1,6 @@
 const accountSid = process.env.accountSid;
 const authToken = process.env.authToken;
-const myPhone = process.env.CellF;
+const myPhone = process.env.CellB;
 const twilioNumber = process.env.twilioNumber;
 const twilio = require('twilio')(accountSid, authToken);
 const MessagingResponse = require('twilio').twiml.MessagingResponse;
@@ -41,8 +41,8 @@ module.exports = {
         const responseMsg = `Poll title - List of items:\n ${itemList}.\n Vote now by saying:`;
         console.log('response msg is: ');
         console.log(responseMsg);
-        return
-        // return module.exports.send(responseMsg);
+        // return
+        return module.exports.send(responseMsg);
       } else {
         console.log('Wrong poll id ornauthorized command');
         // const responseMsg = "Invalid command";

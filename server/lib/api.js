@@ -43,7 +43,7 @@ module.exports = {
     // const TestArray = {a:1, b:2, '3':4, '4':3, '2':1, '1':0, 'q':3, '10':390};
     // return module.exports.submitVote('1', TestArray)
     // return queries.instantRunOff(3);
-    return queries.calculateRank(1);
+    return queries.calculateRank(4);
     // return queries.onlyTwoLeft(3)
   },
 
@@ -98,6 +98,7 @@ module.exports = {
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
       .where({ 'polls.poll_url': url })
       .orWhere({ 'polls.admin_url': url })
+      .orderBy('poll_items.id', 'asc')
   },
 
   inviteFriends: (friends) => {
@@ -186,9 +187,8 @@ function checkIfAdmin(id, sender) {
           })
       } else {
         console.log('Wrong poll id or unauthorized command');
-        // const responseMsg = "Invalid command";
-        // return sms.send(responseMsg);
-        return
+        const responseMsg = "Invalid command";
+        return sms.send(responseMsg);
       }
     })
 }
@@ -208,13 +208,12 @@ function sendPoll(id, sender) {
         const responseMsg = `Poll title - List of items: ${itemList}. Vote now by saying:`;
         console.log('response msg is: ');
         console.log(responseMsg);
-        return
-        // return sms.send(responseMsg);
+        // return
+        return sms.send(responseMsg);
       } else {
         console.log('Wrong poll id ornauthorized command');
-        // const responseMsg = "Invalid command";
-        // return sms`.send(responseMsg);
-        return
+        const responseMsg = "Invalid command";
+        return sms.send(responseMsg);
       }
     })
 }

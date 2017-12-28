@@ -33,13 +33,14 @@ module.exports = {
   vote: (poll_identifier, voteOrder, voter_id) => {
     console.log(voteOrder);
     const votes = voteOrder;
+    console.log(poll_identifier);
     const randomID = math.generateRandomString;
     return global.knex
       .select()
       .from('polls')
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-      .where({ 'polls.id': poll_identifier })
-      .orWhere({'poll_url': poll_identifier })
+      // .where({ 'polls.id': poll_identifier })
+      .where({'poll_url': poll_identifier })
       .orderBy('poll_items.id', 'asc')
       .then(result => {
         return Promise.all(votes.map((vote, index) => {
@@ -49,7 +50,7 @@ module.exports = {
               voter_id: voter_id,
               submitted_rank: (index + 1)
             })
-            .into('submissions')          
+            .into('submissions')
         }));
       })
   },

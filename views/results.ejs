@@ -37,13 +37,16 @@
   <div class="d-flex justify-content-center main-container">
     <section>
       <div id="piechart"></div>
-
+      <button type='button' class="btn btn-primary btn-lg btn-block" id='refresh'>Refresh </button>
     </section>
 
   </div>
 
 </body>
 
-  <script> var result = <%-JSON.stringify(result)%>;</script>
+<!--passing data to FE javacsript -->
+<script>
+  var result = <%-JSON.stringify(result)%>;
+</script>
 
 </html>

@@ -8,14 +8,8 @@ $(() => {
   function drawChart() {
     const url = window.location.pathname;
     console.log(url);
-    //
-    // $.ajax({
-    //   url: url,
-    //   method: 'GET'
-    // }).done((results) => {
-    //   console.log(results);
-    // });
 
+    // initialize the array and format to google visulation input
     let nameRank = [['Title', 'Rank']];
     result.forEach(item => {
       let items = [];

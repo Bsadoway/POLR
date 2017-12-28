@@ -40,10 +40,10 @@ module.exports = {
 
   // TESTING FUNCTION
   testFunction: () => {
-    const TestArray = {a:1, b:2, '3':4, '4':3, '2':1, '1':0, 'q':3, '10':390};
-    return module.exports.submitVote('1', TestArray)
+    // const TestArray = {a:1, b:2, '3':4, '4':3, '2':1, '1':0, 'q':3, '10':390};
+    // return module.exports.submitVote('1', TestArray)
     // return queries.instantRunOff(3);
-    // return queries.calculateRank(3);
+    return queries.calculateRank(1);
     // return queries.onlyTwoLeft(3)
   },
 

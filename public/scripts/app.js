@@ -27,14 +27,28 @@ $(() => {
     $('#friends-form').toggle();
   });
 
+  // admin close poll button
+  $('.close-poll').on('click', function() {
+    $.ajax({
+      url: $(location).attr('pathname'),
+      type: 'PUT',
+      success: function() {
+        alert('Poll successfully closed');
+      }
+    })
+  });
 
-
+  // redirect back to create a new poll
+  $('.create-poll').on('click', function(){
+    window.location.href = "/";
+  });
 
 
   //sort the options into drag and drop
   $("#sortable").sortable();
   $("#sortable").disableSelection();
 
+  // refresh poll button
   $('#refresh').on('click', function() {
     window.location.reload(true);
   });

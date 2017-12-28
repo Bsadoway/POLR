@@ -108,5 +108,17 @@ module.exports = (API) => {
       .catch(err => res.redirect(`/${url}`))
   });
 
+//////////// RESULTS ROUTE /////////////////////////////
+  router.get('/:poll/results', (req, res) => {
+    const url = req.params.poll;
+    API.getPoll(url)
+      .then(result => {
+        res.render('results', {'result': result, 'url': url})
+      })
+      .catch(err => res.render('result'))
+  });
+
+
+
   return router;
 }

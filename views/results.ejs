@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Admin Page</title>
-
+  <title>Results</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -17,46 +16,37 @@
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/pie-chart.js"></script>
 
   <!-- External  javascript-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/729922a123.js"></script>
-  ]
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <!-- For mobile drag n drop-->
+  <script type="text/javascript" src="/scripts/jquery.ui.touch-punch.js"></script>
 
 </head>
 
 <body>
 
-  <header>POLR</header>
+  <header class="nav">POLR</header>
 
-  <h1 class="d-flex justify-content-center"> Admin Page</h1>
+  <h1 class="d-flex justify-content-center"> Results</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
-      <div class="d-flex flex-column">
-        <div class="p-2">
-        </div>
-        <hr>
-      </div>
-      <ul>
-
-        <% result.forEach((item) =>{ %>
-          <li class="ui-state-default vote">
-            <div class="p-2">
-              <%= item.poll_item %>
-            </div>
-            <br>
-          </li>
-          <% }); %>
-      </ul>
-      <button type='button' class="friends-button btn btn-primary btn-lg btn-block">Invite friends</button>
-      <div id="friends-form">
-      </div>
-      <button class="btn btn-primary btn-lg btn-block">Close poll</button>
-      <button class="btn btn-primary btn-lg btn-block">Create new poll</button>
+      <div id="piechart"></div>
+      <button type='button' class="btn btn-primary btn-lg btn-block" id='refresh'>Refresh </button>
     </section>
+
   </div>
 
 </body>
+
+<!--passing data to FE javacsript -->
+<script>
+  var result = <%-JSON.stringify(result)%>;
+</script>
 
 </html>

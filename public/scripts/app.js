@@ -31,8 +31,9 @@ $(() => {
   $("#sortable").sortable();
   $("#sortable").disableSelection();
 
+  $('#refresh').on('click', function () {
+    window.location.reload(true);
+  });
 
-  // custom validators if needed go here
-  $.validate({});
 
 });

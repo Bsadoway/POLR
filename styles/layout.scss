@@ -16,10 +16,12 @@ body {
     height: 100px;
   }
 
-  .main-container {}
+  #poll-title{
+    padding: 15px;
+  }
 
   .main-container section {
-    background-color: $body-color;
+    background-color: $header-color;
     width: 400px;
     padding: 10px;
     border-radius: 5px;
@@ -34,12 +36,28 @@ body {
   }
 
   li.vote {
-    background-color: $header-color;
+    background-color: #F5F5F5;
+    border-color: #31322C;
+    text-align: center;
     margin: 5px;
+    border-radius: 5px;
+    font-size: 1.2em;
+  }
+
+  li.vote div {
+    display: inline-block;
   }
 
   input.p-2 {
     width: 90%;
     margin: 5px auto;
+  }
+
+  button.friends-button {
+    margin: 10px 0;
+  }
+
+  #friends-form {
+    margin: 10px;
   }
 }

@@ -22,7 +22,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/729922a123.js"></script>
-  ]
+
 
 </head>
 
@@ -33,13 +33,13 @@
   <h1 class="d-flex justify-content-center"> Admin Page</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
+      <h3 id='poll-title'><%= result[0].poll_title %></h3>
       <div class="d-flex flex-column">
         <div class="p-2">
         </div>
         <hr>
       </div>
-      <ul>
-
+      <ul class="list-group">
         <% result.forEach((item) =>{ %>
           <li class="ui-state-default vote">
             <div class="p-2">
@@ -50,10 +50,18 @@
           <% }); %>
       </ul>
       <button type='button' class="friends-button btn btn-primary btn-lg btn-block">Invite friends</button>
-      <div id="friends-form">
+      <div id="friends-form" style="display:none">
+        <form action='' method='POST'>
+          <label for='friends'>Phone #</label>
+          <input type='text' id='id1' class="p-2" name='friends'>
+          <input type='text' id='id2' class="p-2" name='friends'>
+          <div id='friend'></div>
+          <i class="fa fa-plus fa-2x add-sms" aria-hidden="true"></i>
+          <button type="submit" class="btn btn-primary btn-lg btn-block"> Submit </button>
+        </form>
       </div>
-      <button class="btn btn-primary btn-lg btn-block">Close poll</button>
-      <button class="btn btn-primary btn-lg btn-block">Create new poll</button>
+      <button class="btn btn-primary btn-lg btn-block close-poll">Close poll</button>
+      <button class="btn btn-primary btn-lg btn-block create-poll">Create new poll</button>
     </section>
   </div>
 

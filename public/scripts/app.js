@@ -4,9 +4,9 @@ $(() => {
   let count = 4;
   // TODO cap item limit at 10
   $('.add-vote-element').on('click', function() {
-    $('#sortable').append(
+    $('#options-box').append(
       `<li class="ui-state-default">
-        <input class="p-2" type='text' id='item${count}' name='item' placeholder="Item${count} goes here">
+        <input class="p-2" type='text' id='item${count}' name='item' placeholder="option ${count}">
         <br>
       </li>`
     );

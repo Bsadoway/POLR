@@ -1,4 +1,4 @@
-$background-color: #D0D7D0;
+$light-grey-color: #D0D7D0;
 $text-color: #31322C;
 $body-color: #48AAB5;
 $header-color: #B4CAD5;
@@ -16,19 +16,31 @@ body {
     height: 100px;
   }
 
-  #poll-title{
+  #poll-title {
     padding: 15px;
   }
 
+  .main-container {
+    background-color: $light-grey-color;
+    padding: 40px;
+  }
+
   .main-container section {
-    background-color: $header-color;
+    background-color: #fff;
     width: 400px;
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    border: 1px solid #e6e6e6;
+  }
+
+  .main-container section h2 {
+    padding: 10px;
   }
 
   .main-container section ul {
     list-style: none;
+    margin-bottom: 0;
   }
 
   .main-container section form i {

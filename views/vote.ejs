@@ -36,7 +36,7 @@
   <h1 class="d-flex justify-content-center"> Vote Page</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
-      <h2 id='poll_title' class='text-center'><%= result[0].poll_title %></h2>
+      <h2 id='poll_title' class='text-center'>Views Page</h2>
 
       <form action='/<%= url %>' method='POST'>
         <div class="d-flex flex-column">
@@ -50,7 +50,7 @@
             <% result.forEach((item, index) =>{ %>
               <li class="ui-state-default vote">
                 <div id='item<%= index %>' class="p-2" ><%= item.poll_item %> </div>
-                <input type='hidden' name='voteOrder' value='<%= index %>' >
+                <input type='hidden' name='voteOrder' value='<%= index + 1%>' >
                 <br>
               </li>
               <% }); %>

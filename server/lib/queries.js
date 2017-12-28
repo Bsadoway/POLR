@@ -31,18 +31,18 @@ module.exports = {
 
   // Adds votes to poll item
   vote: (poll_identifier, voteOrder, voter_id) => {
-    // const votes = voterOrder.split('');
+    console.log(voteOrder);
+    const votes = voteOrder;
     const randomID = math.generateRandomString;
-    // console.log(command);
     return global.knex
       .select()
       .from('polls')
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
       .where({ 'polls.id': poll_identifier })
-      .orWhere({'poll_url': poll_identifer })
+      .orWhere({'poll_url': poll_identifier })
       .orderBy('poll_items.id', 'asc')
       .then(result => {
-        return Promise.all(voteOrder.map((vote, index) => {
+        return Promise.all(votes.map((vote, index) => {
           return global.knex
             .insert({
               item_id: result[(vote - 1)].id,

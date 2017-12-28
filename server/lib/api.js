@@ -24,7 +24,8 @@ module.exports = {
         .then( voter_id => {
           // console.log('id is:')
           // console.log(voter_id[0]);
-          return queries.vote(poll_id, command, voter_id[0])
+          const voteOrder = command.split('');
+          return queries.vote(poll_id, voteOrder, voter_id[0])
       // ])
         })
     }
@@ -124,7 +125,7 @@ module.exports = {
     const voteOrder = input.voteOrder;
     return queries.addVoter(name)
       .then(voter_id => {
-        return queries.vote(url, voteOrder, voter_id)
+        return queries.vote(url, voteOrder, voter_id[0])
       })
   },
 

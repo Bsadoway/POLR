@@ -53,7 +53,58 @@ exports.seed = function (knex, Promise) {
       { item_id: '9', voter_id: '9', submitted_rank: 3 },
       { item_id: '9', voter_id: '10', submitted_rank: 2 },
       { item_id: '9', voter_id: '11', submitted_rank: 2 },
-      { item_id: '9', voter_id: '12', submitted_rank: 1 }
+      { item_id: '9', voter_id: '12', submitted_rank: 1 },
+
+
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      { item_id: '10', voter_id: '7', submitted_rank: 1 },
+      { item_id: '10', voter_id: '8', submitted_rank: 1 },
+      { item_id: '10', voter_id: '9', submitted_rank: 1 },
+      { item_id: '10', voter_id: '10', submitted_rank: 3 },
+      { item_id: '10', voter_id: '11', submitted_rank: 3 },
+      { item_id: '10', voter_id: '12', submitted_rank: 3 },
+
+
+      { item_id: '11', voter_id: '7', submitted_rank: 2 },
+      { item_id: '11', voter_id: '8', submitted_rank: 2 },
+      { item_id: '11', voter_id: '9', submitted_rank: 2 },
+      { item_id: '11', voter_id: '10', submitted_rank: 1 },
+      { item_id: '11', voter_id: '11', submitted_rank: 1 },
+      { item_id: '11', voter_id: '12', submitted_rank: 2 },
+
+
+      { item_id: '12', voter_id: '7', submitted_rank: 3 },
+      { item_id: '12', voter_id: '8', submitted_rank: 3 },
+      { item_id: '12', voter_id: '9', submitted_rank: 3 },
+      { item_id: '12', voter_id: '10', submitted_rank: 2 },
+      { item_id: '12', voter_id: '11', submitted_rank: 2 },
+      { item_id: '12', voter_id: '12', submitted_rank: 1 },
+
+      /////////////////////////////////////////////////////////////////////////////////////////////////////
+
+      { item_id: '13', voter_id: '7', submitted_rank: 1 },
+      { item_id: '13', voter_id: '8', submitted_rank: 1 },
+      { item_id: '13', voter_id: '9', submitted_rank: 1 },
+      { item_id: '13', voter_id: '10', submitted_rank: 3 },
+      { item_id: '13', voter_id: '11', submitted_rank: 3 },
+      { item_id: '13', voter_id: '12', submitted_rank: 3 },
+
+
+      { item_id: '14', voter_id: '7', submitted_rank: 2 },
+      { item_id: '14', voter_id: '8', submitted_rank: 2 },
+      { item_id: '14', voter_id: '9', submitted_rank: 2 },
+      { item_id: '14', voter_id: '10', submitted_rank: 1 },
+      { item_id: '14', voter_id: '11', submitted_rank: 1 },
+      { item_id: '14', voter_id: '12', submitted_rank: 2 },
+
+
+      { item_id: '14', voter_id: '7', submitted_rank: 3 },
+      { item_id: '14', voter_id: '8', submitted_rank: 3 },
+      { item_id: '14', voter_id: '9', submitted_rank: 3 },
+      { item_id: '14', voter_id: '10', submitted_rank: 2 },
+      { item_id: '14', voter_id: '11', submitted_rank: 2 },
+      { item_id: '14', voter_id: '12', submitted_rank: 1 }
 
     ])
   ]);

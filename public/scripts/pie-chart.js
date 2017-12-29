@@ -24,6 +24,9 @@ $(() => {
 
     var options = {
       title: `${result[0].poll_title}`,
+      // legend: {position: 'labeled'}
+      chartArea: { width: '90%', height: '90%' },
+      // fontSize: '12'
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));

@@ -8,14 +8,12 @@
 
   <link rel="icon" href="data:,">
 
-
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -41,28 +39,32 @@
       <h2 class="text-center">Create a New Poll</h2>
       <hr>
       <form action='/' method='POST'>
+        
         <div class="d-flex flex-column">
-          <label for='creator'>Email:</label>
+          <h5 class="text-center">E-mail</h5>
+          <label for='creator'></label>
           <input class="p-2" type='email' id='creator' name='creator' placeholder="Email">
           <br>
         </div>
         <div class="d-flex flex-column">
-          <label for='title'>Poll Title:</label>
-          <input class="p-2" type='text' name='title' placeholder="Name of the poll">
+          <h5 class="text-center">Poll Title</h5>
+          <label for='title'></label>
+          <input class="p-2" type='text' name='title' placeholder="What do you want to vote on?">
           <hr>
         </div>
-        <p>Options:</p>
+        <h5 class="text-center">Voting options</h5>
+        <!-- <p>Options:</p> -->
         <ul class='options-box'>
           <li class="ui-state-default d-flex">
-            <input class="p-2" type='text' id='item' name='item' placeholder="option 1">
+            <input class="p-2" type='text' id='item' name='item' placeholder="Option 1">
             <br>
           </li>
           <li class="ui-state-default d-flex">
-            <input class="p-2" type='text' id='item2' name='item' placeholder="option 2">
+            <input class="p-2" type='text' id='item2' name='item' placeholder="Option 2">
             <br>
           </li>
           <li class="ui-state-default d-flex">
-            <input class="p-2" type='text' id='item3' name='item' placeholder="option 3">
+            <input class="p-2" type='text' id='item3' name='item' placeholder="Option 3">
             <br>
           </li>
         </ul>
@@ -72,6 +74,7 @@
         </div>
         <button type="submit" class="btn btn-outline-primary btn-lg btn-block"> Submit </button>
       </form>
+
     </section>
 
   </div>

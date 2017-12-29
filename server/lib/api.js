@@ -7,7 +7,8 @@ module.exports = {
 
   // TESTING FUNCTION
   testFunction: (url) => {
-    return module.exports.irv(url);
+    // return module.exports.irv(url);
+    return module.exports.getPoll(url);
   },  
 
   irv: (url) => {

@@ -67,7 +67,7 @@ body {
     margin-left: 110px;
   }
 
-  li.vote div {
+  li.vote div, li.vote-admin div {
     display: inline-block;
   }
 
@@ -75,22 +75,32 @@ body {
     margin-top: 20px;
   }
 
+  li.vote-admin {
+    background-color: $light-grey-color;
+    border-color: #31322C;
+    color: $text-color;
+    text-align: center;
+    margin: 5px;
+    border-radius: 5px;
+    font-size: 1.2em;
+  }
+
   input.p-2 {
     width: 90%;
     margin: 5px auto;
   }
 
-  div.add-option {
+  div.add-option, div.add-sms {
     display: block;
     color: #007bff;
   }
 
-  div.add-option:hover {
+  div.add-option:hover, div.add-sms:hover {
     color: #00bbff;
     cursor: pointer;
   }
 
-  div.add-option p {
+  div.add-option p, div.add-sms p {
     margin-top: 5px;
     padding-top: 5px;
   }

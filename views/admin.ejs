@@ -38,10 +38,10 @@
   <div class="d-flex justify-content-center main-container">
     <section>
       <h2 id='poll_title' class='text-center'><%= result[0].poll_title %></h2>
-      <p></p>
+      <p id='is-poll-closed-text' class='text-center'>Poll is open</p>
       <ul class="list-group">
         <% result.forEach((item) =>{ %>
-          <li class="ui-state-default vote">
+          <li class="ui-state-default vote-admin">
             <div class="p-2">
               <%= item.poll_item %>
             </div>
@@ -52,23 +52,27 @@
       <button type='button' class="friends-button btn btn-outline-primary btn-lg btn-block">Invite friends</button>
       <div id="friends-form" style="display:none">
         <form action='' method='POST'>
-          <label for='friends'>Phone #</label>
+          <label for='friends'>Send this poll to friends via SMS</label>
           <input type='text' id='id1' class="p-2" name='friends'>
           <input type='text' id='id2' class="p-2" name='friends'>
           <div id='friend'></div>
-          <i class="fa fa-plus add-sms" aria-hidden="true"></i>
+          <div class='add-sms'>
+            <i class="fa fa-plus pull-left" aria-hidden="true"></i>
+            <p>Add phone number</p>
+          </div>
           <button type="submit" class="btn btn-outline-primary btn-lg btn-block"> Submit </button>
         </form>
       </div>
-      <button class="btn btn-outline-primary btn-lg btn-block close-poll">Close poll</button>
-      <button class="btn btn-outline-primary btn-lg btn-block create-poll">Create new poll</button>
+      <button class="btn btn-outline-primary btn-lg btn-block view-results">View Poll Results</button>
+      <button class="btn btn-outline-primary btn-lg btn-block close-poll">Close Poll</button>
+      <button class="btn btn-outline-primary btn-lg btn-block create-poll">Create New Poll</button>
     </section>
   </div>
 
 </body>
 
 <script>
-  var result = <%-JSON.stringify(result)%>;
+  var result = <%-JSON.stringify(result[0])%>;
 </script>
 
 </html>

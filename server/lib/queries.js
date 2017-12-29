@@ -1,41 +1,39 @@
 const math = require('./math-functions');
 const sms = require('./sms');
+const irv = require('./irv')
 
 module.exports = {
 
   // Voting and IRV Functions /////////////////////////////////
-  // Checks if there are only two poll items left
-  onlyTwoLeft: (id) => {
-    return global.knex
-      .count('poll_item')
-      .from('poll_items')
-      .where({ 'poll_id': id })
-      .andWhere('rank', '>=', 0)
-      .then(result => {
-        if (result[0].count === 2) {
-          return true
-        } else {
-          return false
-        }
+
+  // Checks if there is an item with > 50% of majority vote
+  isWinner: (url) => {
+    return Promise.all([
+      // Most votes
+      global.knex.max('irv_rank').from('poll_items').join('polls', { 'poll_items.poll_id': 'polls.id' }).where({ 'poll_url': url }).orWhere({ 'admin_url': url }),
+      // Total votes
+      global.knex.sum('irv_rank').from('poll_items').join('polls', { 'poll_items.poll_id': 'polls.id' }).where({ 'poll_url': url }).orWhere({ 'admin_url': url })
+    ])
+      .then(votes => {
+        return math.hasMajorityVote(votes)
       })
   },
 
-  // Checks if there is an item with > 50% of majority vote
-  isWinner: (poll_id) => {
-    return Promise.all([
-      // Most votes
-      global.knex.max('rank').from('poll_items').where({ 'poll_id': 3 }),
-      // Total votes
-      global.knex.sum('rank').from('poll_items').where({ 'poll_id': 3 })
-    ])
+  // Checks if there are only two poll items left
+  onlyTwoLeft: (url) => {
+    return global.knex
+      .count('poll_item')
+      .from('poll_items')
+      .join('polls', { 'poll_items.poll_id': 'polls.id' })
+      .where({ 'poll_url': url })
+      .orWhere({ 'admin_url': url })
+      .andWhere('rank', '>=', 0)
       .then(result => {
-        const mostVotes = result[0][0].max;
-        const totalVotes = result[1][0].sum;
-        const mostVoteRatio = mostVotes / totalVotes;
-        console.log(mostVoteRatio);
-        if (mostVoteRatio > 0.5) {
+        if (result[0].count === 2) {
+          console.log('true')
           return true
         } else {
+          console.log('false')
           return false
         }
       })
@@ -58,69 +56,32 @@ module.exports = {
             return global.knex
               .from('poll_items')
               .where({ 'id': rankPoints.id })
-              .update({ 'IRV_rank': rankPoints.count })
+              .update({ 'irv_rank': rankPoints.count })
           }))
         }
       });
   },
 
-  // Runs one round of instant run-off
   instantRunOff: (url) => {
-    // finds lowest IRV_ranked item in poll
-    return global.knex
-      .select('id')
-      .from('polls')
-      .where({ 'poll_url': url })
-      .orWhere({ 'admin_url': url })
-      .then(result => {
-        return global.knex.raw(`SELECT poll_items.id FROM poll_items WHERE poll_id=${result[0].id} AND IRV_rank=(SELECT MIN(rank) FROM poll_items WHERE poll_id=${result[0].id})`)
+    return irv.findLowestRank(url)
+      .then(poll_itemID => {
+        const itemQty = poll_itemID.rows.length;
+        const selector = math.randomSelect(itemQty);
+        const poll_item_id = poll_itemID.rows[selector].id;
+        return irv.eliminateItem(poll_item_id)
       })
-      // filters lowest IRV_ranked choice from future run offs
-      .then(result => {
-        // console.log('knex raw result')
-        // console.log(result);
-        return global.knex
-          .from('poll_items')
-          .where({ 'poll_items.id': result.rows[0].id })
-          .update({ 'IRV_rank': null })
-          .returning('id')//, 'submissions.voter_id')
+      .then(poll_itemId => {
+        return irv.findVoter(poll_itemId)
       })
-      // finds voters that voted for lowest ranked item as their first choice
       .then(result => {
-        // console.log('returning result1 is')
-        // console.log(result);
-        return global.knex
-          .select('voter_id', 'poll_id')
-          .from('poll_items')
-          .join('submissions', { 'poll_items.id': 'submissions.item_id' })
-          .where({ 'item_id': result[0] })
-          .andWhere({ 'submitted_rank': 1 })
-      })
-      // finds their 2nd ranked choice based on poll_id and voter_id
-      .then(result => {
-        if (result.length !== 0) {
-          console.log('2nd choice result');
-          console.log(result);
-          return Promise.all(result.map(secondChoice => {
-            return global.knex
-              .select('poll_items.id', 'submitted_rank')
-              .from('submissions')
-              .join('poll_items', { 'submissions.item_id': 'poll_items.id' })
-              .where({ 'poll_id': secondChoice.poll_id })
-              .andWhere({ 'submitted_rank': 2 })
-              .andWhere({ 'voter_id': secondChoice.voter_id })
-              // adds 2nd place votes to the 2nd choice item
-              .then(result => {
-                return global.knex
-                  .from('poll_items')
-                  .where({ 'id': result[0].id })
-                  .increment('IRV_rank', 1)
-              })
-          }));
-        }
+        return Promise.all(result.map(nextChoice => {
+          return irv.findNextBestChoice(2, nextChoice.poll_id, nextChoice.voter_id)
+            .then(result => {
+              return irv.updateRank(result)
+            })
+        }));
       })
   },
-
 
   // Other Query functions /////////////////////////////////////////////
 
@@ -186,11 +147,12 @@ module.exports = {
       .select('is_open')
       .from('polls')
       .where({ 'admin_url': admin_url })
-      .update({
-        is_open: false
-      })
+      .update({ is_open: false })
       .then(() => {
         return module.exports.calculateRank(admin_url, false)
+      })
+      .then(() => {
+        return irv.eliminateNoVotes(admin_url)
       })
   },
 

@@ -14,8 +14,22 @@ module.exports = {
     return pollArray
   },
 
-  randomSelect: () => {
-    return Math.floor(Math.random() * 2);
+  randomSelect: (n) => {
+    return Math.floor(Math.random() * n)
   },
+
+  hasMajorityVote: (votes) => {
+    const mostVotes = votes[0][0].max;
+    const totalVotes = votes[1][0].sum;
+    const mostVoteRatio = mostVotes / totalVotes;
+    console.log(mostVoteRatio);
+    if (mostVoteRatio > 0.5) {
+      console.log('there is a winner')
+      return true
+    } else {
+      console.log('there is no winner')
+      return false
+    }
+  }
 
 }

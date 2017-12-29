@@ -55,15 +55,8 @@ $(() => {
     })
   });
 
-  $('.view-results').on('click', function () {
-    // const resultsUrl = result.poll_url + '/results';
-    $.ajax({
-      url: 'results',
-      type: 'GET',
-      success: function() {
-        window.location.href = 'results';
-      }
-    })
+  $('.view-results').on('click', function() {
+    window.location.href = '/' + result.poll_url + '/results';
   });
 
   // redirect back to create a new poll
@@ -71,7 +64,6 @@ $(() => {
   $('.create-poll').on('click', function() {
     window.location.href = "/";
   });
-
 
   //sort the options into drag and drop
   // FOR VOTING
@@ -84,8 +76,8 @@ $(() => {
   });
 
 
-  // Will pop up an dismissable alert box for errors.  
-  $('#put-your-class/id-here').on('click', function () {
+  // Will pop up an dismissable alert box for errors.
+  $('#put-your-class/id-here').on('click', function() {
     // $('.alert').alert('close');
     $('.alert').remove();
     $('#where-you-want-it-to-pop-up-at').append(
@@ -97,8 +89,6 @@ $(() => {
       </div>`
     );
   });
-
-
 
   $.validate({
 

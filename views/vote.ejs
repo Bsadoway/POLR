@@ -35,29 +35,29 @@
 
   <header>POLR</header>
 
-  <h1 class="d-flex justify-content-center"> Vote Page</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
-      <h2 id='poll_title' class='text-center'>Views Page</h2>
+      <h2 id='poll_title' class='text-center'><%= result[0].poll_title %></h2>
 
       <form action='/<%= url %>' method='POST'>
-        <div class="d-flex flex-column">
-          <div class="p-2"></div>
-          <hr>
-        </div>
+
         <label for="voter_name">Name:</label>
         <input class="p-2" type='text' id='voter_name' name='voter_name' data-validation="length alphanumeric" data-validation-length="3-12" data-validation-error-msg="Name has to be an alphanumeric value (3-12 chars)">
         <br><br>
-        <ul id="sortable">
-            <% result.forEach((item, index) =>{ %>
-              <li class="ui-state-default vote">
-                <div id='item<%= index %>' class="p-2" ><%= item.poll_item %> </div>
-                <input type='hidden' name='voteOrder' value='<%= index + 1%>' >
-                <br>
-              </li>
-              <% }); %>
+        <p>Drag and drop options from favourite to least favourite</p>
+        <ul id="sortable" class="options-box">
+          <% result.forEach((item, index) =>{ %>
+            <li class="ui-state-default vote">
+              <div id='item<%= index %>' class="p-2">
+                <%= item.poll_item %>
+                <i class="fa fa-bars" aria-hidden="true"></i>
+              </div>
+              <input type='hidden' name='voteOrder' value='<%= index + 1%>'>
+              <br>
+            </li>
+            <% }); %>
         </ul>
-        <button type="submit" class="btn btn-primary btn-lg btn-block"> Submit </button>
+        <button type="submit" class="btn btn-outline-primary btn-lg btn-block vote-submit"> Submit </button>
       </form>
     </section>
   </div>

@@ -1,18 +1,40 @@
 const math = require('./math-functions');
 const queries = require('./queries')
 const sms = require('./sms');
+const irv = require('./irv')
 
 module.exports = {
 
   // TESTING FUNCTION
   testFunction: (url) => {
-    // const TestArray = {a:1, b:2, '3':4, '4':3, '2':1, '1':0, 'q':3, '10':390};
-    // return module.exports.submitVote('1', TestArray)
-    return queries.instantRunOff(url);
-    // return queries.calculateRank(url);
-    // return queries.onlyTwoLeft(3)
-  },
+    return module.exports.irv(url);
+  },  
 
+  irv: (url) => {
+    return irv.isWinner(url)
+      .then(result => {
+        if (result) {
+          console.log('winner');
+          return true
+        } else {
+          console.log('no winner. running instant run-off round. checking if only 2 left');
+          return irv.onlyTwoLeft(url)
+            .then( result => {
+              if (result) {
+                console.log('its a tie!');
+                return true
+              } else {
+                console.log('its NOT a tie!');
+                return queries.instantRunOff(url)
+                  .then( () => {
+                    return false
+                  })
+              }
+          })
+        }
+      })
+  },
+  
   // Issues actions based on incoming SMS
   incomingSMS: (message) => {
     const sender = message.From;
@@ -93,7 +115,7 @@ module.exports = {
     const admin_url = adminInfo.admin_url;
     const poll_url = adminInfo.poll_url;
     const poll_title = adminInfo.poll_title;
-    const adminMessage = `You created a survey with POLR!\nYour admin link is: http://localhost:8080/${admin_url}\nTo close the poll reply with: ${poll_id} close`;
+    const adminMessage = `You created a survey with POLR!\nYour admin link is: http://localhost:8080/${admin_url}\nTo close the poll reply with: ${poll_id} close\nForward the link below to invite your friends!`;
     const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: http://localhost:8080/${poll_url} or reply with ${poll_id} vote`;
     sms.send(adminMessage).then(() => sms.send(pollMessage));
     return
@@ -112,29 +134,5 @@ module.exports = {
       })
   },
 
-  finalResult: () => {
-    return queries.isWinner()
-      .then(result => {
-        if (result) {
-          console.log('winner');
-          return true
-        } else {
-          console.log('no winner. running instant run-off round');
-          if (queries.onlyTwoLeft(3)) {
-            const tieSelector = math.randomSelect;
-            return global.knex
-              .select('poll_item')
-              .count('rank')
-              .from('poll_items')
-              .where
-          }
-          return queries.instantRunOff(3)
-            .then(() => {
-              runOff()
-            })
-        }
-      })
-    // return queries.instantRunOff(3);
-  }
 
 }

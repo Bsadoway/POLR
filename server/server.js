@@ -7,11 +7,12 @@ const express     = require("express");
 const bodyParser  = require("body-parser");
 const sass        = require("node-sass-middleware");
 const app         = express();
-
 const knexConfig  = require("../knexfile");
 global.knex       = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+
+const api = require('./lib/api');
 
 // Twilio
 const accountSid = process.env.accountSid;
@@ -37,8 +38,6 @@ app.use("/styles", sass({
   outputStyle: 'expanded'
 }));
 app.use(express.static("public"));
-
-const api = require('./lib/api');
 
 // Mount all resource routes
 app.use(pollRoutes(api));

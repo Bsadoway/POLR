@@ -74,6 +74,7 @@ module.exports = {
         return irv.findVoter(poll_itemId)
       })
       .then(result => {
+        // console.log('next best choie');
         return Promise.all(result.map(nextChoice => {
           return irv.findNextBestChoice(2, nextChoice.poll_id, nextChoice.voter_id)
             .then(result => {

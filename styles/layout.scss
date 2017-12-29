@@ -1,6 +1,6 @@
 $light-grey-color: #D0D7D0;
 $text-color: #31322C;
-$body-color: #48AAB5;
+$blue-color: #48AAB5;
 $header-color: #B4CAD5;
 
 body {
@@ -14,6 +14,10 @@ body {
   header {
     background-color: $header-color;
     height: 100px;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   #poll-title {
@@ -64,6 +68,29 @@ body {
     width: 90%;
     margin: 5px auto;
   }
+
+  div.add-option {
+    display: block;
+    color: #007bff;
+  }
+
+  div.add-option:hover {
+    color: #00bbff;
+    cursor: pointer;
+  }
+
+  div.add-option p {
+    margin-top: 5px;
+    padding-top: 5px;
+  }
+
+
+
+  #options-box {
+    padding-left: 0;
+  }
+
+
 
   button.friends-button {
     margin: 10px 0;

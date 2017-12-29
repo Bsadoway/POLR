@@ -32,7 +32,9 @@
 
 <body>
 
-  <header class="nav"><p>POLR</p></header>
+  <header class="nav">
+    <p>POLR</p>
+  </header>
 
   <div class="d-flex justify-content-center main-container">
     <section>
@@ -46,25 +48,28 @@
         </div>
         <div class="d-flex flex-column">
           <label for='title'>Poll Title:</label>
-          <input class="p-2" type='text' name='title' placeholder="Poll Title goes here">
+          <input class="p-2" type='text' name='title' placeholder="Name of the poll">
           <hr>
         </div>
         <p>Options:</p>
         <ul id='options-box'>
-          <li class="ui-state-default">
+          <li class="ui-state-default d-flex">
             <input class="p-2" type='text' id='item' name='item' placeholder="option 1">
             <br>
           </li>
-          <li class="ui-state-default">
+          <li class="ui-state-default d-flex">
             <input class="p-2" type='text' id='item2' name='item' placeholder="option 2">
             <br>
           </li>
-          <li class="ui-state-default">
+          <li class="ui-state-default d-flex">
             <input class="p-2" type='text' id='item3' name='item' placeholder="option 3">
             <br>
           </li>
         </ul>
-        <i class="fa fa-plus add-vote-element" aria-hidden="true"> Add an option</i>
+        <div class='add-option'>
+          <i class="fa fa-plus pull-left" aria-hidden="true"></i>
+          <p>Add an option</p>
+        </div>
         <button type="submit" class="btn btn-outline-primary btn-lg btn-block"> Submit </button>
       </form>
     </section>

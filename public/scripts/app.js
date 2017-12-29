@@ -5,9 +5,15 @@ $(() => {
   // FOR ADMIN
   function checkIfPollClosed() {
     if (!result.is_open) {
-      $('.close-poll').addClass('disabled').attr('disabled', 'disabled');
-      $('.friends-button').addClass('disabled').attr('disabled', 'disabled');
+      // $('.close-poll').addClass('disabled').attr('disabled', 'disabled');
+      // $('.friends-button').addClass('disabled').attr('disabled', 'disabled');
       $('#is-poll-closed-text').text('Poll is closed');
+      $('.close-poll').remove();
+      $('.friends-button').remove();
+      $('.list-group').remove();
+      // $('section').append(
+      //   '<div id="piechart"></div>'
+      // );
     }
   }
   checkIfPollClosed();

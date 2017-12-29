@@ -97,7 +97,11 @@ module.exports = (API) => {
     const url = req.params.poll;
     API.getPoll(url)
       .then(result => {
-        res.render('vote', {'result': result, 'url': url})
+        if (result[0].is_open) {
+          res.render('vote', {'result': result, 'url': url})
+        } else {
+          res.render('results', { 'result': result, 'url': url })
+        }
       })
       .catch(err => res.render('vote'))
   });

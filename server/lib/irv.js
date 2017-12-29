@@ -26,8 +26,10 @@ module.exports = {
       .select('poll_items.id')
       .from('poll_items')
       .join('polls', { 'polls.id': 'poll_items.poll_id' })
-      .where({ 'poll_url': url })
-      .orWhere({ 'admin_url': url })
+      .where(function () {
+        this.where({ 'poll_url': url, })
+          .orWhere({ 'admin_url': url, })
+      })
       .andWhere({ 'irv_rank': 0 })
       .then(result => {
         console.log(result);

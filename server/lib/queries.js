@@ -19,26 +19,6 @@ module.exports = {
       })
   },
 
-  // Checks if there are only two poll items left
-  onlyTwoLeft: (url) => {
-    return global.knex
-      .count('poll_item')
-      .from('poll_items')
-      .join('polls', { 'poll_items.poll_id': 'polls.id' })
-      .where({ 'poll_url': url })
-      .orWhere({ 'admin_url': url })
-      .andWhere('rank', '>=', 0)
-      .then(result => {
-        if (result[0].count === 2) {
-          console.log('true')
-          return true
-        } else {
-          console.log('false')
-          return false
-        }
-      })
-  },
-
   // Calculates and sets rank according to submitted votes
   calculateRank: (url, columnSelector) => {
     return global.knex.raw(`SELECT poll_items.id, COUNT(submitted_rank) FROM poll_items JOIN polls ON poll_items.poll_id=polls.id JOIN submissions ON poll_items.id=submissions.item_id WHERE (poll_url='${url}' OR admin_url='${url}') AND submitted_rank=1 GROUP BY poll_items.id ORDER BY poll_items.id ASC`)

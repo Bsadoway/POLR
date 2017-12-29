@@ -24,7 +24,7 @@ module.exports = {
                 console.log('its a tie!');
                 return true
               } else {
-                console.log('its NOT a tie!');
+                console.log('its NOT a tie! Running irv round');
                 return queries.instantRunOff(url)
                   .then( () => {
                     return false

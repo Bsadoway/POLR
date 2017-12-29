@@ -26,8 +26,10 @@ module.exports = {
       .select('poll_items.id')
       .from('poll_items')
       .join('polls', { 'polls.id': 'poll_items.poll_id' })
-      .where({ 'poll_url': url })
-      .orWhere({ 'admin_url': url })
+      .where(function () {
+        this.where({ 'poll_url': url, })
+          .orWhere({ 'admin_url': url, })
+      })
       .andWhere({ 'irv_rank': 0 })
       .then(result => {
         console.log(result);
@@ -94,13 +96,15 @@ module.exports = {
       .count('poll_item')
       .from('poll_items')
       .join('polls', { 'poll_items.poll_id': 'polls.id' })
-      .where({ 'poll_url': url })
-      .orWhere({ 'admin_url': url })
+      .where(function () {
+        this.where({ 'poll_url': url, })
+          .orWhere({ 'admin_url': url, })
+      })
       .andWhere('irv_rank', '>=', 0)
       .then(result => {
         console.log("only 2 left results");
         console.log(result);
-        if (result[0].count === 2) {
+        if (result[0].count === '2') {
           console.log('true')
           return true
         } else {

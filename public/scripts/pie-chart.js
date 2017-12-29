@@ -20,8 +20,10 @@ $(() => {
 
     let pie = google.visualization.arrayToDataTable(nameRank);
 
+    console.log(result[0].poll_title);
+
     var options = {
-      title: 'Results of [NAMEOFPOLL]'
+      title: `${result[0].poll_title}`,
     };
 
     var chart = new google.visualization.PieChart(document.getElementById('piechart'));

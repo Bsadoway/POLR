@@ -35,15 +35,10 @@
     <% include ./partials/_header %>
   </header>
 
-  <h1 class="d-flex justify-content-center"> Admin Page</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
-      <h3 id='poll-title'></h3>
-      <div class="d-flex flex-column">
-        <div class="p-2">
-        </div>
-        <hr>
-      </div>
+      <h2 id='poll_title' class='text-center'><%= result[0].poll_title %></h2>
+      <p></p>
       <ul class="list-group">
         <% result.forEach((item) =>{ %>
           <li class="ui-state-default vote">
@@ -54,22 +49,26 @@
           </li>
           <% }); %>
       </ul>
-      <button type='button' class="friends-button btn btn-primary btn-lg btn-block">Invite friends</button>
+      <button type='button' class="friends-button btn btn-outline-primary btn-lg btn-block">Invite friends</button>
       <div id="friends-form" style="display:none">
         <form action='' method='POST'>
           <label for='friends'>Phone #</label>
           <input type='text' id='id1' class="p-2" name='friends'>
           <input type='text' id='id2' class="p-2" name='friends'>
           <div id='friend'></div>
-          <i class="fa fa-plus fa-2x add-sms" aria-hidden="true"></i>
-          <button type="submit" class="btn btn-primary btn-lg btn-block"> Submit </button>
+          <i class="fa fa-plus add-sms" aria-hidden="true"></i>
+          <button type="submit" class="btn btn-outline-primary btn-lg btn-block"> Submit </button>
         </form>
       </div>
-      <button class="btn btn-primary btn-lg btn-block close-poll">Close poll</button>
-      <button class="btn btn-primary btn-lg btn-block create-poll">Create new poll</button>
+      <button class="btn btn-outline-primary btn-lg btn-block close-poll">Close poll</button>
+      <button class="btn btn-outline-primary btn-lg btn-block create-poll">Create new poll</button>
     </section>
   </div>
 
 </body>
+
+<script>
+  var result = <%-JSON.stringify(result)%>;
+</script>
 
 </html>

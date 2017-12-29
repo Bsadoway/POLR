@@ -4,7 +4,7 @@ $(() => {
   let count = 4;
   // TODO cap item limit at 10
   $('.add-option').on('click', function() {
-    $('#options-box').append(
+    $('.options-box').append(
       `<li class="ui-state-default d-flex">
         <input class="p-2" type='text' id='item${count}' name='item' placeholder="option ${count}">
         <br>
@@ -39,7 +39,7 @@ $(() => {
   });
 
   // redirect back to create a new poll
-  $('.create-poll').on('click', function(){
+  $('.create-poll').on('click', function() {
     window.location.href = "/";
   });
 
@@ -53,6 +53,18 @@ $(() => {
     window.location.reload(true);
   });
 
+  function checkIfPollClosed() {
+
+    console.log('sfasf');
+    if (!result[0].is_open) {
+      $('.close-poll').addClass('disabled');
+      $('.friends-button').addClass('disabled');
+    } else {
+      console.log('yep hello');
+    }
+  }
+  checkIfPollClosed();
+  
   $.validate({
 
   })

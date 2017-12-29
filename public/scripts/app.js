@@ -53,6 +53,23 @@ $(() => {
     window.location.reload(true);
   });
 
+
+  // Will pop up an dismissable alert box for errors.  
+  $('#put-your-class/id-here').on('click', function () {
+    // $('.alert').alert('close');
+    $('.alert').remove();
+    $('#where-you-want-it-to-pop-up-at').append(
+      `<div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+      </div>`
+    );
+  });
+
+
+
   $.validate({
 
   })

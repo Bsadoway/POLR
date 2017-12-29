@@ -65,11 +65,6 @@ $(() => {
     window.location.href = "/";
   });
 
-  //sort the options into drag and drop
-  // FOR VOTING
-  $("#sortable").sortable();
-  $("#sortable").disableSelection();
-
   // refresh poll button
   $('#refresh').on('click', function() {
     location.reload();

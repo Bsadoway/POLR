@@ -52,7 +52,7 @@
           <% result.forEach((item, index) =>{ %>
             <li class="ui-state-default vote">
               <div id='item<%= index %>' class="p-2">
-                <%= item.poll_item %>
+                <p class="text-center"><%= item.poll_item %></p>
                 <i class="fa fa-bars" aria-hidden="true"></i>
               </div>
               <input type='hidden' name='voteOrder' value='<%= index + 1%>'>

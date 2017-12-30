@@ -34,39 +34,93 @@
 
   <div class="d-flex justify-content-center main-container">
     <section>
-      <h2 id='poll_title' class='text-center'><%= result[0].poll_title %></h2>
-      <p id='is-poll-closed-text' class='text-center'>Poll is open</p>
-      <ul class="list-group">
-        <% result.forEach((item) =>{ %>
-          <li class="ui-state-default vote-admin">
-            <div class="p-2">
-              <%= item.poll_item %>
-            </div>
+
+
+      <form id="needs-validation" action='/' method='POST'>
+      
+        <div class="d-flex flex-column">
+          <h5 class="text-center">E-mail</h5>
+          <label for='creator'></label>
+              <br>
+              <div class="input-group">
+                <span class="input-group-addon testing2" id="basic-addon2" data-toggle="popover" title="Get poll by SMS" data-content="Enter your cell phone number to enable administration of your poll through SMS.">?</span>
+                <input class="form-control" type='email' id='creator' name='creator' placeholder="Email">
+              </div>
+              <br>
+          <br>
+        </div>
+        <div class="d-flex flex-column">
+          <h5 class="text-center">Poll Title</h5>
+          <label for='title'></label>
+          <input class="p-2 form-control" type='text' name='title' placeholder="What do you want to vote on?" maxlength="4" required>
+          <div class="p-2 invalid-feedback">
+            Title cannot be empty.
+          </div>
+          <hr>
+        </div>
+        <h5 class="text-center">Voting options</h5>
+        <!-- <p>Options:</p> -->
+        <ul class='options-box'>
+          <li class="ui-state-default d-flex">
+                    <br>
+                    <div class="input-group">
+                      <span class="input-group-addon testing2" id="basic-addon2" data-toggle="popover" title="Get poll by SMS" data-content="Enter your cell phone number to enable administration of your poll through SMS.">1</span>
+                      <input class="form-control" type='text' id='item' name='item' placeholder="Option 1" required>
+                    </div>
+                    <br>
+          </li>
+          <li class="ui-state-default d-flex">
+            <input class="p-2" type='text' id='item2' name='item' placeholder="Option 2" required>
             <br>
           </li>
-          <% }); %>
-      </ul>
-      <button type='button' class="friends-button btn btn-outline-primary btn-lg btn-block">Invite friends</button>
-      <div id="friends-form" style="display:none">
-        <form action='' method='POST'>
-          <label for='friends'>Send this poll to friends via SMS</label>
-          <input type='text' id='id1' class="p-2" name='friends'>
-          <input type='text' id='id2' class="p-2" name='friends'>
-          <div id='friend'></div>
-          <div class='add-sms'>
-            <i class="fa fa-plus pull-left" aria-hidden="true"></i>
-            <p>Add phone number</p>
-          </div>
-          <button type="submit" class="btn btn-outline-primary btn-lg btn-block"> Submit </button>
-        </form>
-      </div>
-      <button class="btn btn-outline-primary btn-lg btn-block view-results">View Poll Results</button>
-      <button class="btn btn-outline-primary btn-lg btn-block close-poll">Close Poll</button>
-      <button class="btn btn-outline-primary btn-lg btn-block create-poll">Create New Poll</button>
+          <li class="ui-state-default d-flex">
+            <input class="p-2" type='text' id='item3' name='item' placeholder="Option 3">
+            <br>
+          </li>
+        </ul>
+        <div class='add-option'>
+          <i class="fa fa-plus pull-left" aria-hidden="true"></i>
+          <p>Add an option</p>
+        </div>
+        <button type="submit" class="btn btn-outline-primary btn-lg btn-block suuber"> Submit </button>
+        <br>
+        <div class="input-group">
+          <!-- <input type='text' class="p-2 form-control" id='item' name='item' placeholder="Option 1" required> -->
+          <input type="text" class="form-control"                           placeholder="Test" aria-describedby="basic-addon2">
+          <span class="input-group-addon testing2" id="basic-addon2" data-toggle="popover" title="Get poll by SMS" data-content="Enter your cell phone number to enable administration of your poll through SMS.">@Click for info popup</span>
+        </div>
+        <br>
+      </form>
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                      Launch demo modal
+                    </button>
+                    
+                    <!-- Modal -->
+
     </section>
   </div>
 
 </body>
+                    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            Blah BLah??
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" href="http://www.google.ca">Goto Site</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
 <script>
   var result = <%-JSON.stringify(result[0])%>;

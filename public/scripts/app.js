@@ -11,7 +11,7 @@ $(() => {
   }
   checkIfPollClosed();
 
-
+  
   // adds another sms input to the friends form
   // FOR ADMIN
   let smsCount = 3;
@@ -21,13 +21,13 @@ $(() => {
     );
     smsCount++;
   });
-
+  
   // toggle friends sms form
   // FOR ADMIN
   $('.friends-button').on('click', function() {
     $('#friends-form').toggle();
   });
-
+  
   // admin close poll button
   // FOR ADMIN
   $('.close-poll').on('click', function() {
@@ -40,22 +40,36 @@ $(() => {
       }
     })
   });
+  
+  $('.suuber').on('click', function () {
+    // console.log('clicked');
+    // console.log($('#needs-validation')[0]);
+    // console.log($('#needs-validation')[0].checkValidity());
+    $('#needs-validation').addClass('was-validated');
+
+    if ($('#needs-validation')[0].checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    return false
+  });
 
   // Toggles popover text whenever an element is clicked
   $('.testing2').on('click', function () {
+    console.log('testing2 clicked');
     $('.testing2').popover('toggle');
   });
-
+  
   $('.view-results').on('click', function() {
     window.location.href = `/${result.poll_url}/results`;
   });
-
+  
   // redirect back to create a new poll
   // FOR ADMIN
   $('.create-poll').on('click', function() {
     window.location.href = "/";
   });
-
+  
   // refresh poll button
   $('#refresh').on('click', function() {
     location.reload();

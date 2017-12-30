@@ -1,6 +1,5 @@
 $(() => {
   // TODO separate into js files based on page functions
-
   // disable close button and send sms to friends button is poll is closed
   // FOR ADMIN
   function checkIfPollClosed() {
@@ -11,6 +10,7 @@ $(() => {
     }
   }
   checkIfPollClosed();
+
 
   // adds another sms input to the friends form
   // FOR ADMIN
@@ -41,8 +41,13 @@ $(() => {
     })
   });
 
+  // Toggles popover text whenever an element is clicked
+  $('.testing2').on('click', function () {
+    $('.testing2').popover('toggle');
+  });
+
   $('.view-results').on('click', function() {
-    window.location.href = '/' + result.poll_url + '/results';
+    window.location.href = `/${result.poll_url}/results`;
   });
 
   // redirect back to create a new poll
@@ -56,12 +61,11 @@ $(() => {
     location.reload();
   });
 
-
   // Will pop up an dismissable alert box for errors.
-  $('#put-your-class/id-here').on('click', function() {
+  $('put-your-class-here').on('click', function() {
     // $('.alert').alert('close');
     $('.alert').remove();
-    $('#where-you-want-it-to-pop-up-at').append(
+    $('#poll_title').append(
       `<div class="alert alert-warning alert-dismissible fade show" role="alert">
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
           <span aria-hidden="true">&times;</span>

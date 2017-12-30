@@ -28,7 +28,8 @@ module.exports = (API) => {
       API.testFunction(url)
       .then(result => {
         console.log(result);
-        res.render('index');
+        res.render('test', { 'result': result })
+        // res.render('index');
       })
       .catch(err => res.render('vote'))
   });

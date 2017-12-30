@@ -4,11 +4,9 @@
 <head>
   <title>Admin Page</title>
 
-
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="icon" href="data:,">
-
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
@@ -16,7 +14,6 @@
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
-
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
@@ -39,7 +36,6 @@
     <section>
       <h2 id='poll_title' class='text-center'><%= result[0].poll_title %></h2>
       <p id='is-poll-closed-text' class='text-center'>Poll is open</p>
-      <% if (result[0].is_open) { %>
       <ul class="list-group">
         <% result.forEach((item) =>{ %>
           <li class="ui-state-default vote-admin">
@@ -64,11 +60,8 @@
           <button type="submit" class="btn btn-outline-primary btn-lg btn-block"> Submit </button>
         </form>
       </div>
-      <% } %>
       <button class="btn btn-outline-primary btn-lg btn-block view-results">View Poll Results</button>
-      <% if (result[0].is_open) { %>
       <button class="btn btn-outline-primary btn-lg btn-block close-poll">Close Poll</button>
-      <% } %>      
       <button class="btn btn-outline-primary btn-lg btn-block create-poll">Create New Poll</button>
     </section>
   </div>

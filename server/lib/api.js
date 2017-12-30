@@ -1,14 +1,16 @@
 const math = require('./math-functions');
 const queries = require('./queries')
 const sms = require('./sms');
-const irv = require('./irv')
+const irv = require('./irv');
+const mailgun = require('./mailgun');
 
 module.exports = {
 
   // TESTING FUNCTION
   testFunction: (url) => {
     // return module.exports.irv(url);
-    return module.exports.getPoll(url);
+    // return module.exports.getPoll(url);
+    return mailgun.send(poll_info);
   },  
 
   irv: (url) => {
@@ -97,9 +99,12 @@ module.exports = {
       .into('polls')
       .returning(['id', 'admin_url', 'poll_url', 'poll_title', 'creator'])
       .then(poll_info => {
-        queries.pollInsert(poll_info, input);
-        return poll_info[0]
+        return queries.pollInsert(poll_info, input)
       })
+      .then((poll_info) => {
+        mailgun.send(poll_info[0]);
+        return poll_info[0]
+      });
     // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
   },
 

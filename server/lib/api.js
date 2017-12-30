@@ -88,9 +88,18 @@ module.exports = {
 
   // Admin APIs
   createPoll: (input) => {
+    let creator = "";
+    let isSMS = false;
+    if (input.creator_email) {
+      creator = input.creator_email;
+    } else {
+      const sms = input.creator_sms.replace(/\D/g, ''); 
+      creator = `+1${sms}`;
+      isSMS = true;
+    }
     return global.knex
       .insert({
-        creator: input.creator,
+        creator: creator,
         poll_title: input.title,
         admin_url: `${math.generateRandomString()}/admin`,
         poll_url: `${math.generateRandomString()}`,
@@ -102,10 +111,13 @@ module.exports = {
         return queries.pollInsert(poll_info, input)
       })
       .then((poll_info) => {
-        mailgun.send(poll_info[0]);
+        if (isSMS){
+          // module.exports.sendAdminSMS(poll_info[0]);
+        } else {
+          // mailgun.send(poll_info[0]);
+        }
         return poll_info[0]
       });
-    // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken
   },
 
   inviteFriends: (url, friends) => {

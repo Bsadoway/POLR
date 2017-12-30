@@ -1,6 +1,6 @@
 const accountSid = process.env.accountSid;
 const authToken = process.env.authToken;
-const myPhone = process.env.CellB;
+const myPhone = process.env.CellF;
 const twilioNumber = process.env.twilioNumber;
 const twilio = require('twilio')(accountSid, authToken);
 const MessagingResponse = require('twilio').twiml.MessagingResponse;

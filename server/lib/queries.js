@@ -138,7 +138,7 @@ module.exports = {
   },
 
   pollInsert: (poll_info, input) => {
-    Promise.all(input.item.map((item) => {
+    return Promise.all(input.item.map((item) => {
       return global.knex
         .insert({
           poll_item: item,
@@ -147,7 +147,10 @@ module.exports = {
         })
         .into('poll_items')
         .returning('poll_item');
-    }));
+    }))
+    .then(() =>{
+      return poll_info
+    })
   }
 
 

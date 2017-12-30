@@ -60,21 +60,20 @@ body {
     border-radius: 5px;
     font-size: 1.2em;
     cursor: pointer;
+    height: 50px;
+  }
+
+  li.vote div {
+    padding: 6px;
   }
 
   li.vote .fa-bars {
-    float: left;
-    margin-top: 5px;
-  }
-
-  li.vote div, li.vote-admin div {
-    display: inline-block;
+    float: right;
   }
 
   li.vote div p {
-    float: right;
-    margin-top: 10px;
-    margin-bottom: 0;
+    float: left;
+    margin: 5px 0 2px 10px;
   }
 
   .vote-submit {
@@ -89,6 +88,10 @@ body {
     margin: 5px;
     border-radius: 5px;
     font-size: 1.2em;
+  }
+
+  li.vote-admin div {
+    display: inline-block;
   }
 
   input.p-2 {

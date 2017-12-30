@@ -4,8 +4,9 @@ $(() => {
   // FOR ADMIN
   function checkIfPollClosed() {
     if (!result.is_open) {
-      $('.close-poll').addClass('disabled').attr('disabled', 'disabled');
-      $('.friends-button').addClass('disabled').attr('disabled', 'disabled');
+      // $('.list-group').remove();
+      $('.close-poll').remove();
+      $('.friends-button').remove();
       $('#is-poll-closed-text').text('Poll is closed');
     }
   }
@@ -41,11 +42,6 @@ $(() => {
     })
   });
 
-  // Toggles popover text whenever an element is clicked
-  $('.testing2').on('click', function () {
-    $('.testing2').popover('toggle');
-  });
-
   $('.view-results').on('click', function() {
     window.location.href = `/${result.poll_url}/results`;
   });
@@ -60,36 +56,5 @@ $(() => {
   $('#refresh').on('click', function() {
     location.reload();
   });
-
-  // Will pop up an dismissable alert box for errors.
-  $('put-your-class-here').on('click', function() {
-    // $('.alert').alert('close');
-    $('.alert').remove();
-    $('#poll_title').append(
-      `<div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
-      </div>`
-    );
-  });
-
-  $('.suuber').on('click', function () {
-    console.log('clicked');
-    // console.log($('#needs-validation')[0]);
-    // console.log($('#needs-validation')[0].checkValidity());
-    // $('#needs-validation').addClass('was-validated');
-
-    // if ($('#needs-validation')[0].checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-    // return false
-  });
-
-  $.validate({
-
-  })
 
 });

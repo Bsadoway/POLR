@@ -1,7 +1,7 @@
 $(() => {
 
   // add an item to the vote option list
-  let count = 4;
+  let count = 3;
   // TODO cap item limit at 10
   $('.add-option').on('click', function () {
     if (count <= 9) {
@@ -9,7 +9,7 @@ $(() => {
         `<li class="ui-state-default d-flex">
         <div class="p-2 input-group">
           <span class="input-group-addon testing2" id="basic-addon2">${count}</span>
-          <input class="form-control" type='text' id='item${count}' name='item' placeholder="Option ${count}" maxlength="22">
+          <input class="form-control" type='text' id='item${count}' name='item' placeholder="Option ${count}" maxlength="22" required>
         <br>
         </div>
       </li>`

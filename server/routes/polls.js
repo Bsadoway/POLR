@@ -50,7 +50,7 @@ module.exports = (API) => {
         console.log('after create result is');
         console.log(result);
         // API.sendAdminSMS(result);
-        res.render('index');
+        res.redirect(`/${result.admin_url}`);
       })
       .catch(err => res.render('index'))
   });

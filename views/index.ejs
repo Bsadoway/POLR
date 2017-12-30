@@ -42,10 +42,16 @@
       <form id="needs-validation" action='/' method='POST' novalidate>
         <div class="d-flex flex-column">
           <div class="justify-content-center btn-group btn-group-toggle" data-toggle="buttons">
-            <button id="email">E-mail</button>
-            <button id="phone">Phone#</button>
+            <button type="button" class="btn" id="email">E-mail</button>
+            <button type="button" class="btn" id="phone">Phone#</button>
           </div>
-          <div id="switch-option"></div>
+          <br>
+          <div id="switch-option">
+            <input class="p-2 form-control" type='email' id='creator' name='creator-email' placeholder="E-mail" required>
+            <div class="invalid-feedback">
+              Must enter a valid e-mail address.
+            </div>
+          </div>
           <br>
         </div>
 

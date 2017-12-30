@@ -2,7 +2,7 @@ $(() => {
 
   $('#email').on('click', function () {
     $('#switch-option').html(
-      `  <input class="p-2 form-control" type='email' id='creator' name='creator' placeholder="E-mail" required>
+      `<input class="p-2 form-control" type='email' id='creator' name='creator-email' placeholder="E-mail" required>
         <div class="invalid-feedback">
           Must enter a valid e-mail address.
         </div>`
@@ -11,7 +11,7 @@ $(() => {
 
   $('#phone').on('click', function () {
     $('#switch-option').html(
-      `  <input class="p-2 form-control" type='tel' pattern="^\d{3}-\d{3}-\d{4}$" id='creator' name='creator' placeholder="Phone Number (XXX-XXX-XXXX)" required>
+      `<input class="p-2 form-control" type='tel' pattern="^\d{3}-\d{3}-\d{4}$" id='creator' name='creator-sms' placeholder="Phone Number (XXX-XXX-XXXX)" required>
         <div class="invalid-feedback">
           Must enter a valid Phone Nmber.
         </div>`

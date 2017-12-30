@@ -1,6 +1,7 @@
 $light-grey-color: #D0D7D0;
 $text-color: #31322C;
 $blue-color: #48AAB5;
+$full-blue-color: #007bff;
 $header-color: #B4CAD5;
 
 body {
@@ -101,7 +102,7 @@ body {
 
   div.add-option, div.add-sms {
     display: block;
-    color: #007bff;
+    color: $full-blue-color;
   }
 
   div.add-option:hover, div.add-sms:hover {
@@ -128,5 +129,11 @@ body {
 
   #logo {
     padding: 15px;
+  }
+
+  #email, #phone {
+    color: $full-blue-color;
+    border-color: $full-blue-color;
+    background-color: #FFF;
   }
 }

@@ -12,7 +12,6 @@ $(() => {
   }
   checkIfPollClosed();
 
-
   // adds another sms input to the friends form
   // FOR ADMIN
   let smsCount = 3;

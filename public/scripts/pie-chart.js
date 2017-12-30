@@ -1,36 +1,42 @@
 $(() => {
-  google.charts.load('current', {
-    'packages': ['corechart']
+  let nameRank = [];
+  result.forEach(item => {
+    let items = {};
+    items = {
+      y: item.rank,
+      label: item.poll_item
+    }
+    nameRank.push(items);
   });
-  google.charts.setOnLoadCallback(drawChart);
 
+  var chart = new CanvasJS.Chart("piechart", {
+    animationEnabled: true,
+    title: {
+      text: result[0].poll_title
+    },
+    legend: {
+      cursor: "pointer",
+      itemclick: explodePie
+    },
+    data: [{
+      type: "pie",
+      startAngle: 240,
+      yValueFormatString: "##0.00\"%\"",
+      showInLegend: "true",
+      legendText: "{label}",
+      indexLabel: "{label} {y}",
+      dataPoints: nameRank,
+    }]
+  });
+  chart.render();
 
-  function drawChart() {
-    const url = window.location.pathname;
-    console.log(url);
+  function explodePie(e) {
+    if (typeof(e.dataSeries.dataPoints[e.dataPointIndex].exploded) === "undefined" || !e.dataSeries.dataPoints[e.dataPointIndex].exploded) {
+      e.dataSeries.dataPoints[e.dataPointIndex].exploded = true;
+    } else {
+      e.dataSeries.dataPoints[e.dataPointIndex].exploded = false;
+    }
+    e.chart.render();
 
-    // initialize the array and format to google visulation input
-    let nameRank = [['Title', 'Rank']];
-    result.forEach(item => {
-      let items = [];
-      items.push(item.poll_item, item.rank);
-      nameRank.push(items);
-      console.log(nameRank);
-    })
-
-    let pie = google.visualization.arrayToDataTable(nameRank);
-
-    console.log(result[0].poll_title);
-
-    var options = {
-      title: `${result[0].poll_title}`,
-      // legend: {position: 'labeled'},
-      chartArea: { width: '90%', height: '90%' },
-      // fontSize: '12'
-    };
-
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-
-    chart.draw(pie, options);
   }
 });

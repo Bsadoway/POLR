@@ -25,7 +25,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/729922a123.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
   <!-- For mobile drag n drop-->
   <script type="text/javascript" src="/scripts/jquery.ui.touch-punch.js"></script>
 
@@ -37,11 +37,11 @@
     <% include ./partials/_header %>
   </header>
 
-  <h1 class="d-flex justify-content-center"> Results</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
-      <div id="piechart"></div>
-      <button type='button' class="btn btn-primary btn-lg btn-block" id='refresh'>Refresh </button>
+      <h2 id='poll_title' class='text-center'>Results of poll:</h2>
+      <div id="piechart" style="height: 300px; width: 100%;"></div>
+      <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='refresh'>Refresh Results</button>
     </section>
 
   </div>

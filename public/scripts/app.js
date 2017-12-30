@@ -75,6 +75,19 @@ $(() => {
     );
   });
 
+  $('.suuber').on('click', function () {
+    console.log('clicked');
+    // console.log($('#needs-validation')[0]);
+    // console.log($('#needs-validation')[0].checkValidity());
+    // $('#needs-validation').addClass('was-validated');
+
+    // if ($('#needs-validation')[0].checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
+    // }
+    // return false
+  });
+
   $.validate({
 
   })

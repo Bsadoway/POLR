@@ -8,8 +8,8 @@ const yelp = require('./yelp');
 module.exports = {
 
   // TESTING FUNCTION
-  testFunction: (url, fastForward) => {
-    return yelp.search();
+  testFunction: (url) => {
+    return yelp.search(url);
     // return module.exports.irv(url, fastForward);
     // return module.exports.getPoll(url);
     // return mailgun.send(poll_info);
@@ -181,3 +181,23 @@ module.exports = {
 
 
 }
+
+/* 
+Details:
+
+.name:
+.image_url
+.url - yelp url
+.phone
+.rating
+
+.location.address1
+          .city
+          .state
+
+          .display_address[0] - the whole thing
+.photos[array of photos]
+.price
+
+
+*/

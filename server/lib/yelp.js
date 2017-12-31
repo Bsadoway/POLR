@@ -6,58 +6,61 @@ const client = yelp.client(yelp_api);
 module.exports = {
   
   search: (url) => {
-    return global.knex
-      .select('id')
-      .from('polls')
-      .where({ 'poll_url': url })
-      .orWhere({ 'admin_url': url })
+    return global.knex.select('id') .from('polls') .where({ 'poll_url': url }) .orWhere({ 'admin_url': url }) 
       .then(result => {
-        return global.knex.raw(`SELECT poll_items.poll_item FROM poll_items WHERE poll_id='${result[0].id}' AND "irv_rank"=(SELECT MIN("irv_rank") FROM poll_items WHERE poll_id='${result[0].id}')`)
+        return global.knex.raw(`SELECT poll_items.poll_item, polls.poll_title FROM poll_items JOIN polls ON polls.id=poll_items.poll_id WHERE poll_id='${result[0].id}' AND "irv_rank"=(SELECT MAX("irv_rank") FROM poll_items WHERE poll_id='${result[0].id}')`)
       })
-      .then(restaurant => {
+      .then(result => {
+        // console.log('result is:')
+        // console.log(result.rows[0]);
 
-        const test = /eat|restaurant/.test(restaurant.poll_title);
+        const pollTitle = result.rows[0].poll_title;
+        const pollItem  = result.rows[0].poll_item;
 
-        if (test) {
+        // console.log(pollTitle);
+        // console.log(pollItem);
+
+
+        const test = /eat|restaurant/.test(pollTitle);
+
+        // if (test) {
 
           console.log('starting yelp search');
-          console.log('result is:')
-          console.log(restaurant);
+          // console.log('result is:')
+          // console.log(result);
 
           const searchRequest = {
-            term: restaurant.poll_title,
+            term: pollItem,
             location: 'vancouver, bc'
           };
 
           return client.search(searchRequest)
             .then(result => {
-              const firstResult = result.jsonBody.businesses[0].id;
-              // const prettyJson = JSON.stringify(firstResult, null, 4);
-              // console.log(prettyJson);
-              return firstResult
-            })
-            .then(() => {
-              return client.business("richmond-sushi-richmond")
-                .then(result => {
-                  const firstResult = result.jsonBody;
-                  const prettyJson = JSON.stringify(firstResult, null, 4);
-                  // console.log("SECOND ONE")
-                  console.log(prettyJson);
-                  return firstResult
-                })
+              const firstResult = result.jsonBody.businesses[0];
+
+              const name = result.jsonBody.businesses[0].name;
+              const image = result.jsonBody.businesses[0].image_url;
+              const yelp_url = result.jsonBody.businesses[0].url;
+              const rating = result.jsonBody.businesses[0].rating;
+              const price = result.jsonBody.businesses[0].price;
+
+              const yelpObject = {
+                name: name,
+                image: image,
+                yelp_url: yelp_url,
+                rating: rating,
+                price: price
+              }
+
+              const prettyJson = JSON.stringify(firstResult, null, 4);
+              console.log(prettyJson);
+              console.log('yelp object is')
+              console.log(yelpObject)
+              return yelpObject
             })
             .catch(error => {
               console.log('Error', error);
             });
-
-        } else {
-          console.log("not a match. no yelp search");
-          return
-        }
-
-
-
-
 
       })
 
@@ -65,24 +68,3 @@ module.exports = {
   }
 
 }
-
-
-/* 
-Details:
-
-.name:
-.image_url
-.url - yelp url
-.phone
-.rating
-
-.location.address1
-          .city
-          .state
-
-          .display_address[0] - the whole thing
-.photos[array of photos]
-.price
-
-
-*/

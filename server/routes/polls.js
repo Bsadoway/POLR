@@ -103,7 +103,11 @@ module.exports = (API) => {
     API.getPoll(url)
       .then(result => {
         if(result.length !== 0){
+          if (result[0].is_open) {
           res.render('vote', {'result': result, 'url': url})
+          } else {
+          res.redirect(`/${url}/results`)
+          }
         } else {
           res.status(404).render('404error');
         }

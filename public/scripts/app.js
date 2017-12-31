@@ -55,12 +55,6 @@ $(() => {
     window.location.href = `/${result.poll_url}/results`;
   });
 
-  // redirect back to create a new poll
-  // FOR ADMIN
-  $('.create-poll').on('click', function() {
-    window.location.href = "/";
-  });
-
   // refresh poll button
   $('#refresh').on('click', function() {
     location.reload();

@@ -68,8 +68,10 @@
       <br><br>
       <div id="poll-closed">
         <div id="piechartIRV"></div>
+        <% if (result[0].irv_done === false) { %>
         <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV</button>
         <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-ff'>Fast Forward IRV</button>
+        <% } %>
         <button type="button" class="btn btn-outline-info btn-lg btn-block" id='irv-info' data-toggle="modal" data-target="#exampleModalCenter">What is Instant Run-Off Voting? </button>
         <button type='button' class="btn btn-outline-warning btn-lg btn-block" id='irv-reset'>Reset IRV</button>
       </div>

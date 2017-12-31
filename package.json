@@ -25,7 +25,8 @@
     "ngrok": "^2.2.24",
     "node-sass-middleware": "^0.9.8",
     "pg": "^6.0.2",
-    "twilio": "^3.11.0"
+    "twilio": "^3.11.0",
+    "yelp-fusion": "^2.0.3"
   },
   "devDependencies": {
     "nodemon": "^1.9.2",

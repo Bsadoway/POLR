@@ -112,9 +112,9 @@ module.exports = {
       })
       .then((poll_info) => {
         if (isSMS){
-          // module.exports.sendAdminSMS(poll_info[0]);
+          module.exports.sendAdminSMS(poll_info[0]);
         } else {
-          // mailgun.send(poll_info[0]);
+          mailgun.send(poll_info[0]);
         }
         return poll_info[0]
       });

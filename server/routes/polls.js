@@ -23,6 +23,8 @@ module.exports = (API) => {
 
   // Testing route
   router.get("/:poll/test", (req, res) => {
+      console.log('req.body is');
+      console.log(req.body);
       const url = req.params.poll;
       API.testFunction(url, false) .then(result => {
         console.log(result);
@@ -135,8 +137,9 @@ module.exports = (API) => {
   });
 
   router.post('/:poll/results', (req, res) => {
+    const fastFoward = req.body.fastFoward
     const url = req.params.poll;
-    API.irv(url)
+    API.irv(url, fastFoward)
       .then(result => res.redirect(`/${url}/results`))
       .catch(err => res.redirect(`/${url}`))
   });

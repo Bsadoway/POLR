@@ -64,7 +64,7 @@ module.exports = {
           // console.log('id is:')
           // console.log(voter_id[0]);
           const voteOrder = command.split('');
-          return queries.vote(url, voteOrder, voter_id[0])
+          return queries.vote(url, voteOrder, voter_id[0], sender)
           // ])
         })
     }
@@ -133,6 +133,7 @@ module.exports = {
   },
 
   inviteFriends: (url, friends) => {
+    console.log(friends are )
     return module.exports.getPoll(url)
       .then(result => {
         return Promise.all(friends.map((phoneNum) => {
@@ -159,7 +160,7 @@ module.exports = {
     const poll_url = adminInfo.poll_url;
     const poll_title = adminInfo.poll_title;
     const adminMessage = `You created a survey with POLR!\nYour admin link is: ${process.env.SERVER_URL}/${admin_url}\nTo close the poll reply with: ${admin_url} close\nForward the link below to invite your friends!`;
-    const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with ${poll_url} vote`;
+    const pollMessage = `${creator} wants to ask you about ${poll_title}!\n To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with: ${poll_url} vote`;
     sms.send(creator, adminMessage).then(() => sms.send(creator, pollMessage));
     return
   },

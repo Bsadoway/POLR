@@ -20,6 +20,25 @@ $(() => {
   }
   checkIfPollClosed();
 
+  // Advance IRV by 1 step
+  $('put-id-or-class here').on('click', function (){
+    console.log('clicked');
+    $.ajax({
+      url: $(location).attr('pathname'),
+      method: 'POST',
+      data: {"fastForward": false}
+    })
+  });
+
+  // Fast forward's IRV to final step
+  $('put-id-or-class here').on('click', function () {
+    console.log('clicked');
+    $.ajax({
+      url: $(location).attr('pathname'),
+      method: 'POST',
+      data: { "fastForward": true }
+    })
+  });
 
   // adds another sms input to the friends form
   // FOR ADMIN

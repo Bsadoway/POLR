@@ -133,7 +133,7 @@ module.exports = {
   },
 
   inviteFriends: (url, friends) => {
-    console.log(friends are )
+    console.log('friends are');
     return module.exports.getPoll(url)
       .then(result => {
         return Promise.all(friends.map((phoneNum) => {

@@ -59,7 +59,6 @@ body {
     margin: 0 auto;
   }
 
-
   li.vote {
     background-color: $blue-color;
     border-color: #31322C;
@@ -107,17 +106,20 @@ body {
     margin: 5px auto;
   }
 
-  div.add-option, div.add-sms {
+  div.add-option,
+  div.add-sms {
     display: block;
     color: $full-blue-color;
   }
 
-  div.add-option:hover, div.add-sms:hover {
+  div.add-option:hover,
+  div.add-sms:hover {
     color: #00bbff;
     cursor: pointer;
   }
 
-  div.add-option p, div.add-sms p {
+  div.add-option p,
+  div.add-sms p {
     margin-top: 5px;
     padding-top: 5px;
   }
@@ -138,7 +140,8 @@ body {
     padding: 15px;
   }
 
-  #email, #phone {
+  #email,
+  #phone {
     color: $full-blue-color;
     border-color: $full-blue-color;
     background-color: #FFF;

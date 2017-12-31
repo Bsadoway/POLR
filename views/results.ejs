@@ -45,7 +45,9 @@
           </button>
         </div>
         <div class="modal-body">
-           Instant-runoff voting (IRV) is a voting method used in single-seat elections with more than two candidates. Instead of voting only for a single candidate, voters in IRV elections can rank the candidates in order of preference. Ballots are initially counted for each elector's top choice. If a candidate secures more than half of these votes, that candidate wins. Otherwise, the candidate in last place is eliminated and removed from consideration. The top remaining choices on all the ballots are then counted again. This process repeats until one candidate is the top remaining choice of a majority of the voters. When the field is reduced to two, it has become an "instant runoff" that allows a comparison of the top two candidates head-to-head.
+          Instant-runoff voting (IRV) is a voting method used in single-seat elections with more than two candidates. Instead of voting only for a single candidate, voters in IRV elections can rank the candidates in order of preference. Ballots are initially counted
+          for each elector's top choice. If a candidate secures more than half of these votes, that candidate wins. Otherwise, the candidate in last place is eliminated and removed from consideration. The top remaining choices on all the ballots are then
+          counted again. This process repeats until one candidate is the top remaining choice of a majority of the voters. When the field is reduced to two, it has become an "instant runoff" that allows a comparison of the top two candidates head-to-head.
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -69,14 +71,13 @@
       <div id="poll-closed">
         <div id="piechartIRV"></div>
         <% if (result[0].irv_done === false) { %>
-        <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV</button>
-        <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-ff'>Fast Forward IRV</button>
-        <% } %>
-        <button type="button" class="btn btn-outline-info btn-lg btn-block" id='irv-info' data-toggle="modal" data-target="#exampleModalCenter">What is Instant Run-Off Voting? </button>
-        <button type='button' class="btn btn-outline-warning btn-lg btn-block" id='irv-reset'>Reset IRV</button>
+          <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV</button>
+          <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-ff'>Fast Forward IRV</button>
+          <% } %>
+            <button type="button" class="btn btn-outline-info btn-lg btn-block" id='irv-info' data-toggle="modal" data-target="#exampleModalCenter">What is Instant Run-Off Voting? </button>
+            <button type='button' class="btn btn-outline-warning btn-lg btn-block" id='irv-reset'>Reset IRV</button>
       </div>
     </section>
-
   </div>
 
 </body>

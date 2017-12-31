@@ -1,7 +1,6 @@
 $(() => {
 
   // disable close button and send sms to friends button is poll is closed
-  // FOR ADMIN
   function checkIfPollClosed() {
     if (!result.is_open) {
       // $('.list-group').remove();
@@ -12,9 +11,7 @@ $(() => {
   }
   checkIfPollClosed();
 
-
   // adds another sms input to the friends form
-  // FOR ADMIN
   let smsCount = 2;
   $('.add-sms').on('click', function() {
     $('#friend').append(
@@ -33,13 +30,11 @@ $(() => {
   });
 
   // toggle friends sms form
-  // FOR ADMIN
   $('.friends-button').on('click', function() {
     $('#friends-form').toggle();
   });
 
   // admin close poll button
-  // FOR ADMIN
   $('.close-poll').on('click', function() {
     $.ajax({
       url: $(location).attr('pathname'),
@@ -51,11 +46,12 @@ $(() => {
     })
   });
 
-
+  // redirect to results from admin
   $('.view-results').on('click', function() {
     window.location.href = `/${result.poll_url}/results`;
   });
 
+  // validation checks
   $('#needs-validation').on('submit', function () {
     if ($('#needs-validation')[0].checkValidity() === false) {
       event.preventDefault();

@@ -13,7 +13,6 @@ module.exports = (API) => {
     const sms = req.body;
     API.incomingSMS(sms)
       .then(responseMsg => {
-        // res.end();
         const twiml = new MessagingResponse();
         twiml.message();
         res.writeHead(204, {'Content-type': 'text/xml'});
@@ -25,8 +24,7 @@ module.exports = (API) => {
   // Testing route
   router.get("/:poll/test", (req, res) => {
       const url = req.params.poll;
-      API.testFunction(url, false)
-      .then(result => {
+      API.testFunction(url, false) .then(result => {
         console.log(result);
         res.render('test', { 'result': result })
         // res.render('index');

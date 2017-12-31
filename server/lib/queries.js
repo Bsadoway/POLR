@@ -79,7 +79,7 @@ module.exports = {
   },
 
   // Adds votes to poll item
-  vote: (url, voteOrder, voter_id) => {
+  vote: (url, voteOrder, voter_id, sender) => {
     console.log(voteOrder);
     const votes = voteOrder;
     // console.log(poll_identifier);
@@ -90,17 +90,27 @@ module.exports = {
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
       // .where({ 'polls.id': poll_identifier })
       .where({ 'poll_url': url })
+      .andWhere({ is_open: true })
       .orderBy('poll_items.id', 'asc')
       .then(result => {
-        return Promise.all(votes.map((vote, index) => {
-          return global.knex
-            .insert({
-              item_id: result[(vote - 1)].id,
-              voter_id: voter_id,
-              submitted_rank: (index + 1)
-            })
-            .into('submissions')
-        }));
+        if (result.length > 0) {
+          return Promise.all(votes.map((vote, index) => {
+            return global.knex
+              .insert({
+                item_id: result[(vote - 1)].id,
+                voter_id: voter_id,
+                submitted_rank: (index + 1)
+              })
+              .into('submissions')
+          }))
+          .then(()=> {
+            const responseMsg = "Success - Thanks voting with POLR!";
+            return sms.send(sender, responseMsg)
+          })
+        } else {
+          const responseMsg = "No can do. The administrator has closed the poll.";
+          return sms.send(sender, responseMsg)
+        }
       })
   },
 
@@ -115,11 +125,15 @@ module.exports = {
         if (result.length !== 0) {
           console.log('Success. Matched poll_id and sender');
           return module.exports.closePoll(admin_url)
+            .then(() => {
+              const responseMsg = "Success - Your poll is now closed.";
+              return sms.send(sender, responseMsg)
+            })
         } else {
           console.log('Wrong poll id or unauthorized command');
           const responseMsg = "Invalid command";
-          return
-          // return sms.send(responseMsg);
+          // return
+          return sms.send(sender, responseMsg);
         }
       })
   },
@@ -149,9 +163,9 @@ module.exports = {
         .into('poll_items')
         .returning('poll_item');
     }))
-    .then(() =>{
-      return poll_info
-    })
+      .then(() => {
+        return poll_info
+      })
   }
 
 

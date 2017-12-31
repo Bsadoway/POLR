@@ -56,11 +56,6 @@ $(() => {
     window.location.href = `/${result.poll_url}/results`;
   });
 
-  // refresh poll button
-  $('#refresh').on('click', function() {
-    location.reload();
-  });
-
   $('#needs-validation').on('submit', function () {
     if ($('#needs-validation')[0].checkValidity() === false) {
       event.preventDefault();

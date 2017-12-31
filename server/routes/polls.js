@@ -26,7 +26,8 @@ module.exports = (API) => {
       console.log('req.body is');
       console.log(req.body);
       const url = req.params.poll;
-      API.testFunction(url, false) .then(result => {
+      API.testFunction(url)
+        .then(result => {
         console.log(result);
         res.render('test', { 'result': result })
         // res.render('index');

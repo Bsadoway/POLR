@@ -3,12 +3,14 @@ const queries = require('./queries')
 const sms = require('./sms');
 const irv = require('./irv');
 const mailgun = require('./mailgun');
+const yelp = require('./yelp');
 
 module.exports = {
 
   // TESTING FUNCTION
   testFunction: (url, fastForward) => {
-    return module.exports.irv(url, fastForward);
+    return yelp.search();
+    // return module.exports.irv(url, fastForward);
     // return module.exports.getPoll(url);
     // return mailgun.send(poll_info);
   },

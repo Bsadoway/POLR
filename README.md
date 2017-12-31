@@ -16,10 +16,10 @@ User is able to create a new poll and send to friends via direct link or sms. Th
 
 ## Screenshots
 
-!["home"](https://github.com/typeF/POLR/blob/master/public/POLR-logo.png)
-!["vote"](https://github.com/typeF/POLR/blob/master/public/POLR-logo.png)
-!["admin"](https://github.com/typeF/POLR/blob/master/public/POLR-logo.png)
-!["results"](https://github.com/typeF/POLR/blob/master/public/POLR-logo.png)
+!["home"](https://github.com/typeF/POLR/blob/master/docs/homepage.png)
+!["vote"](https://github.com/typeF/POLR/blob/master/docs/voting.png)
+!["admin"](https://github.com/typeF/POLR/blob/master/docs/admin.png)
+!["results"](https://github.com/typeF/POLR/blob/master/docs/results.png)
 
 
 ## Dependencies

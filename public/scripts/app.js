@@ -18,7 +18,8 @@ $(() => {
   let smsCount = 2;
   $('.add-sms').on('click', function() {
     $('#friend').append(
-      `<input type='text' id='id${smsCount}' class="form-control p-2" name='friends'>`
+       `<input class= "p-2 form-control" type = 'tel' pattern = "[0-9]{3}[ -][0-9]{3}[ -][0-9]{4}" id ='id${smsCount}' name='friends' placeholder="(XXX-XXX-XXXX)" required>
+        <div class="invalid-feedback"> Must enter a valid phone number.</div>`
     );
     smsCount++;
   });
@@ -58,6 +59,15 @@ $(() => {
   // refresh poll button
   $('#refresh').on('click', function() {
     location.reload();
+  });
+
+  $('#needs-validation').on('submit', function () {
+    if ($('#needs-validation')[0].checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    $('#needs-validation').addClass('was-validated');
+    return true;
   });
 
 });

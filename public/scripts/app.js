@@ -1,13 +1,5 @@
 $(() => {
-  // FOR RESULTS
-  $('#irv').on('click', function (){
-    console.log('click me here');
-    $.ajax({
-      url: $(location).attr('pathname'),
-      type: 'POST'
-    })
-  });
-  // TODO separate into js files based on page functions
+
   // disable close button and send sms to friends button is poll is closed
   // FOR ADMIN
   function checkIfPollClosed() {
@@ -20,34 +12,6 @@ $(() => {
   }
   checkIfPollClosed();
 
-  // Advance IRV by 1 step
-  $('put-id-or-class here').on('click', function (){
-    console.log('clicked');
-    $.ajax({
-      url: $(location).attr('pathname'),
-      method: 'POST',
-      data: {"fastForward": false}
-    })
-  });
-
-  // Fast forward's IRV to final step
-  $('put-id-or-class here').on('click', function () {
-    console.log('clicked');
-    $.ajax({
-      url: $(location).attr('pathname'),
-      method: 'POST',
-      data: { "fastForward": true }
-    })
-  });
-
-  // Resets IRV
-  $('put-id-or-class here').on('click', function () {
-    console.log('clicked');
-    $.ajax({
-      url: $(location).attr('pathname'),
-      method: 'PUT',
-    })
-  });
 
   // adds another sms input to the friends form
   // FOR ADMIN

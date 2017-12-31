@@ -18,6 +18,7 @@
 
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/app.js"></script>
+  <script type="text/javascript" src="/scripts/results.js"></script>
   <script type="text/javascript" src="/scripts/pie-chart.js"></script>
 
   <!-- External  javascript-->
@@ -44,10 +45,13 @@
       <div id="piechart"></div>
       <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='refresh'>Refresh Results</button>
       <br><br>
-      <% if (!result[0].is_open) { %>
+      <div id="poll-closed">
         <div id="piechartIRV"></div>
         <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv'>Advance IRV</button>
-      <% } %>
+        <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV Once</button>
+        <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-ff'>Fast Forward IRV</button>
+        <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-reset'>IRV Reset</button>
+      </div>
     </section>
 
   </div>

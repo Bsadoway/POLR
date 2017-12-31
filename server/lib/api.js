@@ -119,6 +119,7 @@ module.exports = {
         admin_url: `${math.generateRandomString()}/admin`,
         poll_url: `${math.generateRandomString()}`,
         is_open: true,
+        irv_done: false
       })
       .into('polls')
       .returning(['id', 'admin_url', 'poll_url', 'poll_title', 'creator'])

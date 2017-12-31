@@ -88,13 +88,17 @@ module.exports = {
 
   // Admin APIs
   createPoll: (input) => {
+    console.log('input is');
+    console.log(input);
+    console.log(input.creator_email);
     let creator = "";
     let isSMS = false;
     if (input.creator_email) {
       creator = input.creator_email;
     } else {
-      const sms = input.creator_sms.replace(/\D/g, ''); 
-      creator = `+1${sms}`;
+      // const sms = input.creator_sms.replace(/\D/g, ''); 
+      // creator = `+1${sms}`;
+      creator = math.cleanNumber(input.creator_sms);
       isSMS = true;
     }
     return global.knex
@@ -112,8 +116,11 @@ module.exports = {
       })
       .then((poll_info) => {
         if (isSMS){
+          console.log('its an sms')
+          console.log(poll_info[0]);
           module.exports.sendAdminSMS(poll_info[0]);
         } else {
+          console.log('its an email')
           mailgun.send(poll_info[0]);
         }
         return poll_info[0]
@@ -121,9 +128,22 @@ module.exports = {
   },
 
   inviteFriends: (url, friends) => {
-    return Promise.all(friends.map((phoneNum) => {
-      return sms.sendPoll(url, phoneNum)
-    }));
+    return module.exports.getPoll(url)
+      .then( result => {
+        return Promise.all(friends.map((phoneNum) => {
+          console.log('trying to map')
+          const recipient = math.cleanNumber(phoneNum);
+          const creator = result[0].creator;
+          const poll_url = result[0].poll_url;
+          const poll_title = result[0].poll_title;
+          const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with ${poll_url} vote`;
+          return sms.send(recipient, pollMessage)
+        }));        
+      })
+      .catch(result => {
+        return
+      })
+      
   },
 
   // Sends 2 SMS to admin with admin_url and poll_url
@@ -133,9 +153,9 @@ module.exports = {
     const admin_url = adminInfo.admin_url;
     const poll_url = adminInfo.poll_url;
     const poll_title = adminInfo.poll_title;
-    const adminMessage = `You created a survey with POLR!\nYour admin link is: http://localhost:8080/${admin_url}\nTo close the poll reply with: ${poll_id} close\nForward the link below to invite your friends!`;
-    const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: http://localhost:8080/${poll_url} or reply with ${poll_id} vote`;
-    sms.send(adminMessage).then(() => sms.send(pollMessage));
+    const adminMessage = `You created a survey with POLR!\nYour admin link is: ${process.env.SERVER_URL}/${admin_url}\nTo close the poll reply with: ${admin_url} close\nForward the link below to invite your friends!`;
+    const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with ${poll_url} vote`;
+    sms.send(creator, adminMessage).then(() => sms.send(creator, pollMessage));
     return
   },
 

@@ -71,10 +71,12 @@ module.exports = (API) => {
   router.post('/:poll/admin', (req, res) => {
     const admin_url = `${req.params.poll}/admin`;
     const friends = req.body.friends;
+    console.log('admin url is')
+    console.log(admin_url);
     API.inviteFriends(admin_url, friends)
-      .then(result => {
+      .then(() => {
         console.log(result);
-        res.redirect(`/${url}`)
+        res.redirect(`/${admin_url}`)
         // res.render('admin', { 'result': result })
       })
       .catch(err => res.render('admin'))

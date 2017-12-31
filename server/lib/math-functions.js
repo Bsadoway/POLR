@@ -30,6 +30,12 @@ module.exports = {
       console.log('there is no winner')
       return false
     }
+  },
+
+  cleanNumber: (number) => {
+    const sms = number.replace(/\D/g, '');
+    const cleanNumber = `+1${sms}`;
+    return cleanNumber;
   }
 
 }

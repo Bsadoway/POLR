@@ -1,5 +1,5 @@
 {
-  "name": "node-skeleton",
+  "name": "POLR",
   "version": "1.0.0",
   "description": "",
   "main": "server/server.js",
@@ -9,7 +9,7 @@
     "local": "./node_modules/.bin/nodemon server/server.js  --ignore public/",
     "knex": "./node_modules/.bin/knex"
   },
-  "author": "Lighthouse Labs",
+  "author": "Lighthouse Labs, Frank Lam, Blake Sadoway",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.15.2",

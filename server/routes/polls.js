@@ -126,7 +126,7 @@ module.exports = (API) => {
     const url = req.params.poll;
     API.getPoll(url)
       .then(result => {
-        console.log(result);
+        // console.log(result);
         if(result.length !== 0){
           res.render('results', {'result': result, 'url': url})
         } else {
@@ -137,7 +137,8 @@ module.exports = (API) => {
   });
 
   router.post('/:poll/results', (req, res) => {
-    const fastFoward = req.body.fastFoward
+    console.log(req.body);
+    const fastFoward = req.body.fastForward
     const url = req.params.poll;
     API.irv(url, fastFoward)
       .then(result => res.redirect(`/${url}/results`))

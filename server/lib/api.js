@@ -7,33 +7,38 @@ const mailgun = require('./mailgun');
 module.exports = {
 
   // TESTING FUNCTION
-  testFunction: (url) => {
-    // return module.exports.irv(url);
+  testFunction: (url, fastForward) => {
+    return module.exports.irv(url, fastForward);
     // return module.exports.getPoll(url);
-    return mailgun.send(poll_info);
+    // return mailgun.send(poll_info);
   },
 
-  irv: (url) => {
+  irv: (url, fastForward) => {
+    console.log('going through irv round first line')
     return irv.isWinner(url)
       .then(result => {
         if (result) {
           console.log('winner');
-          return true
+          return result
         } else {
-          console.log('no winner. running instant run-off round. checking if only 2 left');
+          console.log('no winner. checking if only 2 left');
           return irv.onlyTwoLeft(url)
-            .then( result => {
+            .then(result => {
               if (result) {
                 console.log('its a tie!');
-                return true
+                return result
               } else {
                 console.log('its NOT a tie! Running irv round');
-                return queries.instantRunOff(url)
-                  .then( () => {
-                    return false
+                return queries.instantRunOff(url, fastForward)
+                  .then(result => {
+                    if (fastForward) {
+                      return module.exports.irv(url);
+                    } else {
+                      return result
+                    }
                   })
               }
-          })
+            })
         }
       })
   },
@@ -115,7 +120,7 @@ module.exports = {
         return queries.pollInsert(poll_info, input)
       })
       .then((poll_info) => {
-        if (isSMS){
+        if (isSMS) {
           console.log('its an sms')
           console.log(poll_info[0]);
           module.exports.sendAdminSMS(poll_info[0]);
@@ -129,7 +134,7 @@ module.exports = {
 
   inviteFriends: (url, friends) => {
     return module.exports.getPoll(url)
-      .then( result => {
+      .then(result => {
         return Promise.all(friends.map((phoneNum) => {
           console.log('trying to map')
           const recipient = math.cleanNumber(phoneNum);
@@ -138,12 +143,12 @@ module.exports = {
           const poll_title = result[0].poll_title;
           const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with ${poll_url} vote`;
           return sms.send(recipient, pollMessage)
-        }));        
+        }));
       })
       .catch(result => {
         return
       })
-      
+
   },
 
   // Sends 2 SMS to admin with admin_url and poll_url

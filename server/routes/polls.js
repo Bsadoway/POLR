@@ -25,7 +25,7 @@ module.exports = (API) => {
   // Testing route
   router.get("/:poll/test", (req, res) => {
       const url = req.params.poll;
-      API.testFunction(url)
+      API.testFunction(url, false)
       .then(result => {
         console.log(result);
         res.render('test', { 'result': result })

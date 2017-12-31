@@ -1,6 +1,7 @@
 const math = require('./math-functions');
 const sms = require('./sms');
-const irv = require('./irv')
+const irv = require('./irv');
+const api = require('./api');
 
 module.exports = {
 

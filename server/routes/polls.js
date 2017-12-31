@@ -76,16 +76,14 @@ module.exports = (API) => {
   // Inviting friends
   router.post('/:poll/admin', (req, res) => {
     const admin_url = `${req.params.poll}/admin`;
-    const friends = req.body.friends;
-    console.log('admin url is')
-    console.log(admin_url);
+    const friends = [].concat(req.body.friends);
     API.inviteFriends(admin_url, friends)
       .then(() => {
         console.log(result);
         res.redirect(`/${admin_url}`)
         // res.render('admin', { 'result': result })
       })
-      .catch(err => res.render('admin'))
+      .catch(err => res.redirect(`/${admin_url}`))
   });
 
   // Closes poll
@@ -147,6 +145,16 @@ module.exports = (API) => {
     res.status(404).render('404error');
   });
 
+  router.put('/:poll/results', (req, res) => {
+    const url = req.params.poll;
+    API.closePoll(url)
+      .then(result => res.redirect(`/${url}/results`))
+      .catch(err => res.redirect(`/${url}/results`))
+  });
+  router.get('*', function (req, res) {
+    res.status(404).render('404error');
+  });
+  
 
   return router;
 }

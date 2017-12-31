@@ -40,7 +40,7 @@ module.exports = {
       .then(result => {
         if (result.length !== 0) {
           const itemList = math.listBuilder(result).join(" ");
-          const responseMsg = `${result[0].poll_title}\n${itemList}\nTo vote, reply with the poll code and your votes ordered from highest to lowest ranked choice: ${result[0].poll_url} 1234`;
+          const responseMsg = `${result[0].poll_title}\n${itemList}\nTo vote, reply with the poll code and your votes ordered from HIGHEST -> LOWEST rank: ${result[0].poll_url} 1234`;
           console.log('response msg is: ');
           console.log(responseMsg);
           // return

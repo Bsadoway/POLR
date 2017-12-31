@@ -133,7 +133,6 @@ module.exports = {
   },
 
   inviteFriends: (url, friends) => {
-    console.log('friends are');
     return module.exports.getPoll(url)
       .then(result => {
         return Promise.all(friends.map((phoneNum) => {
@@ -142,7 +141,7 @@ module.exports = {
           const creator = result[0].creator;
           const poll_url = result[0].poll_url;
           const poll_title = result[0].poll_title;
-          const pollMessage = `${creator} wants to ask you about ${poll_title}! To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with ${poll_url} vote`;
+          const pollMessage = `${creator} wants to ask you about ${poll_title}!\n To vote visit: ${process.env.SERVER_URL}/${poll_url} or reply with: ${poll_url} vote`;
           return sms.send(recipient, pollMessage)
         }));
       })

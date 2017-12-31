@@ -40,9 +40,18 @@ $(() => {
     })
   });
 
+  // Resets IRV
+  $('put-id-or-class here').on('click', function () {
+    console.log('clicked');
+    $.ajax({
+      url: $(location).attr('pathname'),
+      method: 'PUT',
+    })
+  });
+
   // adds another sms input to the friends form
   // FOR ADMIN
-  let smsCount = 3;
+  let smsCount = 2;
   $('.add-sms').on('click', function() {
     $('#friend').append(
       `<input type='text' id='id${smsCount}' class="form-control p-2" name='friends'>`

@@ -3,6 +3,7 @@ const queries = require('./queries')
 const sms = require('./sms');
 const irv = require('./irv');
 const mailgun = require('./mailgun');
+const yelp = require('./yelp');
 
 module.exports = {
 
@@ -78,16 +79,20 @@ module.exports = {
   },
 
   // Retrieves poll information based on provided URL and calculates ranks for poll items
-  getPoll: (url) => {
+  getPoll: (url, selector) => {
     return queries.calculateRank(url, true)
       .then(() => {
-        return global.knex
-          .select()
-          .from('polls')
-          .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-          .where({ 'polls.poll_url': url })
-          .orWhere({ 'polls.admin_url': url })
-          .orderBy('poll_items.id', 'asc')
+        if (selector) {
+          return Promise.all([
+            global.knex.select().from('polls').join('poll_items', { 'poll_items.poll_id': 'polls.id' }).where({ 'polls.poll_url': url }).orWhere({ 'polls.admin_url': url }).orderBy('poll_items.id', 'asc'),
+            yelp.search(url)
+          ])
+        } else {
+          return global.knex.select().from('polls').join('poll_items', { 'poll_items.poll_id': 'polls.id' }).where({ 'polls.poll_url': url }).orWhere({ 'polls.admin_url': url }).orderBy('poll_items.id', 'asc')
+        }
+
+
+
       })
   },
 

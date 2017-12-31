@@ -124,10 +124,10 @@ module.exports = (API) => {
   router.get('/:poll/results', (req, res) => {
     console.log('GETTING RESULTS')
     const url = req.params.poll;
-    API.getPoll(url)
+    API.getPoll(url, true)
       .then(result => {
         if(result.length !== 0){
-          res.render('results', {'result': result, 'url': url})
+          res.render('results', {'result': result[0], 'url': url, 'yelp': result[1]})
         } else {
           res.status(404).render('404error');
         }
@@ -150,7 +150,7 @@ module.exports = (API) => {
     const url = req.params.poll;
     API.resetIRV(url)
       .then(result => res.render('results', { 'result': result, 'url': url }))
-      .catch(err => res.redirect(`/3/results`))
+      .catch(err => res.render('results', { 'result': result, 'url': url }))
   });
 
   router.get('*', function (req, res) {

@@ -11,7 +11,7 @@ exports.seed = function (knex, Promise) {
       { poll_item: 'Poll_item 3-1', rank: 3, poll_id: 3, irv_rank: 3 },
       { poll_item: 'Poll_item 3-2', rank: 2, poll_id: 3, irv_rank: 2 },
       { poll_item: 'Poll_item 3-3', rank: 1, poll_id: 3, irv_rank: 1 },
-      { poll_item: 'Chocolate', rank: 3, poll_id: 4, irv_rank: 3 },
+      { poll_item: 'Marutama Ramen', rank: 3, poll_id: 4, irv_rank: 10 },
       { poll_item: 'Vanilla', rank: 2, poll_id: 4, irv_rank: 2 },
       { poll_item: 'Strawberry', rank: 1, poll_id: 4, irv_rank: 1 },
       { poll_item: 'A traffic cone', rank: 3, poll_id: 5, irv_rank: 3 },

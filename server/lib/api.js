@@ -11,7 +11,7 @@ module.exports = {
     // return module.exports.irv(url);
     // return module.exports.getPoll(url);
     return mailgun.send(poll_info);
-  },  
+  },
 
   irv: (url) => {
     return irv.isWinner(url)
@@ -37,7 +37,7 @@ module.exports = {
         }
       })
   },
-  
+
   // Issues actions based on incoming SMS
   incomingSMS: (message) => {
     const sender = message.From;
@@ -102,7 +102,7 @@ module.exports = {
         return queries.pollInsert(poll_info, input)
       })
       .then((poll_info) => {
-        mailgun.send(poll_info[0]);
+        //mailgun.send(poll_info[0]);
         return poll_info[0]
       });
     // TODO: Add error throwing if initial post creation fails so that step 2 isn't taken

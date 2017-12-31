@@ -23,6 +23,13 @@ $(() => {
     smsCount++;
   });
 
+
+  var clipboard = new Clipboard('#copy');
+  clipboard.on('success', function(e) {
+    $('#copy').tooltip({trigger: 'click'}); 
+  });
+  clipboard.on('error', function(e) {
+  });
   // toggle friends sms form
   // FOR ADMIN
   $('.friends-button').on('click', function() {

@@ -22,6 +22,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
   <script src="https://use.fontawesome.com/729922a123.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js"></script>
 
 
 </head>
@@ -46,6 +47,20 @@
           </li>
           <% }); %>
       </ul>
+      <br>
+      <div class="card">
+        <div class="card-body">
+          <p>Send this URL to your friends to have them vote:</p>
+          <div class="input-group">
+            <input type="text" id="copyurl" class="form-control" value="<%= process.env.SERVER_URL + '/' +result[0].poll_url %>">
+            <div class="input-group-append">
+              <button id="copy" class="btn btn-sml" data-clipboard-target="#copyurl" data-toggle="tooltip" title="Copied to Clipboard!">
+            <i class="fa fa-clipboard" aria-hidden="true"></i>
+          </button>
+            </div>
+          </div>
+        </div>
+      </div>
       <button type='button' class="friends-button btn btn-outline-primary btn-lg btn-block">Invite friends</button>
       <div id="friends-form" style="display:none">
         <form action='' method='POST'>

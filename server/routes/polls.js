@@ -37,8 +37,11 @@ module.exports = (API) => {
   router.get("/", (req, res) => {
     API.getEverything()
       .then(result => {
-        console.log(result);
-        res.render('index');
+        if(result.length !== 0){
+          res.render('index');
+        } else {
+          res.status(404).render('404error');
+        }
       })
       .catch(err => res.render('vote'))
   });
@@ -61,8 +64,11 @@ module.exports = (API) => {
     const admin_url = `${req.params.poll}/admin`;
     API.getPoll(admin_url)
       .then(result => {
-        console.log(result);
-        res.render('admin', {'result': result})
+        if(result.length !== 0){
+          res.render('admin', {'result': result})
+        } else {
+          res.status(404).render('404error');
+        }
       })
       .catch(err => res.render('vote'))
   });
@@ -87,8 +93,6 @@ module.exports = (API) => {
     const url = `${req.params.poll}/admin`;
     API.closePoll(url)
       .then(result => {
-        // console.log("log of result is:");
-        // console.log(result);
         res.render('index', { 'result': result })
       })
       .catch(err => res.render('vote'))
@@ -100,7 +104,11 @@ module.exports = (API) => {
     const url = req.params.poll;
     API.getPoll(url)
       .then(result => {
-        res.render('vote', {'result': result, 'url': url})
+        if(result.length !== 0){
+          res.render('vote', {'result': result, 'url': url})
+        } else {
+          res.status(404).render('404error');
+        }
       })
       .catch(err => res.render('vote'))
   });
@@ -118,11 +126,18 @@ module.exports = (API) => {
     const url = req.params.poll;
     API.getPoll(url)
       .then(result => {
-        res.render('results', {'result': result, 'url': url})
+        if(result.length !== 0){
+          res.render('results', {'result': result, 'url': url})
+        } else {
+          res.status(404).render('404error');
+        }
       })
       .catch(err => res.render('result'))
   });
 
+  router.get('*', function(req, res){
+    res.status(404).render('404error');
+  });
 
 
   return router;

@@ -8,7 +8,6 @@ const sms = require('../lib/sms');
 
 module.exports = (API) => {
 
-// Testing route for receiving SMS
   router.post('/sms', (req, res) => {
     const sms = req.body;
     API.incomingSMS(sms)
@@ -21,18 +20,6 @@ module.exports = (API) => {
       .catch(err => console.log(err))
   });
 
-  // Testing route
-  router.get("/:poll/test", (req, res) => {
-      console.log('req.body is');
-      console.log(req.body);
-      const url = req.params.poll;
-      API.testFunction(url, false) .then(result => {
-        console.log(result);
-        res.render('test', { 'result': result })
-        // res.render('index');
-      })
-      .catch(err => res.render('vote'))
-  });
 
   router.get("/", (req, res) => {
     API.getEverything()
@@ -47,12 +34,8 @@ module.exports = (API) => {
   });
 
   router.post("/", (req, res) => {
-    // console.log(req.body);
     API.createPoll(req.body)
       .then(result => {
-        console.log('after create result is');
-        console.log(result);
-        // API.sendAdminSMS(result);
         res.redirect(`/${result.admin_url}`);
       })
       .catch(err => res.render('index'))
@@ -79,9 +62,7 @@ module.exports = (API) => {
     const friends = [].concat(req.body.friends);
     API.inviteFriends(admin_url, friends)
       .then(() => {
-        console.log(result);
         res.redirect(`/${admin_url}`)
-        // res.render('admin', { 'result': result })
       })
       .catch(err => res.redirect(`/${admin_url}`))
   });
@@ -117,7 +98,6 @@ module.exports = (API) => {
 
   router.post('/:poll', (req, res) => {
     const url = req.params.poll;
-    console.log(req.body);
     API.submitVote(url, req.body)
       .then(result => res.redirect(`/${url}/results`))
       .catch(err => res.redirect(`/${url}/results`))
@@ -126,11 +106,9 @@ module.exports = (API) => {
 
 //////////// RESULTS ROUTE /////////////////////////////
   router.get('/:poll/results', (req, res) => {
-    console.log('GETTING RESULTS')
     const url = req.params.poll;
     API.getPoll(url)
       .then(result => {
-        // console.log(result);
         if(result.length !== 0){
           res.render('results', {'result': result, 'url': url})
         } else {
@@ -148,18 +126,12 @@ module.exports = (API) => {
       .then(result => res.redirect(`/${url}/results`))
       .catch(err => res.redirect(`/${url}`))
   });
-  router.get('*', function(req, res){
-    res.status(404).render('404error');
-  });
 
   router.put('/:poll/results', (req, res) => {
     const url = req.params.poll;
     API.resetIRV(url)
       .then(result => res.end())
       .catch(err => res.end())
-
-      // .then(result => res.render('results', { 'result': result, 'url': url }))
-      // .catch(err => res.redirect(`/3/results`))
   });
 
   router.get('*', function (req, res) {

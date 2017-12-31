@@ -32,9 +32,7 @@ module.exports = {
       })
       .andWhere({ 'irv_rank': 0 })
       .then(result => {
-        console.log(result);
         return Promise.all(result.map(poll_item => {
-          console.log(poll_item)
           return global.knex
             .from('poll_items')
             .where({ 'id': poll_item.id })
@@ -69,11 +67,9 @@ module.exports = {
       .andWhere({ 'submitted_rank': submitted_rank })
       .andWhere({ 'voter_id': voter_id })
       .then(result => {
-        console.log(result);
         if (result.length !== 0 && result[0].rank !== null) {
           return result[0]
         } else {
-          console.log('hit else statement');
           return module.exports.findNextBestChoice((submitted_rank + 1), poll_id, voter_id)
         }
       })
@@ -102,13 +98,9 @@ module.exports = {
       })
       .andWhere('irv_rank', '>=', 0)
       .then(result => {
-        console.log("only 2 left results");
-        console.log(result);
         if (result[0].count === '2') {
-          console.log('true')
           return true
         } else {
-          console.log('false')
           return false
         }
       })

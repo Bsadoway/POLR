@@ -6,13 +6,6 @@ const mailgun = require('./mailgun');
 
 module.exports = {
 
-  // TESTING FUNCTION
-  testFunction: (url, fastForward) => {
-    return module.exports.irv(url, fastForward);
-    // return module.exports.getPoll(url);
-    // return mailgun.send(poll_info);
-  },
-
   irv: (url, fastForward) => {
     console.log('going through irv round first line')
     return irv.isWinner(url)
@@ -36,9 +29,12 @@ module.exports = {
                 console.log('its NOT a tie! Running irv round');
                 return queries.instantRunOff(url, fastForward)
                   .then(result => {
-                    if (fastForward) {
+                    console.log('last fast foward is:');
+                    console.log(fastForward)
+                    
+                    if (fastForward == 'true') {
                       console.log('we are fast forwarding')
-                      return module.exports.irv(url);
+                      return module.exports.irv(url, fastForward);
                     } else {
                       return result
                     }
@@ -64,14 +60,11 @@ module.exports = {
       const voteOrder = command.split('');
       return sms.sendPoll(url, sender)
     } else {
-      // return Promise.all([
+      // Submits votes based on sms input
       return queries.addVoter(sender)
         .then(voter_id => {
-          // console.log('id is:')
-          // console.log(voter_id[0]);
           const voteOrder = command.split('');
           return queries.vote(url, voteOrder, voter_id[0], sender)
-          // ])
         })
     }
     return
@@ -99,16 +92,11 @@ module.exports = {
 
   // Admin APIs
   createPoll: (input) => {
-    console.log('input is');
-    console.log(input);
-    console.log(input.creator_email);
     let creator = "";
     let isSMS = false;
     if (input.creator_email) {
       creator = input.creator_email;
     } else {
-      // const sms = input.creator_sms.replace(/\D/g, ''); 
-      // creator = `+1${sms}`;
       creator = math.cleanNumber(input.creator_sms);
       isSMS = true;
     }
@@ -127,23 +115,34 @@ module.exports = {
         return queries.pollInsert(poll_info, input)
       })
       .then((poll_info) => {
+        // Sends SMS with admin and vote links if user entered SMS
         if (isSMS) {
-          console.log('its an sms')
-          console.log(poll_info[0]);
           module.exports.sendAdminSMS(poll_info[0]);
         } else {
-          console.log('its an email')
+          // Sends email to user if they entered email
           mailgun.send(poll_info[0]);
         }
         return poll_info[0]
       });
   },
 
+  submitVote: (url, input) => {
+    const name = input.voter_name;
+    const voteOrder = input.voteOrder;
+    return queries.addVoter(name)
+      .then(voter_id => {
+        return queries.vote(url, voteOrder, voter_id[0])
+      })
+  },
+
+  closePoll: (admin_url) => {
+    return queries.closePoll(admin_url);
+  },
+
   inviteFriends: (url, friends) => {
     return module.exports.getPoll(url)
       .then(result => {
         return Promise.all(friends.map((phoneNum) => {
-          console.log('trying to map')
           const recipient = math.cleanNumber(phoneNum);
           const creator = result[0].creator;
           const poll_url = result[0].poll_url;
@@ -170,27 +169,12 @@ module.exports = {
     sms.send(creator, adminMessage).then(() => sms.send(creator, pollMessage));
     return
   },
-
+  
   resetIRV: (url) => {
-    console.log('reset irv');
     return queries.calculateRank(url, false)
       .then( () => {
         return irv.changeState(url, false)
       })
   },
-
-  closePoll: (admin_url) => {
-    return queries.closePoll(admin_url);
-  },
-
-  submitVote: (url, input) => {
-    const name = input.voter_name;
-    const voteOrder = input.voteOrder;
-    return queries.addVoter(name)
-      .then(voter_id => {
-        return queries.vote(url, voteOrder, voter_id[0])
-      })
-  },
-
 
 }

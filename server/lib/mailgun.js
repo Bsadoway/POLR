@@ -11,7 +11,6 @@ const server_url = process.env.SERVER_URL;
 module.exports = {
 
   send: (poll_info) => {
-    console.log('attempting to send message with mailgun');
 
     const creator = poll_info.creator;
     const admin_url = poll_info.admin_url;

@@ -37,13 +37,17 @@
     <% include ./partials/_header %>
   </header>
 
-  <h1 class="d-flex justify-content-center"> Results</h1>
   <div class="d-flex justify-content-center main-container">
     <section>
       <h2 id='poll_title' class='text-center'>Results of poll:</h2>
       <h3 class='text-center'><%= result[0].poll_title %></h3>
       <div id="piechart"></div>
-      <button type='button' class="btn btn-primary btn-lg btn-block" id='refresh'>Refresh Results</button>
+      <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='refresh'>Refresh Results</button>
+      <br><br>
+      <% if (!result[0].is_open) { %>
+        <div id="piechartIRV"></div>
+        <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv'>Advance IRV</button>
+      <% } %>
     </section>
 
   </div>

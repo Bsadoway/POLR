@@ -121,6 +121,7 @@ module.exports = (API) => {
       .catch(err => res.redirect(`/${url}`))
   });
 
+
 //////////// RESULTS ROUTE /////////////////////////////
   router.get('/:poll/results', (req, res) => {
     const url = req.params.poll;
@@ -135,6 +136,12 @@ module.exports = (API) => {
       .catch(err => res.render('result'))
   });
 
+  router.post('/:poll/results', (req, res) => {
+    const url = req.params.poll;
+    API.irv(url)
+      .then(result => res.redirect(`/${url}/results`))
+      .catch(err => res.redirect(`/${url}`))
+  });
   router.get('*', function(req, res){
     res.status(404).render('404error');
   });

@@ -1,4 +1,12 @@
 $(() => {
+  // FOR RESULTS
+  $('#irv').on('click', function (){
+    console.log('click me here');
+    $.ajax({
+      url: $(location).attr('pathname'),
+      type: 'POST'
+    })
+  });
   // TODO separate into js files based on page functions
   // disable close button and send sms to friends button is poll is closed
   // FOR ADMIN
@@ -49,6 +57,7 @@ $(() => {
       }
     })
   });
+
 
   $('.view-results').on('click', function() {
     window.location.href = `/${result.poll_url}/results`;

@@ -44,7 +44,6 @@ $(() => {
     console.log('clicked');
   });
 
-
   // Resets IRV
   $('#irv-reset').on('click', function () {
     console.log('clicked');

@@ -7,9 +7,8 @@ $(() => {
   function drawChart() {
     const url = window.location.pathname;
 
-    // initialize the array and format to google visulation input
+    // initialize both normal and IRV arrays and format to google visulation input
     let nameRank = [['Title', 'Rank']];
-
     result.forEach(item => {
       let items = [];
       items.push(item.poll_item, item.rank);

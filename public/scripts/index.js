@@ -1,5 +1,6 @@
 $(() => {
 
+  // email form
   $('#email').on('click', function () {
     $('#switch-option').html(
       `<input class="p-2 form-control" type='email' id='creator' name='creator_email' placeholder="E-mail" required>
@@ -9,6 +10,7 @@ $(() => {
     )
   });
 
+  // phone sms form
   $('#phone').on('click', function () {
     $('#switch-option').html(
       `<input class="p-2 form-control" type='tel' pattern="[0-9]{3}[ -][0-9]{3}[ -][0-9]{4}" id='creator' name='creator_sms' placeholder="(XXX-XXX-XXXX)" required>

@@ -21,7 +21,7 @@ module.exports = {
       from: mg_from,
       to: creator,
       subject: 'Your new POLR survey',
-      html: `<html>Thanks for using POLR!\n<br><br> You can access and administer your survey at:<br> ${server_url}/${admin_url}. \n<br><br> Invite your friends to vote using this link:<br> http://localhost:8080/${poll_url}</html>`,
+      html: `<html>Thanks for using POLR!\n<br><br> You can access and administer your survey at:<br> ${server_url}/${admin_url}. \n<br><br> Invite your friends to vote using this link:<br> ${server_url}/${poll_url}</html>`,
       attachment: img
     };
 

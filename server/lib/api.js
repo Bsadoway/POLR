@@ -20,20 +20,24 @@ module.exports = {
         if (result) {
           console.log('winner');
           return irv.changeState(url, true)
-          // return result
+          // return
         } else {
+          console.log('fast foward is:');
+          console.log(fastForward)
+
           console.log('no winner. checking if only 2 left');
           return irv.onlyTwoLeft(url)
             .then(result => {
               if (result) {
                 console.log('its a tie!');
-                // return result
                 return irv.changeState(url, true)
+                // return
               } else {
                 console.log('its NOT a tie! Running irv round');
                 return queries.instantRunOff(url, fastForward)
                   .then(result => {
                     if (fastForward) {
+                      console.log('we are fast forwarding')
                       return module.exports.irv(url);
                     } else {
                       return result

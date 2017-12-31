@@ -107,7 +107,7 @@ module.exports = (API) => {
     const url = req.params.poll;
     console.log(req.body);
     API.submitVote(url, req.body)
-      .then(result => res.redirect(`/${url}`))
+      .then(result => res.redirect(`/${url}/results`))
       .catch(err => res.redirect(`/${url}`))
   });
 

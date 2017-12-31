@@ -11,7 +11,7 @@ module.exports = {
     // return module.exports.irv(url);
     // return module.exports.getPoll(url);
     return mailgun.send(poll_info);
-  },  
+  },
 
   irv: (url) => {
     return irv.isWinner(url)
@@ -37,7 +37,7 @@ module.exports = {
         }
       })
   },
-  
+
   // Issues actions based on incoming SMS
   incomingSMS: (message) => {
     const sender = message.From;
@@ -93,7 +93,7 @@ module.exports = {
     if (input.creator_email) {
       creator = input.creator_email;
     } else {
-      const sms = input.creator_sms.replace(/\D/g, ''); 
+      const sms = input.creator_sms.replace(/\D/g, '');
       creator = `+1${sms}`;
       isSMS = true;
     }

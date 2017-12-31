@@ -18,9 +18,17 @@ $(() => {
   let smsCount = 3;
   $('.add-sms').on('click', function() {
     $('#friend').append(
-      `<input type='text' id='id${smsCount}' class="p-2" name='friends'>`
+      `<input type='text' id='id${smsCount}' class="form-control p-2" name='friends'>`
     );
     smsCount++;
+  });
+
+  //copy to clipboard button
+  var clipboard = new Clipboard('#copy');
+  clipboard.on('success', function(e) {
+    $('#copy').tooltip({trigger: 'click'});
+  });
+  clipboard.on('error', function(e) {
   });
 
   // toggle friends sms form

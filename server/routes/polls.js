@@ -149,10 +149,12 @@ module.exports = (API) => {
   router.put('/:poll/results', (req, res) => {
     const url = req.params.poll;
     API.resetIRV(url)
-      .then(result => res.redirect(`/${url}/results`))
-      .catch(err => res.redirect(`/${url}`))
+      // .then(result => res.redirect(`/${url}/results`))
+      // .catch(err => res.redirect(`/${url}`))
 
-      // .then(result => res.render('results', { 'result': result, 'url': url, 'yelp':yelp }))
+      .then(result => res.render('results', { 'result': result, 'url': url, 'yelp':yelp }))
+      .catch(err => res.end())
+
       // .catch(err => res.render('results', { 'result': result, 'url': url, 'yelp':yelp }))
   });
 

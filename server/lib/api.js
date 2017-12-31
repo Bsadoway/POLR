@@ -20,14 +20,16 @@ module.exports = {
       .then(result => {
         if (result) {
           console.log('winner');
-          return result
+          return irv.changeIRVstate(url, true)
+          // return result
         } else {
           console.log('no winner. checking if only 2 left');
           return irv.onlyTwoLeft(url)
             .then(result => {
               if (result) {
                 console.log('its a tie!');
-                return result
+                // return result
+                return irv.changeIRVstate(url, true)
               } else {
                 console.log('its NOT a tie! Running irv round');
                 return queries.instantRunOff(url, fastForward)
@@ -171,7 +173,10 @@ module.exports = {
 
   resetIRV: (url) => {
     console.log('reset irv');
-    return queries.calculateRank(url, false);
+    return queries.calculateRank(url, false)
+      .then( () => {
+        return irv.changeIRVstate(url, false)
+      })
   },
 
   closePoll: (admin_url) => {

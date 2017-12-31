@@ -126,6 +126,8 @@ module.exports = (API) => {
     const url = req.params.poll;
     API.getPoll(url, true)
       .then(result => {
+        console.log("result is");
+        console.log(result);
         if(result.length !== 0){
           res.render('results', {'result': result[0], 'url': url, 'yelp': result[1]})
         } else {
@@ -148,14 +150,9 @@ module.exports = (API) => {
 
   router.put('/:poll/results', (req, res) => {
     const url = req.params.poll;
-    API.resetIRV(url)
-      // .then(result => res.redirect(`/${url}/results`))
-      // .catch(err => res.redirect(`/${url}`))
-
-      .then(result => res.render('results', { 'result': result, 'url': url, 'yelp':yelp }))
+    API.resetIRV(url, true)
+      .then(result => res.render('results', { 'result': result, 'url': url, 'yelp':result[1] }))
       .catch(err => res.end())
-
-      // .catch(err => res.render('results', { 'result': result, 'url': url, 'yelp':yelp }))
   });
 
   router.get('*', function (req, res) {

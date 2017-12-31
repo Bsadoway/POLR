@@ -63,9 +63,12 @@
       </div>
       <button type='button' class="friends-button btn btn-outline-primary btn-lg btn-block">Invite friends</button>
       <div id="friends-form" style="display:none">
-        <form action='' method='POST'>
-          <h5 class="text-center">Send this poll to friends via SMS</h5>
-          <input type='text' id='id1' class="form-control p-2" name='friends'>
+        <form id="needs-validation" action='' method='POST' novalidate>
+          <h5 class="text-center">Send this poll to friends via SMS</h5>                 
+          <input class="p-2 form-control" type='tel' pattern="[0-9]{3}[ -][0-9]{3}[ -][0-9]{4}" id='id1' name='friends' placeholder="(XXX-XXX-XXXX)" required>
+          <div class="invalid-feedback">
+            Must enter a valid phone number.
+          </div>
           <div id='friend'></div>
           <div class='add-sms'>
             <i class="fa fa-plus pull-left" aria-hidden="true"></i>

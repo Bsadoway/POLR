@@ -13,7 +13,7 @@ $(() => {
     $('#switch-option').html(
       `<input class="p-2 form-control" type='tel' pattern="[0-9]{3}[ -][0-9]{3}[ -][0-9]{4}" id='creator' name='creator_sms' placeholder="(XXX-XXX-XXXX)" required>
         <div class="invalid-feedback">
-          Must enter a valid Phone Nmber.
+          Must enter a valid phone number.
         </div>`
     )
   });

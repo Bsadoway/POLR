@@ -166,7 +166,17 @@ module.exports = {
       .then(() => {
         return poll_info
       })
-  }
+  },
 
+  changeIRVstate: (url, selector) => {
+    return global.knex
+      .select('irv_done')
+      .from('polls')
+      .where(function () {
+        this.where({ 'poll_url': url, })
+          .orWhere({ 'admin_url': url, })
+      })
+      .update({ irv_done: selector })
+  }
 
 }

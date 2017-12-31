@@ -35,6 +35,7 @@
 <body>
 
   <!-- Modal -->
+  <% if (result[0].irv_done && yelp) {%>
   <div class="modal fade" id="yelpmodal" tabindex="-1" role="dialog" aria-labelledby="yelpmodalaria" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -45,6 +46,7 @@
           </button>
         </div>
         <div class="modal-body">
+          <img src="<%=yelp.image%>" class="img-fluid" alt="restaurant-image">
           <br>
           Rating: <%=yelp.rating%>
           Price: <%=yelp.price%>
@@ -59,7 +61,7 @@
       </div>
     </div>
   </div>
-
+  <% } %>
 
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -94,7 +96,11 @@
       <br><br>
       <div id="poll-closed">
         <div id="piechartIRV"></div>
-        <% if (yelp) {%>
+        <% if (!result[0].irv_done) { %>
+          <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV</button>
+          <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-ff'>Fast Forward IRV</button>
+        <% } %>
+        <% if (result[0].irv_done && yelp) {%>
         <button type="button" class="btn btn-outline-success btn-lg btn-block" id='yelp-button' data-toggle="modal" data-target="#yelpmodal">I'm feeling lucky</button>
         <% } %>
         <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV</button>

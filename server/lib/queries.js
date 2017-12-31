@@ -10,9 +10,7 @@ module.exports = {
   // Checks if there is an item with > 50% of majority vote
   isWinner: (url) => {
     return Promise.all([
-      // Most votes
       global.knex.max('irv_rank').from('poll_items').join('polls', { 'poll_items.poll_id': 'polls.id' }).where({ 'poll_url': url }).orWhere({ 'admin_url': url }),
-      // Total votes
       global.knex.sum('irv_rank').from('poll_items').join('polls', { 'poll_items.poll_id': 'polls.id' }).where({ 'poll_url': url }).orWhere({ 'admin_url': url })
     ])
       .then(votes => {
@@ -31,7 +29,7 @@ module.exports = {
               .where({ 'id': rankPoints.id })
               .update({ 'rank': rankPoints.count })
           }))
-          // Sets IRV_rank after poll is closed 
+        // Sets IRV_rank after poll is closed 
         } else {
           return Promise.all(result.rows.map(rankPoints => {
             return global.knex
@@ -55,7 +53,6 @@ module.exports = {
         return irv.findVoter(poll_itemId)
       })
       .then(result => {
-        // console.log('next best choie');
         return Promise.all(result.map(nextChoice => {
           return irv.findNextBestChoice(2, nextChoice.poll_id, nextChoice.voter_id)
             .then(result => {
@@ -80,15 +77,12 @@ module.exports = {
 
   // Adds votes to poll item
   vote: (url, voteOrder, voter_id, sender) => {
-    console.log(voteOrder);
     const votes = voteOrder;
-    // console.log(poll_identifier);
     const randomID = math.generateRandomString;
     return global.knex
       .select()
       .from('polls')
       .join('poll_items', { 'poll_items.poll_id': 'polls.id' })
-      // .where({ 'polls.id': poll_identifier })
       .where({ 'poll_url': url })
       .andWhere({ is_open: true })
       .orderBy('poll_items.id', 'asc')
@@ -123,16 +117,13 @@ module.exports = {
       .andWhere({ 'creator': sender })
       .then(result => {
         if (result.length !== 0) {
-          console.log('Success. Matched poll_id and sender');
           return module.exports.closePoll(admin_url)
             .then(() => {
               const responseMsg = "Success - Your poll is now closed.";
               return sms.send(sender, responseMsg)
             })
         } else {
-          console.log('Wrong poll id or unauthorized command');
           const responseMsg = "Invalid command";
-          // return
           return sms.send(sender, responseMsg);
         }
       })
@@ -166,7 +157,7 @@ module.exports = {
       .then(() => {
         return poll_info
       })
-  }
+  },
 
 
 }

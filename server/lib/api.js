@@ -7,33 +7,19 @@ const mailgun = require('./mailgun');
 module.exports = {
 
   irv: (url, fastForward) => {
-    console.log('going through irv round first line')
     return irv.isWinner(url)
       .then(result => {
         if (result) {
-          console.log('winner');
           return irv.changeState(url, true)
-          // return
         } else {
-          console.log('fast foward is:');
-          console.log(fastForward)
-
-          console.log('no winner. checking if only 2 left');
           return irv.onlyTwoLeft(url)
             .then(result => {
               if (result) {
-                console.log('its a tie!');
                 return irv.changeState(url, true)
-                // return
               } else {
-                console.log('its NOT a tie! Running irv round');
                 return queries.instantRunOff(url, fastForward)
-                  .then(result => {
-                    console.log('last fast foward is:');
-                    console.log(fastForward)
-                    
+                  .then(result => {                    
                     if (fastForward == 'true') {
-                      console.log('we are fast forwarding')
                       return module.exports.irv(url, fastForward);
                     } else {
                       return result

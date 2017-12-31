@@ -164,6 +164,11 @@ module.exports = {
     return
   },
 
+  resetIRV: (url) => {
+    console.log('reset irv');
+    return queries.calculateRank(url, false);
+  },
+
   closePoll: (admin_url) => {
     return queries.closePoll(admin_url);
   },

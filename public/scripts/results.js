@@ -8,6 +8,10 @@ $(() => {
     window.location.href = "https://en.wikipedia.org/wiki/Instant-runoff_voting"
   })
 
+  $('.google-map-link').on('click', function () {
+    window.location.href = "https://en.wikipedia.org/wiki/Instant-runoff_voting"
+  })
+
   // Advance IRV by 1 step
   $('#irv-once').on('click', function () {
     console.log('clicked irv once');

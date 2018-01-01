@@ -35,6 +35,39 @@
 <body>
 
   <!-- Modal -->
+  <% if (yelp) { %>
+  <div class="modal fade" id="yelpmodal" tabindex="-1" role="dialog" aria-labelledby="yelpmodalaria" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">
+            <%=yelp.name%>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <img class="img-fluid" src="<%=yelp.image%>" alt="yelp-img">
+          <!-- <br> Rating:
+          <%=yelp.rating%>
+            Price:
+            <%=yelp.price%> -->
+              <iframe width="300" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyC24Uf59vQcxtmZSaPA7eBSsuLNuqNo5bQ&q=<%=yelp.map%>"
+                allowfullscreen>
+              </iframe>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Google Map</button> -->
+                <!-- <button type="button" class="btn btn-primary yelp-link">Yelp</button> -->
+              </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+
+
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
@@ -70,6 +103,9 @@
       <br><br>
       <div id="poll-closed">
         <div id="piechartIRV"></div>
+        <% if (result[0].irv_done === true && yelp) { %>
+          <button type="button" class="btn btn-outline-success btn-lg btn-block" id='yelp-button' data-toggle="modal" data-target="#yelpmodal">I'm feeling lucky</button>
+        <% } %>
         <% if (result[0].irv_done === false) { %>
           <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-once'>Advance IRV</button>
           <button type='button' class="btn btn-outline-primary btn-lg btn-block" id='irv-ff'>Fast Forward IRV</button>

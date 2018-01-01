@@ -3,6 +3,7 @@ const queries = require('./queries')
 const sms = require('./sms');
 const irv = require('./irv');
 const mailgun = require('./mailgun');
+const yelp = require('./yelp');
 
 module.exports = {
 
@@ -162,5 +163,9 @@ module.exports = {
         return irv.changeState(url, false)
       })
   },
+
+  yelpCheck: (url) => {
+    return yelp.find(url)
+  }
 
 }

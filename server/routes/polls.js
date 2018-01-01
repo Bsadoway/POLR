@@ -7,6 +7,26 @@ const MessagingResponse = require('twilio').twiml.MessagingResponse;
 const sms = require('../lib/sms');
 
 module.exports = (API) => {
+  
+  router.use('/:poll/results', function yelp (req, res, next) {
+    const url = req.params.poll;
+    API.yelpCheck(url)
+      .then(result => {
+        if (result) {
+          // console.log('result is')
+          // console.log(result);
+          // console.log('res locals result is')
+          res.locals.yelp = result
+          // console.log(res.locals.yelp);
+          next()
+        } else {
+          res.locals.yelp = false
+          next()
+        }
+      })
+      .catch(err => console.log(err))
+  }); 
+
 
   router.post('/sms', (req, res) => {
     const sms = req.body;

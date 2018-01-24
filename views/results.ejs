@@ -49,18 +49,14 @@
         </div>
         <div class="modal-body">
           <img class="img-fluid" src="<%=yelp.image%>" alt="yelp-img">
-          <!-- <br> Rating:
-          <%=yelp.rating%>
-            Price:
-            <%=yelp.price%> -->
-            <br>
-              <iframe width="300" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyC24Uf59vQcxtmZSaPA7eBSsuLNuqNo5bQ&q=<%=yelp.map%>"
+              <iframe class="google-map" width="300" height="250" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?key=AIzaSyC24Uf59vQcxtmZSaPA7eBSsuLNuqNo5bQ&q=<%=yelp.map%>"
                 allowfullscreen>
               </iframe>
               <div class="modal-footer">
+                <a href="<%=yelp.yelp_url%>">
+                <button type="button" class="btn btn-danger">Yelp</button>
+                </a>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <!-- <button type="button" class="btn btn-primary" data-dismiss="modal">Google Map</button> -->
-                <!-- <button type="button" class="btn btn-primary yelp-link">Yelp</button> -->
               </div>
         </div>
       </div>
